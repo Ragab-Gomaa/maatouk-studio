@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/react";
 import "@/styles/globals.css";
 import { ClientLayout } from "./client-layout";
 
@@ -50,6 +51,7 @@ export default function RootLayout({
     <html lang="en" dir="ltr" suppressHydrationWarning>
       <body className="font-body antialiased">
         <ClientLayout>{children}</ClientLayout>
+        <Analytics />
       </body>
     </html>
   );
