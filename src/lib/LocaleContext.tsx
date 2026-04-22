@@ -14,8 +14,14 @@ interface LocaleContextType {
 
 const LocaleContext = createContext<LocaleContextType | null>(null);
 
-export function LocaleProvider({ children }: { children: ReactNode }) {
-  const { locale, setLocale, toggleLocale, dir } = useLocale();
+export function LocaleProvider({
+  children,
+  initialLocale,
+}: {
+  children: ReactNode;
+  initialLocale?: Locale;
+}) {
+  const { locale, setLocale, toggleLocale, dir } = useLocale(initialLocale);
 
   const t = <T,>(en: T, ar: T): T => (locale === "ar" ? ar : en);
 

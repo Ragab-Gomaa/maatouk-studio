@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from "next";
+import { cookies } from "next/headers";
 import { Analytics } from "@vercel/analytics/react";
 import "@/styles/globals.css";
 import { ClientLayout } from "./client-layout";
+import { Locale, getDirection } from "@/lib/i18n";
 
 const SITE_URL = "https://maatouk-studio.com";
 
@@ -71,16 +73,6 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-const localeInitScript = `
-(function(){try{
-  var l=localStorage.getItem("maatouk-locale");
-  if(l==="ar"||l==="en"){
-    document.documentElement.lang=l;
-    document.documentElement.dir=l==="ar"?"rtl":"ltr";
-  }
-}catch(e){}})();
-`;
-
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -94,15 +86,20 @@ const organizationJsonLd = {
   knowsLanguage: ["en", "ar"],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const cookieStore = await cookies();
+  const cookieLocale = cookieStore.get("maatouk-locale")?.value;
+  const initialLocale: Locale =
+    cookieLocale === "ar" || cookieLocale === "en" ? cookieLocale : "en";
+  const dir = getDirection(initialLocale);
+
   return (
-    <html lang="en" dir="ltr" suppressHydrationWarning>
+    <html lang={initialLocale} dir={dir} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: localeInitScript }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -111,7 +108,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-body antialiased" suppressHydrationWarning>
-        <ClientLayout>{children}</ClientLayout>
+        <ClientLayout initialLocale={initialLocale}>{children}</ClientLayout>
         <Analytics />
       </body>
     </html>
