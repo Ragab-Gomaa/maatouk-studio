@@ -131,7 +131,7 @@ export default function Hero() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="relative flex items-center justify-center lg:justify-end"
+            className="relative flex items-center justify-center"
           >
             <ComposedMark />
           </motion.div>
@@ -151,13 +151,13 @@ function ComposedMark() {
   const { t } = useTranslation();
 
   return (
-    <div className="relative w-full max-w-[380px] sm:max-w-[440px] lg:max-w-[460px] aspect-[5/6] mx-auto lg:ml-auto">
+    <div className="relative w-full max-w-[300px] sm:max-w-[340px] lg:max-w-[380px] aspect-[5/6] mx-auto">
       {/* ── Card 1 — Branding (top, aligned to end) ── */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.3 }}
-        className="absolute top-0 end-0 w-[70%] aspect-square rounded-[22px] overflow-hidden studio-card"
+        className="absolute top-0 end-0 w-[65%] aspect-square rounded-[20px] overflow-hidden studio-card"
       >
         <CornerLabel text={t("Branding", "الهوية البصرية")} tone="blue" />
         <BrandingAnimation />
@@ -168,7 +168,7 @@ function ComposedMark() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.5 }}
-        className="absolute top-[30%] start-0 w-[70%] aspect-square rounded-[22px] overflow-hidden studio-card bg-ink"
+        className="absolute top-[32%] start-0 w-[65%] aspect-square rounded-[20px] overflow-hidden studio-card bg-ink"
       >
         <CornerLabel text={t("Motion", "تصميم الحركة")} tone="dark" />
         <MotionAnimation />
@@ -179,7 +179,7 @@ function ComposedMark() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.7 }}
-        className="absolute bottom-0 end-0 w-[70%] aspect-square rounded-[22px] overflow-hidden studio-card"
+        className="absolute bottom-0 end-0 w-[65%] aspect-square rounded-[20px] overflow-hidden studio-card"
       >
         <CornerLabel text={t("Digital", "المنتجات الرقمية")} tone="light" />
         <DigitalAnimation />
@@ -190,7 +190,7 @@ function ComposedMark() {
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: 1.0, type: "spring" }}
-        className="absolute top-[46%] start-[46%] w-3 h-3 rotate-45 bg-brand-green shadow-[0_6px_16px_-4px_rgba(60,255,197,0.7)] z-20"
+        className="absolute top-[47%] start-[47%] w-2.5 h-2.5 rotate-45 bg-brand-green shadow-[0_6px_14px_-4px_rgba(60,255,197,0.7)] z-20"
         aria-hidden="true"
       />
     </div>
