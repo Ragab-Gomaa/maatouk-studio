@@ -13,12 +13,6 @@ import Button from "@/components/ui/Button";
 export default function Hero() {
   const { t, locale } = useTranslation();
 
-  const stats = [
-    { value: "03", label: { en: "Disciplines", ar: "تخصصات" } },
-    { value: "AR·EN", label: { en: "Bilingual", ar: "ثنائي اللغة" } },
-    { value: "01", label: { en: "Studio team", ar: "فريق واحد" } },
-  ];
-
   return (
     <section className="relative overflow-hidden bg-surface pt-28 md:pt-36 lg:pt-40 pb-20 md:pb-24">
       {/* Ambient color glows */}
@@ -35,21 +29,21 @@ export default function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] gap-12 lg:gap-20 items-center">
           {/* ── Left: type block ── */}
           <div>
-            {/* Announcement pill */}
+            {/* Status pill — symmetric, single message */}
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2.5 pl-2 pr-4 py-1.5 bg-surface-raised border border-black/[0.06] rounded-full shadow-sm mb-8"
+              className="inline-flex items-center gap-2.5 px-4 py-2 bg-surface-raised border border-black/[0.06] rounded-full shadow-sm mb-8"
             >
-              <span className="inline-flex items-center gap-1.5 pl-2 pr-2.5 py-1 bg-brand-blue rounded-full text-white text-[10px] uppercase tracking-[0.15em] font-semibold">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-green" aria-hidden="true" />
-                {t("Studio", "استوديو")}
+              <span className="relative flex w-2 h-2" aria-hidden="true">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-brand-green opacity-50 animate-ping" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-green" />
               </span>
-              <span className="text-[12px] text-ink-muted font-medium">
+              <span className="text-[12px] text-ink-muted font-medium tracking-[-0.01em]">
                 {t(
-                  "Branding · Motion · Digital",
-                  "هوية · حركة · رقمي"
+                  "Now accepting new projects — 2026",
+                  "نستقبل مشاريع جديدة — ٢٠٢٦"
                 )}
               </span>
             </motion.div>
@@ -95,7 +89,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.25 }}
-              className="flex flex-wrap items-center gap-3 mb-8 md:mb-10"
+              className="flex flex-wrap items-center gap-3"
             >
               <Button href="/contact" variant="primary" size="lg" withArrow>
                 {t("Start a project", "ابدأ مشروعك")}
@@ -104,30 +98,6 @@ export default function Hero() {
                 {t("Explore work", "استكشف أعمالنا")}
               </Button>
             </motion.div>
-
-            {/* Stats — compact inline row tied to the CTAs above */}
-            <motion.dl
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.35 }}
-              className="inline-flex items-center gap-5 md:gap-7 pt-6 md:pt-7 border-t border-black/[0.08] max-w-md"
-            >
-              {stats.map((s, i) => (
-                <div
-                  key={i}
-                  className={`flex items-baseline gap-2 ${
-                    i < stats.length - 1 ? "pe-5 md:pe-7 border-e border-black/[0.08]" : ""
-                  }`}
-                >
-                  <dd className="font-lyon text-base md:text-lg font-bold text-ink">
-                    {s.value}
-                  </dd>
-                  <dt className="text-[10px] uppercase tracking-[0.15em] font-medium text-ink-whisper">
-                    {t(s.label.en, s.label.ar)}
-                  </dt>
-                </div>
-              ))}
-            </motion.dl>
           </div>
 
           {/* ── Right: Disciplines Mark (single composed unit) ── */}
