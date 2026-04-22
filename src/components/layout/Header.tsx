@@ -83,8 +83,8 @@ export default function Header() {
               </span>
             </Link>
 
-            {/* ── Desktop nav — simple color shift ── */}
-            <div className="hidden lg:flex items-center gap-8">
+            {/* ── Desktop nav — pill hover + sliding active indicator ── */}
+            <div className="hidden lg:flex items-center gap-1 relative">
               {navLinks.map((link) => {
                 const active = isActive(link.href);
                 return (
@@ -92,13 +92,20 @@ export default function Header() {
                     key={link.href}
                     href={link.href}
                     aria-current={active ? "page" : undefined}
-                    className={`relative py-1 text-[14px] transition-colors duration-300 focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-4 rounded-sm ${
+                    className={`relative px-4 py-2 rounded-full text-[14px] font-medium transition-colors duration-300 focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2 ${
                       active
-                        ? "text-ink font-semibold"
-                        : "text-ink-whisper hover:text-ink font-medium"
+                        ? "text-white"
+                        : "text-ink-muted hover:text-ink hover:bg-black/[0.04]"
                     }`}
                   >
-                    {t(link.label.en, link.label.ar)}
+                    {active && (
+                      <motion.span
+                        layoutId="nav-pill"
+                        className="absolute inset-0 bg-ink rounded-full -z-10"
+                        transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                      />
+                    )}
+                    <span className="relative">{t(link.label.en, link.label.ar)}</span>
                   </Link>
                 );
               })}
