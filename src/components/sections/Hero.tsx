@@ -13,9 +13,9 @@ export default function Hero() {
   const { t, locale } = useTranslation();
 
   const features: { value: string; label: { en: string; ar: string } }[] = [
-    { value: "24h", label: { en: "Response time", ar: "وقت الاستجابة" } },
-    { value: t("In-house", "داخلي"), label: { en: "End-to-end delivery", ar: "تسليم شامل" } },
-    { value: "AR · EN", label: { en: "First-class bilingual", ar: "ثنائي اللغة" } },
+    { value: "10+", label: { en: "Clients served", ar: "عميل" } },
+    { value: "15+", label: { en: "Projects delivered", ar: "مشروع مُسلَّم" } },
+    { value: "3+", label: { en: "Years of craft", ar: "سنوات من الحرفية" } },
   ];
 
   return (
