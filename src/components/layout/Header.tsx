@@ -123,19 +123,19 @@ export default function Header() {
 
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
-                className="lg:hidden w-10 h-10 rounded-full flex items-center justify-center border border-black/[0.08] hover:border-brand-blue/40 transition-colors focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2"
+                className="lg:hidden flex items-center justify-center w-7 h-7 rounded-sm focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2"
                 aria-label={menuOpen ? t("Close menu", "إغلاق") : t("Open menu", "فتح القائمة")}
                 aria-expanded={menuOpen}
                 aria-controls="mobile-menu"
               >
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-[5px]">
                   <motion.span
-                    animate={menuOpen ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }}
-                    className="w-4 h-0.5 bg-ink block rounded-full"
+                    animate={menuOpen ? { rotate: 45, y: 3.5 } : { rotate: 0, y: 0 }}
+                    className="w-5 h-[2px] bg-ink block rounded-full"
                   />
                   <motion.span
-                    animate={menuOpen ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }}
-                    className="w-4 h-0.5 bg-ink block rounded-full"
+                    animate={menuOpen ? { rotate: -45, y: -3.5 } : { rotate: 0, y: 0 }}
+                    className="w-5 h-[2px] bg-ink block rounded-full"
                   />
                 </div>
               </button>
@@ -186,14 +186,6 @@ export default function Header() {
                 <Button href="/contact" variant="primary" size="lg" withArrow onClick={() => setMenuOpen(false)}>
                   {t("Start a project", "ابدأ مشروعك")}
                 </Button>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.55 }}
-                className="mt-6"
-              >
-                <LanguageSwitch locale={locale} onToggle={toggleLocale} />
               </motion.div>
             </nav>
           </motion.div>
