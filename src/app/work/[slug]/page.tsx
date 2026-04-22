@@ -180,8 +180,8 @@ export default function CaseStudyPage() {
         </div>
       </section>
 
-      {/* ─── Challenge & Approach ─── */}
-      {(project.challenge || project.approach) && (
+      {/* ─── Challenge, Approach, Outcome ─── */}
+      {(project.challenge || project.approach || project.outcome) && (
         <section className="py-20 md:py-28 bg-white">
           <div className="max-w-[1440px] mx-auto px-6 sm:px-8 md:px-12 lg:px-20 space-y-20 md:space-y-24">
             {project.challenge && (
@@ -202,6 +202,16 @@ export default function CaseStudyPage() {
                   ar: "كيف حللناه.",
                 }}
                 body={project.approach}
+              />
+            )}
+            {project.outcome && (
+              <NarrativeBlock
+                label={t("The Outcome", "النتيجة")}
+                heading={{
+                  en: "What shipped.",
+                  ar: "ما الذي تم إطلاقه.",
+                }}
+                body={project.outcome}
               />
             )}
           </div>

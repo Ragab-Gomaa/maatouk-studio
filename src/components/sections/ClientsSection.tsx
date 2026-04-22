@@ -5,19 +5,18 @@ import { useTranslation } from "@/lib/LocaleContext";
 
 type Client = {
   name: string;
-  en: string;
-  ar: string;
+  nameAr: string;
+  logo: string;
+  /** ratio = width / height of the logo artwork (used to keep display sizes balanced) */
+  ratio: number;
 };
 
 const clients: Client[] = [
-  { name: "Dolcebello", en: "Dolcebello", ar: "دولشي بيلو" },
-  { name: "Nobles Catering", en: "Nobles Catering", ar: "نوبلز كاترينج" },
-  { name: "Meezan", en: "Meezan", ar: "ميزان" },
-  { name: "Royal Catering", en: "Royal Catering", ar: "رويال كاترينج" },
-  { name: "Sandah", en: "Sandah", ar: "صنده" },
-  { name: "Forkpos", en: "Forkpos", ar: "فوركبوس" },
-  { name: "Blankos KSA", en: "Blankos KSA", ar: "بلانكوس" },
-  { name: "Class Ride", en: "Class Ride", ar: "كلاس رايد" },
+  { name: "Dolcebello", nameAr: "دولشي بيلو", logo: "/images/logos/clients/dolcebello.svg", ratio: 820 / 270 },
+  { name: "Nobles Catering", nameAr: "نوبلز كاترينج", logo: "/images/logos/clients/nobles-catering.svg", ratio: 1080 / 387 },
+  { name: "Royal Catering", nameAr: "رويال كاترينج", logo: "/images/logos/clients/royal-catering.svg", ratio: 1 },
+  { name: "Forkpos", nameAr: "فوركبوس", logo: "/images/logos/clients/forkpos.svg", ratio: 113 / 36 },
+  { name: "Meezan", nameAr: "ميزان", logo: "/images/logos/clients/meezan.svg", ratio: 1 },
 ];
 
 export default function ClientsSection() {
@@ -34,36 +33,58 @@ export default function ClientsSection() {
             </span>
           </div>
           <span className="h-px flex-1 bg-black/10" />
-          <span className="text-[11px] text-black/40 uppercase tracking-[0.15em] font-medium">
-            {t(`${clients.length}+ brands`, `${clients.length}+ علامة`)}
+          <span className="text-[11px] text-black/40 uppercase tracking-[0.15em] font-medium hidden sm:inline">
+            {t("Trusted by", "موثوق من")}
           </span>
         </div>
 
-        <motion.div
+        <motion.ul
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           variants={{
             hidden: {},
-            visible: { transition: { staggerChildren: 0.05 } },
+            visible: { transition: { staggerChildren: 0.08 } },
           }}
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-px bg-black/[0.06]"
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-px bg-black/[0.06] border border-black/[0.06]"
         >
-          {clients.map((c) => (
-            <motion.div
-              key={c.name}
-              variants={{
-                hidden: { opacity: 0, y: 10 },
-                visible: { opacity: 1, y: 0 },
-              }}
-              className="group relative bg-surface flex items-center justify-center h-20 md:h-24 transition-colors hover:bg-white"
-            >
-              <span className="font-lyon text-base md:text-lg font-bold tracking-tight text-black/50 group-hover:text-brand-blue transition-colors duration-300">
-                {t(c.en, c.ar)}
-              </span>
-            </motion.div>
-          ))}
-        </motion.div>
+          {clients.map((c) => {
+            // Aspect-based width cap: taller logos render smaller horizontally.
+            const maxWidthClass =
+              c.ratio > 2.5 ? "max-w-[170px]" : c.ratio > 1.3 ? "max-w-[140px]" : "max-w-[70px]";
+            return (
+              <motion.li
+                key={c.name}
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                className="group relative bg-surface flex items-center justify-center h-24 md:h-28 transition-colors hover:bg-white px-4"
+                aria-label={t(c.name, c.nameAr)}
+              >
+                {/* Grayscale base logo */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={c.logo}
+                  alt={`${c.name} logo`}
+                  className={`w-full ${maxWidthClass} h-10 md:h-12 object-contain transition-[filter,opacity,transform] duration-500 group-hover:scale-[1.03] group-hover:opacity-0`}
+                  style={{ filter: "grayscale(1) opacity(0.55)" }}
+                  loading="lazy"
+                />
+
+                {/* Colored hover logo */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={c.logo}
+                  alt=""
+                  aria-hidden="true"
+                  className={`absolute w-full ${maxWidthClass} h-10 md:h-12 object-contain opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none px-4`}
+                  loading="lazy"
+                />
+              </motion.li>
+            );
+          })}
+        </motion.ul>
       </div>
     </section>
   );

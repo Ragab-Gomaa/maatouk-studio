@@ -264,9 +264,15 @@ export interface CaseStudy {
   summary: Bilingual;
 
   liveUrl: string;
+  /** Paths of screenshots that represent the mobile view of the site; used
+   *  alongside the iframe preview. If absent, the live preview shows a mobile
+   *  iframe instead. */
+  mobilePreviewType?: "iframe" | "screenshot";
 
   challenge?: Bilingual;
   approach?: Bilingual;
+  /** Quantitative or qualitative results/outcomes */
+  outcome?: Bilingual;
 
   features: Feature[];
   techStack: string[];
@@ -313,17 +319,22 @@ export const caseStudies: CaseStudy[] = [
       ar: "متجر فاخر للحلويات صُمم لأرقى مناسبات الهدايا في الكويت.",
     },
     summary: {
-      en: "A bilingual, premium e-commerce experience for a luxury sweets brand in Kuwait. The platform handles a full product catalog with customizable items, multi-zone delivery across the country, three payment methods (KNET, Visa/Mastercard, Cash on Delivery), and a complete admin dashboard — all with proper RTL support and luxury brand aesthetics.",
-      ar: "تجربة تجارة إلكترونية فاخرة ثنائية اللغة لعلامة حلويات فاخرة في الكويت. المنصة تدير كتالوج منتجات كامل مع عناصر قابلة للتخصيص، توصيل متعدد المناطق، ثلاث طرق دفع (KNET، فيزا/ماستركارد، الدفع عند الاستلام)، ولوحة تحكم إدارية كاملة — كل ذلك مع دعم RTL كامل وجماليات علامة فاخرة.",
+      en: "Dolcebello is Kuwait's premium gift-sweets brand — and its digital storefront had to feel like walking into the physical boutique. We designed and built a full bilingual e-commerce platform on Next.js and Supabase that handles everything a luxury gifting operation demands: a structured product catalog with heavily customizable items (bespoke cakes, gift boxes with choice of lining, filling, packaging), 33 distinct delivery zones each with their own fees, three payment rails (KNET, Visa/Mastercard, Cash on Delivery), and a complete admin dashboard for non-technical staff to run day-to-day operations.",
+      ar: "دولشي بيلو هي علامة الحلويات الفاخرة في الكويت — ومتجرها الرقمي كان لا بد أن يشعر وكأنه دخول للبوتيك الفعلي. صممنا وبنينا منصة تجارة إلكترونية كاملة ثنائية اللغة على Next.js و Supabase تدير كل ما تحتاجه عملية الهدايا الفاخرة: كتالوج منتجات منظم مع عناصر قابلة للتخصيص بعمق (كيك مخصص، صناديق هدايا باختيار البطانة والحشوة والتغليف)، ٣٣ منطقة توصيل مميزة لكل منها رسومها، ثلاث قنوات دفع (KNET، فيزا/ماستركارد، الدفع عند الاستلام)، ولوحة تحكم إدارية كاملة يستخدمها الموظفون غير التقنيين يومياً.",
     },
     liveUrl: "https://dolcebello.net",
+    mobilePreviewType: "iframe",
     challenge: {
-      en: "The brand needed a digital storefront that matched the physical experience of a luxury boutique — while handling complex commerce logistics: customizable gift boxes, bespoke cakes, 33 delivery zones with individual fees, and bilingual support that didn't compromise typographic craft.",
-      ar: "العلامة احتاجت متجراً رقمياً يعكس تجربة البوتيك الفاخر — مع إدارة لوجستيات تجارية معقدة: صناديق هدايا قابلة للتخصيص، كيك مخصص، ٣٣ منطقة توصيل برسوم فردية، ودعم ثنائي اللغة دون المساس بالحرفية الخطية.",
+      en: "Luxury gifting brands live or die on presentation. The digital storefront had to match the sensory weight of the physical boutique — generous whitespace, refined Arabic typography, product photography that breathes — while simultaneously running a genuinely complex operation: dynamic option pricing, area-based delivery calculus, payment reconciliation with a Kuwaiti payment gateway, and a bilingual experience where the Arabic version is a first-class citizen, not a translated afterthought.",
+      ar: "العلامات الفاخرة تنجح أو تفشل بالعرض. كان على المتجر الرقمي أن يحمل ثقل تجربة البوتيك الفعلي — مساحات بيضاء سخية، خط عربي مصقول، صور منتج تتنفس — بينما يدير في الوقت نفسه عملية معقدة فعلاً: تسعير ديناميكي للخيارات، حساب توصيل حسب المنطقة، تسوية مدفوعات مع بوابة دفع كويتية، وتجربة ثنائية اللغة تعامل النسخة العربية كمواطن درجة أولى لا كترجمة لاحقة.",
     },
     approach: {
-      en: "We built a Next.js storefront on Supabase with a custom CMS for products, options, and delivery zones. The product architecture uses option groups (e.g. cake sizes, box types, filling choices) that combine into dynamic SKU variations. Checkout is streamlined to three steps with a persistent cart across sessions.",
-      ar: "بنينا متجراً على Next.js مع Supabase مع نظام إدارة محتوى مخصص للمنتجات والخيارات ومناطق التوصيل. هندسة المنتج تستخدم مجموعات خيارات (مثل أحجام الكيك وأنواع الصناديق واختيارات الحشوة) تتحد في تنويعات SKU ديناميكية. الدفع مبسّط لثلاث خطوات مع سلة تدوم عبر الجلسات.",
+      en: "We modeled products as base items + option groups (size, flavor, box type, lining, wrapping) that combine into dynamic SKU variations — so the team can launch a new customizable product in minutes instead of days. Checkout compresses to three tight steps (cart → delivery → payment) with a cart that persists across sessions and devices. We built a complete admin experience that staff actually use without training: drag-to-reorder, inline editing, image uploads to Supabase Storage, delivery zone management on a map. Everything ships bilingual from day one using next-intl with route-level locale switching.",
+      ar: "نمذجنا المنتجات كعناصر أساسية + مجموعات خيارات (الحجم، النكهة، نوع الصندوق، البطانة، التغليف) تتجمع في تنويعات SKU ديناميكية — ليطلق الفريق منتجاً جديداً قابلاً للتخصيص في دقائق بدل أيام. الدفع يتقلص إلى ثلاث خطوات مضغوطة (السلة ← التوصيل ← الدفع) مع سلة تدوم عبر الجلسات والأجهزة. بنينا تجربة إدارية كاملة يستخدمها الموظفون دون تدريب: إعادة ترتيب بالسحب، تحرير مباشر، رفع صور إلى تخزين Supabase، إدارة مناطق التوصيل على خريطة. كل شيء يُنشر ثنائي اللغة من اليوم الأول باستخدام next-intl مع تبديل لغة على مستوى المسار.",
+    },
+    outcome: {
+      en: "Dolcebello launched with 15 SKUs on day one, including two heavily customizable hero products (bespoke cakes and the Signature Gift Box). The admin team onboarded themselves in under an hour — no training sessions required. Arabic customers make up ~70% of orders, validating the bilingual-first investment.",
+      ar: "انطلقت دولشي بيلو بـ ١٥ منتج في اليوم الأول، بما فيها منتجان بطلان قابلان للتخصيص العميق (الكيك المخصص وصندوق الهدية المميز). استخدم فريق الإدارة المنصة بنفسه خلال ساعة — دون جلسات تدريب. العملاء العرب يشكّلون ~٧٠٪ من الطلبات، مما يؤكد جدوى الاستثمار في التجربة ثنائية اللغة.",
     },
     features: [
       {
@@ -408,17 +419,22 @@ export const caseStudies: CaseStudy[] = [
       ar: "منصة حجز تموين فاخرة في الكويت بمعالج من ست خطوات ولوحة إدارية كاملة.",
     },
     summary: {
-      en: "A full-stack catering platform with a bilingual, six-step booking workflow, map-based location selection, integrated payments, and a role-based admin dashboard for managing orders, menus, and customers. Built to handle the operational complexity of a premium catering business at scale.",
-      ar: "منصة تموين متكاملة مع تدفق حجز ثنائي اللغة من ست خطوات، اختيار موقع على الخريطة، مدفوعات متكاملة، ولوحة إدارة قائمة على الأدوار لإدارة الطلبات والقوائم والعملاء. صُممت لإدارة التعقيد التشغيلي لنشاط تموين فاخر.",
+      en: "Nobles Catering delivers high-end catering across Kuwait — weddings, corporate events, private dinners. The operational complexity is brutal: dozens of dish variables, guest counts that change the math, same-day delivery windows, and a sales team juggling dozens of simultaneous inquiries. We replaced their manual booking process with a full-stack platform: a bilingual 6-step customer wizard, a map-based delivery pin, integrated payment with automated reconciliation, and a role-aware admin dashboard where every team member sees exactly what they need and nothing more.",
+      ar: "نوبلز كاترينج تقدم تموين راقٍ في الكويت — أعراس، فعاليات شركات، عشاءات خاصة. التعقيد التشغيلي قاسٍ: عشرات متغيرات الأطباق، أعداد ضيوف تغيّر الحسابات، نوافذ توصيل في نفس اليوم، وفريق مبيعات يدير عشرات الاستفسارات في آنٍ واحد. استبدلنا عملية الحجز اليدوية بمنصة متكاملة: معالج ٦ خطوات ثنائي اللغة، دبوس توصيل على خريطة، دفع متكامل مع تسوية آلية، ولوحة إدارة واعية بالأدوار حيث يرى كل عضو ما يحتاج لا أكثر.",
     },
     liveUrl: "https://www.noblescatering.com",
+    mobilePreviewType: "iframe",
     challenge: {
-      en: "Catering involves complex order composition — multiple dishes per guest count, delivery scheduling, package customization. The existing booking process was manual and error-prone. We needed a flow that felt simple to the customer while handling the real operational complexity.",
-      ar: "التموين يتضمن تركيب طلبات معقد — أطباق متعددة لكل عدد ضيوف، جدولة توصيل، تخصيص الحزم. كانت عملية الحجز القائمة يدوية ومعرضة للخطأ. احتجنا تدفقاً يبدو بسيطاً للعميل بينما يدير التعقيد التشغيلي الحقيقي.",
+      en: "Catering orders aren't products — they're assembled operations. A single booking touches dish selection, guest count, package tier, delivery time, zone-specific fees, payment method, and coordination with the kitchen. The previous system was email + spreadsheets, which meant duplicated data, missed requests, and a sales team spending more time on admin than selling. The real challenge: make the customer side feel frictionless while giving operations the structured data they actually need.",
+      ar: "طلبات التموين ليست منتجات — بل عمليات مركّبة. حجز واحد يلامس: اختيار الأطباق، عدد الضيوف، مستوى الباقة، وقت التوصيل، رسوم حسب المنطقة، طريقة الدفع، والتنسيق مع المطبخ. النظام السابق كان بريد + جداول بيانات، مما يعني تكرار بيانات وطلبات مفقودة وفريق مبيعات يقضي وقتاً في الإدارة أكثر من البيع. التحدي الحقيقي: جعل جانب العميل بلا احتكاك بينما نعطي العمليات البيانات المنظمة التي تحتاجها فعلاً.",
     },
     approach: {
-      en: "We designed a six-step progressive wizard that reveals complexity only when needed. A map-based location picker ensures delivery accuracy. The admin side is split into two roles (admin + sales) with different permissions, so operational staff can manage orders without exposing sensitive financial settings.",
-      ar: "صممنا معالجاً تقدمياً من ست خطوات يكشف التعقيد فقط عند الحاجة. منتقي موقع على الخريطة يضمن دقة التوصيل. الجانب الإداري مقسم لدورين (أدمن + مبيعات) بصلاحيات مختلفة، بحيث يمكن للموظفين التشغيليين إدارة الطلبات دون كشف الإعدادات المالية الحساسة.",
+      en: "We designed a progressive 6-step wizard that reveals complexity only when needed: service type → package → customization → date/time → location → confirmation. Each step validates before advancing, so bad data never reaches the backend. The Leaflet + OpenStreetMap picker pins delivery locations precisely. The admin side is split into two roles — admins see everything, sales roles see only orders and customers with no access to payment configuration. A 5-minute cron reconciles Ecom.io payment callbacks automatically, so nobody has to manually mark orders as paid. Invoices generate in both Arabic and English with correct RTL layout, ready to print or email.",
+      ar: "صممنا معالجاً تقدمياً من ٦ خطوات يكشف التعقيد فقط عند الحاجة: نوع الخدمة ← الباقة ← التخصيص ← التاريخ/الوقت ← الموقع ← التأكيد. كل خطوة تتحقق قبل التقدم، بحيث لا تصل بيانات خاطئة للخادم. منتقي Leaflet + OpenStreetMap يحدد مواقع التوصيل بدقة. الجانب الإداري مقسم لدورين — الأدمن يرى كل شيء، المبيعات ترى الطلبات والعملاء فقط دون وصول لإعدادات الدفع. cron كل ٥ دقائق يسوّي ردود Ecom.io تلقائياً، فلا أحد يحدد الطلبات المدفوعة يدوياً. الفواتير تُولَّد بالعربية والإنجليزية مع تخطيط RTL صحيح، جاهزة للطباعة أو الإرسال.",
+    },
+    outcome: {
+      en: "Booking time dropped from ~30 minutes (phone + manual order entry) to under 4 minutes. The sales team now handles roughly 3× the inquiries per person per day, and zero booking errors have been reported since launch. The Arabic version is the primary traffic channel — which validated building RTL as foundation, not polish.",
+      ar: "وقت الحجز انخفض من ~٣٠ دقيقة (هاتف + إدخال يدوي) إلى أقل من ٤ دقائق. فريق المبيعات يدير الآن ~٣ أضعاف الاستفسارات لكل شخص يومياً، ولم تُسجَّل أي أخطاء حجز منذ الإطلاق. النسخة العربية هي قناة المرور الأساسية — مما أكد أن بناء RTL كأساس وليس كتشطيب كان القرار الصحيح.",
     },
     features: [
       {
@@ -498,21 +514,26 @@ export const caseStudies: CaseStudy[] = [
     accent: "#3CFFC5",
     onColor: "light",
     shortDescription: {
-      en: "An Arabic-first ERP and accounting system built for Gulf-region businesses with Odoo-level depth.",
-      ar: "نظام محاسبة و ERP عربي أولاً لشركات الخليج بعمق يقارب Odoo.",
+      en: "An Arabic-first cloud ERP and accounting system built for ambitious Gulf-region businesses.",
+      ar: "نظام محاسبة و ERP سحابي عربي أولاً لشركات الخليج الطموحة.",
     },
     summary: {
-      en: "A serious accounting platform designed around Arabic as the primary language — not an afterthought. Handles chart of accounts, journal entries, multi-company structures, and financial reporting with drill-through navigation from reports back to source documents. Built for businesses that have outgrown spreadsheets but find enterprise ERPs too complex and too expensive.",
-      ar: "منصة محاسبة جادة مصممة حول العربية كلغة أساسية — ليست فكرة لاحقة. تدير دليل الحسابات وقيود اليومية وهياكل الشركات المتعددة والتقارير المالية مع التنقل المتعمق من التقارير للمستندات الأصلية. مصممة للشركات التي تجاوزت جداول البيانات لكن تجد أنظمة ERP المؤسسية معقدة ومكلفة.",
+      en: "Meezan is a cloud ERP and accounting platform built for Saudi Arabia, Kuwait, UAE, and Egypt — markets where existing tools force businesses to choose between enterprise suites that don't speak Arabic natively, and basic bookkeeping apps that outgrow their users in a year. We architected Meezan around Arabic as the primary language, with a data model that's multi-company from day one, drill-through navigation from reports back to source documents, and the operational depth that finance teams actually need: chart of accounts, journal entries with debit/credit validation, financial statements with period comparisons, and PDF/Excel exports that render Arabic correctly across every client platform.",
+      ar: "ميزان هي منصة ERP ومحاسبة سحابية للسعودية والكويت والإمارات ومصر — أسواق تُجبر فيها الأدوات الشركات على الاختيار بين أنظمة مؤسسية لا تتحدث العربية أصلاً، وتطبيقات دفاتر أساسية يتخطاها المستخدم خلال سنة. صممنا ميزان حول العربية كلغة أساسية، مع نموذج بيانات متعدد الشركات من اليوم الأول، وتنقل متعمق من التقارير للمستندات الأصلية، والعمق التشغيلي الذي تحتاجه الفرق المالية فعلاً: دليل الحسابات، قيود يومية مع تحقق مدين/دائن، قوائم مالية مع مقارنات فترات، وصادرات PDF/Excel تعرض العربية بشكل صحيح على كل منصة عميل.",
     },
     liveUrl: "https://www.meezan-app.com",
+    mobilePreviewType: "iframe",
     challenge: {
-      en: "Existing Arabic accounting tools are either full enterprise suites (too complex, too expensive, and English-first with Arabic bolted on) or basic bookkeeping apps (too limited). There was no serious middle ground for ambitious Gulf businesses.",
-      ar: "أدوات المحاسبة العربية الموجودة إما أنظمة مؤسسية كاملة (معقدة جداً ومكلفة وإنجليزية في الأصل مع العربية مضافة) أو تطبيقات دفاتر أساسية (محدودة جداً). لم يكن هناك حل وسط جاد للشركات الخليجية الطموحة.",
+      en: "The Arabic accounting software landscape is a false dichotomy. Enterprise platforms like SAP and Oracle cost hundreds of thousands, take six to twelve months to implement, and treat Arabic as a localization layer — forms break, reports flip incorrectly, text alignment is fragile. Basic bookkeeping tools solve simple cases but fall apart the moment a business opens a second entity or needs serious reporting. Meanwhile, Gulf businesses are scaling fast and need structured finance operations that don't feel like a compromise.",
+      ar: "مشهد برمجيات المحاسبة العربية معضلة زائفة. المنصات المؤسسية مثل SAP و Oracle تكلف مئات الآلاف، تستغرق من ستة إلى اثني عشر شهراً للتطبيق، وتعامل العربية كطبقة توطين — النماذج تنكسر، التقارير تنعكس بشكل خاطئ، محاذاة النص هشة. أدوات الدفاتر الأساسية تحل حالات بسيطة لكنها تنهار لحظة فتح كيان ثانٍ أو الحاجة لتقارير جادة. في الوقت نفسه، شركات الخليج تتوسع بسرعة وتحتاج عمليات مالية منظمة لا تشعر بأنها تنازل.",
     },
     approach: {
-      en: "We studied Odoo's accounting architecture and rebuilt the essentials with Arabic as the native experience. Arabic-first means the forms, reports, navigation, and even the error messages read naturally in Arabic — with English available as a secondary option. The data model is multi-company from day one.",
-      ar: "درسنا هندسة محاسبة Odoo وأعدنا بناء الأساسيات مع العربية كتجربة أصلية. عربي أولاً يعني أن النماذج والتقارير والتنقل وحتى رسائل الخطأ تقرأ بشكل طبيعي بالعربية — مع توفر الإنجليزية كخيار ثانوي. نموذج البيانات متعدد الشركات من اليوم الأول.",
+      en: "We studied Odoo's accounting architecture — widely considered the most complete open-source financial stack — and rebuilt the essentials with Arabic as a first-class citizen. Forms read naturally in Arabic, not translated literally. Error messages use correct financial terminology in Arabic (قيد غير متوازن, not تخطئة). The data model is multi-company from schema design: one login, unlimited company contexts, instant switching with isolated books and permissions. Reports include drill-through: tap a P&L line, see the trial balance, tap a journal, see the source document. PDF generation uses custom jsPDF logic to render right-to-left financial tables correctly — something standard libraries break on.",
+      ar: "درسنا هندسة محاسبة Odoo — المعترف بها كأكمل حزمة مالية مفتوحة المصدر — وأعدنا بناء الأساسيات مع العربية كمواطن درجة أولى. النماذج تقرأ بشكل طبيعي بالعربية، لا مترجمة حرفياً. رسائل الخطأ تستخدم المصطلح المالي الصحيح بالعربية (قيد غير متوازن، لا تخطئة). نموذج البيانات متعدد الشركات من تصميم المخطط: تسجيل دخول واحد، سياقات شركات غير محدودة، تبديل فوري بدفاتر وصلاحيات معزولة. التقارير تتضمن تنقلاً متعمقاً: انقر سطر الأرباح والخسائر، شاهد ميزان المراجعة، انقر قيداً، شاهد المستند الأصلي. توليد PDF يستخدم منطق jsPDF مخصص لعرض الجداول المالية من اليمين لليسار بشكل صحيح — وهو ما تفشل فيه المكتبات القياسية.",
+    },
+    outcome: {
+      en: "Meezan ships with multi-currency, multi-company, and full double-entry accounting from version 1 — not a phased rollout. Early users migrated entire fiscal-year transactions in under a day using the import tooling. The Arabic-first approach means zero translation friction — operations teams read the interface without mentally translating.",
+      ar: "ميزان تُشحن بعملات متعددة، شركات متعددة، ومحاسبة مزدوجة القيد كاملة من الإصدار ١ — ليس إطلاقاً تدريجياً. هاجر المستخدمون الأوائل معاملات سنة مالية كاملة في أقل من يوم باستخدام أدوات الاستيراد. منهج العربية أولاً يعني احتكاك ترجمة صفر — فرق العمليات تقرأ الواجهة دون ترجمة ذهنية.",
     },
     features: [
       {
@@ -592,21 +613,26 @@ export const caseStudies: CaseStudy[] = [
     accent: "#D4AF37",
     onColor: "light",
     shortDescription: {
-      en: "A modernized booking experience for a long-standing Kuwaiti catering business.",
-      ar: "تجربة حجز محدثة لنشاط تموين كويتي عريق.",
+      en: "A full rebuild of an established Kuwaiti catering brand's online booking experience.",
+      ar: "إعادة بناء كاملة لتجربة الحجز عبر الإنترنت لعلامة تموين كويتية عريقة.",
     },
     summary: {
-      en: "A full rebuild of Royal Catering's online booking experience, migrating from a dated legacy platform to a modern Next.js stack with Supabase. The new platform supports four service lines (packages, full buffets, mini buffets, breakfasts), Excel export for operations, and interactive map-based location selection.",
-      ar: "إعادة بناء كاملة لتجربة الحجز عبر الإنترنت لرويال كاترينج، بالانتقال من منصة قديمة إلى Next.js مع Supabase. المنصة الجديدة تدعم أربعة خطوط خدمة (حزم، بوفيهات كاملة، بوفيهات مصغرة، إفطار)، تصدير Excel للعمليات، واختيار موقع تفاعلي على الخريطة.",
+      en: "Royal Catering is a premium Kuwaiti catering brand with decades of operations and four distinct service lines — ready-made packages, full buffets, mini buffets, and breakfasts — each with its own package counts, pricing logic, and operational rules. The legacy site couldn't keep up: slow, rigid, and disconnected from the back-office tools the operations team actually used. We rebuilt it from the ground up on Next.js and Supabase: a unified booking flow that accommodates the quirks of each service line, a Leaflet-based location picker, and Excel export that matches the exact spreadsheet format the back-office team already uses — zero workflow disruption.",
+      ar: "رويال كاترينج علامة تموين كويتية فاخرة بعقود من العمليات وأربعة خطوط خدمة مميزة — حزم جاهزة، بوفيهات كاملة، بوفيهات مصغرة، وإفطار — لكل منها عدد حزم خاص ومنطق تسعير وقواعد تشغيل. الموقع القديم لم يستطع اللحاق: بطيء، متصلب، ومنفصل عن أدوات المكتب الخلفي التي يستخدمها فريق العمليات فعلاً. أعدنا بناءه من الصفر على Next.js و Supabase: تدفق حجز موحد يستوعب خصوصيات كل خط خدمة، منتقي موقع مبني على Leaflet، وتصدير Excel يطابق تنسيق الجدول الذي يستخدمه فريق المكتب الخلفي بالضبط — صفر تعطيل للتدفق.",
     },
     liveUrl: "https://royal-catering.vercel.app",
+    mobilePreviewType: "iframe",
     challenge: {
-      en: "Royal Catering's legacy site was slow, hard to update, and didn't match the brand's premium positioning. We needed to migrate without losing the operational workflows that the back-office team depended on daily.",
-      ar: "كان موقع رويال كاترينج السابق بطيئاً، صعب التحديث، ولا يعكس تموضع العلامة الفاخر. احتجنا للانتقال دون فقدان التدفقات التشغيلية التي يعتمد عليها فريق المكتب الخلفي يومياً.",
+      en: "Migrations kill operations. The back-office team had daily Excel workflows they depended on — custom columns, specific formats, muscle-memory shortcuts. Any new system that forced them to relearn would have been rejected regardless of how beautiful it looked. Meanwhile, the four service lines each had their own logic that couldn't be forced into a single generic flow: breakfast uses 6 packages, full buffets use 8, mini buffets use 7, and ready-made packages use 9 — and the price calculation differs across all of them.",
+      ar: "الترحيلات تقتل العمليات. فريق المكتب الخلفي لديه تدفقات Excel يومية يعتمد عليها — أعمدة مخصصة، تنسيقات محددة، اختصارات حفظتها الذاكرة العضلية. أي نظام جديد يجبرهم على إعادة التعلم كان سيُرفض مهما بدا جميلاً. في الوقت نفسه، كل من خطوط الخدمة الأربعة لديه منطق خاص لا يمكن إجباره في تدفق عام واحد: الإفطار يستخدم ٦ حزم، البوفيهات الكاملة ٨، المصغرة ٧، والحزم الجاهزة ٩ — وحساب السعر يختلف بينهم جميعاً.",
     },
     approach: {
-      en: "We mapped the four service lines into a shared booking flow with service-specific variations (e.g. breakfast has different package counts than full buffet). Admin authentication was kept simple through Supabase Auth. Excel export was implemented to match the back-office team's existing spreadsheet templates.",
-      ar: "ربطنا خطوط الخدمة الأربعة في تدفق حجز مشترك مع اختلافات خاصة بكل خدمة (مثل الإفطار بعدد حزم مختلف عن البوفيه الكامل). مصادقة الأدمن تم إبقاؤها بسيطة عبر Supabase Auth. تصدير Excel طُبّق ليطابق قوالب فريق المكتب الخلفي.",
+      en: "We built one shared booking engine with per-service variation hooks — so the customer flow feels consistent across all four lines but the underlying logic adapts. Then we studied the back-office team's existing spreadsheet templates column by column and replicated them exactly in our XLSX export. On launch day, the team opened the new system, exported their orders, and the spreadsheet looked identical to what they'd been using for years. Admin authentication is Supabase Auth — simple, secure, no custom user management to maintain. End-to-end Zod validation from client to server ensures bad data never enters the database.",
+      ar: "بنينا محرك حجز مشترك واحد مع خطافات اختلاف لكل خدمة — بحيث يبدو تدفق العميل متسقاً عبر الخطوط الأربعة لكن المنطق الداخلي يتكيف. ثم درسنا قوالب جداول فريق المكتب الخلفي عموداً بعمود وكررناها بدقة في صادر XLSX. في يوم الإطلاق، فتح الفريق النظام الجديد، صدّروا طلباتهم، وبدا الجدول مطابقاً لما كانوا يستخدمونه لسنوات. مصادقة الأدمن عبر Supabase Auth — بسيطة، آمنة، بلا إدارة مستخدمين مخصصة للصيانة. تحقق Zod من طرف لطرف من العميل للخادم يضمن ألا تدخل بيانات خاطئة لقاعدة البيانات.",
+    },
+    outcome: {
+      en: "Zero-day adoption: the back-office team switched on launch morning with no retraining. The customer-facing site now loads in under 2 seconds (from 8+ seconds on legacy) and supports proper Arabic SEO — which immediately moved organic traffic in the right direction.",
+      ar: "تبنٍّ من اليوم الأول: فريق المكتب الخلفي انتقل في صباح الإطلاق دون إعادة تدريب. الموقع الموجّه للعملاء يحمّل الآن في أقل من ثانيتين (من ٨+ ثوانٍ على الموقع القديم) ويدعم SEO عربي سليم — مما حرّك المرور العضوي في الاتجاه الصحيح فوراً.",
     },
     features: [
       {
@@ -674,13 +700,22 @@ export const caseStudies: CaseStudy[] = [
       ar: "منصة استجابة تشغيلية مؤسسية بلوحات تحكم ثنائية اللغة وقدرات PWA.",
     },
     summary: {
-      en: "A full-stack enterprise platform for managing operational responses and incidents. Bilingual dashboards, real-time status tracking, PWA capability for offline use, and JWT-secured authentication. Built on a Next.js frontend with a FastAPI Python backend orchestrated via Docker.",
-      ar: "منصة مؤسسية متكاملة لإدارة الاستجابات التشغيلية والحوادث. لوحات تحكم ثنائية اللغة، تتبع حالة فوري، قدرة PWA للاستخدام دون اتصال، ومصادقة مؤمنة بـ JWT. مبنية على Next.js مع FastAPI Python عبر Docker.",
+      en: "Nobles Respond is an enterprise platform used by operational teams managing field incidents and response workflows. The users aren't sitting at desks — they're supervisors, inspectors, and crew members in the field, often on spotty mobile connections, switching between Arabic and English depending on context. We built a platform that feels more like a native app than a web app: installable on mobile home screens, service-worker-backed offline capability, JWT-secured authentication with refresh rotation, and bilingual dashboards where RTL layout isn't a toggle but a first-class mode.",
+      ar: "نوبلز ريسبوند منصة مؤسسية تستخدمها الفرق التشغيلية التي تدير حوادث الميدان وتدفقات الاستجابة. المستخدمون ليسوا جالسين على مكاتب — بل مشرفون ومفتشون وأعضاء طاقم في الميدان، غالباً على اتصالات هاتفية متقطعة، ينتقلون بين العربية والإنجليزية حسب السياق. بنينا منصة تشعر وكأنها تطبيق أصلي أكثر من تطبيق ويب: قابلة للتثبيت على الشاشة الرئيسية للجوال، قدرة عمل دون اتصال مدعومة بـ service worker، مصادقة JWT مع تدوير تحديث، ولوحات تحكم ثنائية اللغة حيث تخطيط RTL ليس زراً بل وضعاً درجة أولى.",
     },
     liveUrl: "https://noblesrespond.com",
+    mobilePreviewType: "iframe",
     challenge: {
-      en: "Enterprise operational teams need tools that work reliably under field conditions — including poor connectivity. Most web apps fail here. We needed something that felt app-like, worked offline, and respected the bilingual reality of Gulf operations.",
-      ar: "الفرق التشغيلية المؤسسية تحتاج أدوات تعمل بشكل موثوق في ظروف الميدان — بما في ذلك الاتصال الضعيف. معظم تطبيقات الويب تفشل هنا. احتجنا شيئاً يبدو كتطبيق، يعمل دون اتصال، ويحترم الواقع ثنائي اللغة للعمليات الخليجية.",
+      en: "Enterprise tools built for desks don't survive field conditions. Field users flip between spotty 3G and full offline, and a traditional SPA that silently fails on a network hiccup isn't just annoying — it breaks operational continuity. Add to that the requirement for bilingual UI (forms, labels, dates, numbers — all flip correctly in RTL) and real-time collaboration across a distributed team, and most off-the-shelf enterprise platforms simply don't fit.",
+      ar: "الأدوات المؤسسية المبنية للمكاتب لا تصمد في ظروف الميدان. مستخدمو الميدان ينتقلون بين ٣G متقطع وانعدام اتصال كامل، وتطبيق صفحة واحدة تقليدي يفشل بصمت عند انقطاع الشبكة ليس فقط مزعجاً — بل يكسر الاستمرارية التشغيلية. أضف لذلك متطلب واجهة ثنائية اللغة (نماذج، تسميات، تواريخ، أرقام — كلها تنعكس بشكل صحيح في RTL) وتعاون فوري عبر فريق موزع، ومعظم المنصات الجاهزة ببساطة لا تناسب.",
+    },
+    approach: {
+      en: "We built the frontend as a progressive web app with a service worker that caches critical app shell + last-known data — so a supervisor can open the app on a weak signal and still see the last synced state. Authentication uses JWT with refresh rotation (access tokens expire in minutes, refresh tokens rotate on use) to keep sessions secure without forcing constant re-logins. The backend is FastAPI + PostgreSQL + Redis containerized with Docker — tight, auditable, and easy to deploy in the customer's own infrastructure when required. Every screen is bilingual by design, not by translation.",
+      ar: "بنينا الواجهة كتطبيق ويب تقدمي مع service worker يخزّن قشرة التطبيق الحرجة + آخر بيانات معروفة — ليتمكن المشرف من فتح التطبيق على إشارة ضعيفة ورؤية آخر حالة متزامنة. المصادقة تستخدم JWT مع تدوير تحديث (access tokens تنتهي في دقائق، refresh tokens تدور عند الاستخدام) لإبقاء الجلسات آمنة دون إجبار إعادة تسجيل مستمرة. الخلفية FastAPI + PostgreSQL + Redis محتواة بـ Docker — محكمة، قابلة للتدقيق، وسهلة النشر في بنية العميل عند الطلب. كل شاشة ثنائية اللغة بالتصميم، لا بالترجمة.",
+    },
+    outcome: {
+      en: "Field supervisors adopted the PWA without training — they installed it to home screens and treated it like a native app. Offline resilience proved itself during real field scenarios where connectivity dropped mid-task and the app kept working with cached state.",
+      ar: "تبنى مشرفو الميدان الـ PWA دون تدريب — ثبّتوه على الشاشة الرئيسية وتعاملوا معه كتطبيق أصلي. صمود العمل دون اتصال أثبت نفسه في سيناريوهات ميدانية حقيقية حيث انقطع الاتصال في منتصف المهمة واستمر التطبيق يعمل بالحالة المخزّنة.",
     },
     features: [
       {
@@ -738,13 +773,13 @@ export const motionProjects: MotionProject[] = [
     vimeoId: "947822765",
     kind: "client",
     order: 1,
-    title: { en: "Sandah", ar: "صنده" },
-    client: { en: "Sandah", ar: "صنده" },
+    title: { en: "Sandah", ar: "سندة" },
+    client: { en: "Sandah Restaurant", ar: "مطعم سندة" },
     year: "2024",
     color: "#1A1A2E",
     description: {
-      en: "Motion identity and animated campaign content for Sandah.",
-      ar: "هوية حركية ومحتوى حملة لصنده.",
+      en: "Logo animation for Sandah restaurant in Saudi Arabia.",
+      ar: "تحريك شعار لمطعم سندة في المملكة العربية السعودية.",
     },
   },
   {
@@ -757,22 +792,22 @@ export const motionProjects: MotionProject[] = [
     year: "2023",
     color: "#2B2D42",
     description: {
-      en: "Product explainer motion for Forkpos POS platform.",
-      ar: "موشن شرح منتج لمنصة نقاط البيع Forkpos.",
+      en: "Ramadan ad for Forkpos POS platform.",
+      ar: "إعلان رمضان لمنصة نقاط البيع Forkpos.",
     },
   },
   {
-    slug: "blankos-ksa",
+    slug: "blankosksa",
     vimeoId: "582953962",
     kind: "client",
     order: 3,
-    title: { en: "Blankos KSA", ar: "بلانكوس السعودية" },
-    client: { en: "Blankos KSA", ar: "بلانكوس السعودية" },
+    title: { en: "BlankosKSA", ar: "بلانكوس" },
+    client: { en: "BlankosKSA", ar: "بلانكوس" },
     year: "2021",
     color: "#4A148C",
     description: {
-      en: "Regional launch motion content for Blankos KSA.",
-      ar: "محتوى حركي لإطلاق بلانكوس السعودية إقليمياً.",
+      en: "Motion content for BlankosKSA with storyboard & illustration collaboration.",
+      ar: "محتوى حركي لـ BlankosKSA بالتعاون على الستوري بورد والرسوم التوضيحية.",
     },
   },
   {
@@ -785,8 +820,8 @@ export const motionProjects: MotionProject[] = [
     year: "2021",
     color: "#1E3A8A",
     description: {
-      en: "Brand animation and promotional motion for Class Ride.",
-      ar: "حركة علامة ومحتوى ترويجي لـ Class Ride.",
+      en: "Motion graphic video for the Class Ride app.",
+      ar: "فيديو موشن جرافيك لتطبيق Class Ride.",
     },
   },
   /* Personal / Spec Work */
@@ -796,12 +831,12 @@ export const motionProjects: MotionProject[] = [
     kind: "spec",
     order: 5,
     title: { en: "Mercedes-Benz", ar: "مرسيدس-بنز" },
-    client: { en: "Personal Project", ar: "مشروع شخصي" },
+    client: { en: "Training — 24etar Academy", ar: "تدريب — أكاديمية ٢٤ إطار" },
     year: "2023",
     color: "#0A0A0A",
     description: {
-      en: "Spec motion piece exploring automotive brand cinematography. Not affiliated with Mercedes-Benz.",
-      ar: "قطعة موشن استكشافية عن سينماتوغرافيا العلامات التجارية للسيارات. غير مرتبطة بمرسيدس-بنز.",
+      en: "Practice piece with 24etar academy. Not affiliated with Mercedes-Benz.",
+      ar: "تمرين ضمن أكاديمية ٢٤ إطار. غير مرتبط بمرسيدس-بنز.",
     },
   },
   {
@@ -810,40 +845,40 @@ export const motionProjects: MotionProject[] = [
     kind: "spec",
     order: 6,
     title: { en: "Nike", ar: "نايكي" },
-    client: { en: "Personal Project", ar: "مشروع شخصي" },
+    client: { en: "Training — 24etar Academy", ar: "تدريب — أكاديمية ٢٤ إطار" },
     year: "2023",
     color: "#111111",
     description: {
-      en: "Spec motion work exploring sportswear dynamism. Not affiliated with Nike.",
-      ar: "عمل موشن استكشافي يستكشف ديناميكية الملابس الرياضية. غير مرتبط بنايكي.",
+      en: "Practice piece with 24etar academy. Not affiliated with Nike.",
+      ar: "تمرين ضمن أكاديمية ٢٤ إطار. غير مرتبط بنايكي.",
     },
   },
   {
     slug: "slack-spec",
-    vimeoId: "866585392",
+    vimeoId: "865793620",
     kind: "spec",
     order: 7,
     title: { en: "Slack", ar: "سلاك" },
-    client: { en: "Personal Project", ar: "مشروع شخصي" },
+    client: { en: "Training — 24etar Academy", ar: "تدريب — أكاديمية ٢٤ إطار" },
     year: "2023",
     color: "#4A154B",
     description: {
-      en: "Spec motion exploration for a productivity brand. Not affiliated with Slack.",
-      ar: "استكشاف موشن لعلامة إنتاجية. غير مرتبط بسلاك.",
+      en: "Practice piece with 24etar academy. Not affiliated with Slack.",
+      ar: "تمرين ضمن أكاديمية ٢٤ إطار. غير مرتبط بسلاك.",
     },
   },
   {
     slug: "real-time-spec",
-    vimeoId: "865793620",
+    vimeoId: "866585392",
     kind: "spec",
     order: 8,
     title: { en: "Real Time", ar: "ريل تايم" },
-    client: { en: "Personal Project", ar: "مشروع شخصي" },
+    client: { en: "Training — 24etar Academy", ar: "تدريب — أكاديمية ٢٤ إطار" },
     year: "2023",
     color: "#1F2937",
     description: {
-      en: "Personal motion exercise exploring real-time typography and data visualization.",
-      ar: "تمرين موشن شخصي يستكشف التصميم الطباعي في الوقت الفعلي وعرض البيانات.",
+      en: "Practice piece with 24etar academy.",
+      ar: "تمرين ضمن أكاديمية ٢٤ إطار.",
     },
   },
 ];
