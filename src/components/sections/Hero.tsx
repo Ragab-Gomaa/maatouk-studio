@@ -20,7 +20,7 @@ export default function Hero() {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-surface pt-28 md:pt-36 lg:pt-40 pb-20 md:pb-28">
+    <section className="relative overflow-hidden bg-surface pt-28 md:pt-32 lg:pt-36 pb-12 md:pb-16">
       <div
         className="absolute top-[-200px] right-[-150px] w-[500px] h-[500px] rounded-full bg-brand-blue/[0.08] blur-3xl pointer-events-none"
         aria-hidden="true"
@@ -175,12 +175,12 @@ function ComposedMark() {
         <MotionAnimation />
       </motion.div>
 
-      {/* ── Card 3 — Digital (bottom, nudged inward from the end) ── */}
+      {/* ── Card 3 — Digital (bottom, nudged visually leftward) ── */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.7 }}
-        className="absolute bottom-0 end-[7%] w-[65%] aspect-square rounded-[20px] overflow-hidden studio-card"
+        className="absolute bottom-0 end-0 w-[65%] aspect-square rounded-[20px] overflow-hidden studio-card -translate-x-[9%]"
       >
         <CornerLabel text={t("Digital", "المنتجات الرقمية")} tone="light" />
         <DigitalAnimation />
@@ -227,217 +227,231 @@ function CornerLabel({
 /* ─────────────────── Animations ─────────────────── */
 
 /**
- * BrandingAnimation — a pen-tool drawing scene on a full brand-blue
- * canvas. A pen cursor clicks anchor points one by one, the path
- * strokes in white between them, bezier handles flicker out at each
- * node, and finally the closed shape fills to reveal the BrandMark.
- * Loops every 9s.
+ * BrandingAnimation — an editorial brand-system card. Reads as a page
+ * from a brand book: a type specimen of the "M" with cap/baseline
+ * guides and anchor callouts, a wordmark lockup (diamond + Maatouk)
+ * underneath, and the brand palette as a row of swatches at the
+ * bottom. Loops every 9s on the full brand-blue canvas.
  */
 function BrandingAnimation() {
   const DURATION = 9;
 
-  // Anchor points the pen lays down around the diamond
-  const anchors = [
-    { x: 60, y: 22, t: 0.08 },
-    { x: 96, y: 60, t: 0.22 },
-    { x: 60, y: 98, t: 0.36 },
-    { x: 24, y: 60, t: 0.5 },
-  ];
-
   return (
     <div
-      className="absolute inset-0 bg-brand-blue overflow-hidden"
+      className="absolute inset-0 bg-brand-blue overflow-hidden flex flex-col"
       style={{ direction: "ltr" }}
     >
-      {/* Subtle white dot grid — the "canvas" */}
+      {/* Breathing green radial wash */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        animate={{
+          background: [
+            "radial-gradient(circle at 50% 45%, rgba(60,255,197,0.1) 0%, transparent 60%)",
+            "radial-gradient(circle at 50% 45%, rgba(60,255,197,0.22) 0%, transparent 55%)",
+            "radial-gradient(circle at 50% 45%, rgba(60,255,197,0.1) 0%, transparent 60%)",
+          ],
+        }}
+        transition={{ duration: DURATION, repeat: Infinity, ease: "easeInOut" }}
+        aria-hidden="true"
+      />
+
+      {/* Subtle dot grid */}
       <div
-        className="absolute inset-0 opacity-[0.18] pointer-events-none"
+        className="absolute inset-0 opacity-[0.12] pointer-events-none"
         style={{
           backgroundImage:
-            "radial-gradient(circle, rgba(255,255,255,0.95) 0.7px, transparent 0.7px)",
+            "radial-gradient(circle, rgba(255,255,255,0.95) 0.6px, transparent 0.6px)",
           backgroundSize: "13px 13px",
         }}
         aria-hidden="true"
       />
 
-      {/* Tool indicator — Pen pill in the top-right */}
+      {/* Brand-kit pill top-right */}
       <motion.div
-        className="absolute top-3 end-3 z-20 flex items-center gap-1 px-1.5 py-0.5 rounded-[3px] bg-white/15 backdrop-blur-sm border border-white/20"
-        animate={{ opacity: [0, 1, 1, 0.35] }}
+        className="absolute top-3 end-3 z-20 flex items-center gap-1 px-1.5 py-0.5 rounded-[3px] bg-white/12 backdrop-blur-sm border border-white/25"
+        animate={{ opacity: [0, 1, 1, 0.3] }}
         transition={{
           duration: DURATION,
-          times: [0, 0.1, 0.85, 0.98],
+          times: [0, 0.08, 0.88, 0.98],
           repeat: Infinity,
         }}
       >
-        <svg width="7" height="7" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-          <path
-            d="M1 11 L4.5 7.5 L9.5 2.5 L10.5 3.5 L5.5 8.5 L2 12 Z"
-            fill="white"
-            stroke="#001F9E"
-            strokeWidth="0.5"
-            strokeLinejoin="round"
-          />
-          <path d="M9 3 L10 4" stroke="#001F9E" strokeWidth="0.6" />
-        </svg>
-        <span className="text-[6px] font-mono uppercase tracking-[0.18em] text-white font-semibold">
-          Pen
+        <span className="w-[3px] h-[3px] rounded-full bg-brand-green" />
+        <span className="text-[6px] font-mono uppercase tracking-[0.2em] text-white font-semibold">
+          Brand · 2026
         </span>
       </motion.div>
 
-      {/* Drawing canvas */}
-      <div className="absolute inset-0 flex items-center justify-center pt-6 pb-6">
-        <svg viewBox="0 0 120 120" className="w-[78%] h-[78%]" aria-hidden="true">
-          {/* Drawn stroke — pathLength animates as the pen moves */}
-          <motion.path
-            d="M60 22 L96 60 L60 98 L24 60 Z"
-            fill="none"
-            stroke="white"
-            strokeWidth="1.4"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: [0, 0, 1, 1, 0] }}
-            transition={{
-              duration: DURATION,
-              times: [0, 0.08, 0.62, 0.86, 0.96],
-              repeat: Infinity,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-          />
+      {/* Main — typography specimen / wordmark lockup / palette stack */}
+      <div className="relative flex-1 flex flex-col pt-11 pb-3 px-3 gap-1.5">
+        {/* Typography specimen: big M with construction guides */}
+        <div className="relative flex-1 min-h-0 flex items-center justify-center">
+          <svg
+            viewBox="0 0 100 68"
+            className="w-full h-full"
+            preserveAspectRatio="xMidYMid meet"
+            aria-hidden="true"
+          >
+            {/* Cap / baseline guides */}
+            <motion.g
+              stroke="white"
+              strokeWidth="0.3"
+              strokeDasharray="1.5 1.5"
+              fill="none"
+              animate={{ opacity: [0, 0.4, 0.4, 0] }}
+              transition={{
+                duration: DURATION,
+                times: [0, 0.08, 0.82, 0.95],
+                repeat: Infinity,
+              }}
+            >
+              <line x1="6" y1="14" x2="94" y2="14" />
+              <line x1="6" y1="55" x2="94" y2="55" />
+            </motion.g>
 
-          {/* Filled shape — reveals once the path is closed */}
-          <motion.path
-            d="M60 22 L96 60 L60 98 L24 60 Z"
-            fill="white"
-            animate={{ opacity: [0, 0, 0, 1, 1, 0] }}
-            transition={{
-              duration: DURATION,
-              times: [0, 0.58, 0.64, 0.7, 0.88, 0.96],
-              repeat: Infinity,
-            }}
-            style={{
-              filter: "drop-shadow(0 2px 10px rgba(255,255,255,0.35))",
-            }}
-          />
+            {/* Guide labels in brand-green */}
+            <motion.g
+              fill="#3CFFC5"
+              style={{
+                fontFamily: "monospace",
+                fontSize: "2.6px",
+                letterSpacing: "0.08em",
+              }}
+              animate={{ opacity: [0, 1, 1, 0] }}
+              transition={{
+                duration: DURATION,
+                times: [0.03, 0.13, 0.82, 0.95],
+                repeat: Infinity,
+              }}
+            >
+              <text x="4" y="13">CAP</text>
+              <text x="4" y="62">BASE</text>
+            </motion.g>
 
-          {/* Bezier handles — brief out-in flash at each anchor */}
-          {anchors.map((a, i) => {
-            const next = anchors[(i + 1) % anchors.length];
-            const angle = Math.atan2(next.y - a.y, next.x - a.x);
-            const hx = a.x + Math.cos(angle) * 10;
-            const hy = a.y + Math.sin(angle) * 10;
-            return (
-              <motion.g
-                key={`h-${i}`}
-                animate={{ opacity: [0, 0, 1, 1, 0] }}
-                transition={{
-                  duration: DURATION,
-                  times: [0, a.t, a.t + 0.02, a.t + 0.1, 0.62],
-                  repeat: Infinity,
-                }}
-              >
-                <line
-                  x1={a.x}
-                  y1={a.y}
-                  x2={hx}
-                  y2={hy}
-                  stroke="#3CFFC5"
-                  strokeWidth="0.4"
-                />
-                <circle cx={hx} cy={hy} r="1" fill="#3CFFC5" />
-              </motion.g>
-            );
-          })}
+            {/* Measurement ticks at the top */}
+            <motion.g
+              stroke="#3CFFC5"
+              strokeWidth="0.3"
+              animate={{ opacity: [0, 0.6, 0.6, 0] }}
+              transition={{
+                duration: DURATION,
+                times: [0.08, 0.18, 0.82, 0.95],
+                repeat: Infinity,
+              }}
+            >
+              <line x1="26" y1="11" x2="26" y2="15" />
+              <line x1="74" y1="11" x2="74" y2="15" />
+              <line x1="50" y1="9" x2="50" y2="14" />
+            </motion.g>
 
-          {/* Anchor squares — drop in one at a time as the pen clicks */}
-          {anchors.map((a, i) => (
-            <motion.rect
-              key={`a-${i}`}
-              x={a.x - 1.6}
-              y={a.y - 1.6}
-              width="3.2"
-              height="3.2"
+            {/* The "M" — hero of the specimen */}
+            <motion.text
+              x="50"
+              y="52"
+              textAnchor="middle"
               fill="white"
-              stroke="#0029D6"
-              strokeWidth="0.5"
+              style={{
+                fontFamily: "Georgia, 'Times New Roman', serif",
+                fontSize: "48px",
+                fontWeight: "700",
+                letterSpacing: "-0.03em",
+              }}
               animate={{
-                opacity: [0, 0, 1, 1, 0],
-                scale: [0, 0, 1.6, 1, 0.6],
+                opacity: [0, 0, 1, 1, 0.35],
+                y: [54, 54, 52, 52, 52],
               }}
               transition={{
                 duration: DURATION,
-                times: [0, a.t, a.t + 0.03, 0.7, 0.95],
+                times: [0, 0.18, 0.32, 0.82, 0.95],
                 repeat: Infinity,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              style={{ transformOrigin: `${a.x}px ${a.y}px` }}
-            />
-          ))}
+            >
+              M
+            </motion.text>
 
-          {/* Pen tool cursor — travels between anchors, clicks each */}
-          <motion.g
-            animate={{
-              x: [60, 60, 96, 60, 24, 60, 60],
-              y: [14, 22, 60, 98, 60, 22, 22],
-              opacity: [0, 1, 1, 1, 1, 1, 0],
-            }}
-            transition={{
-              duration: DURATION,
-              times: [0, 0.08, 0.22, 0.36, 0.5, 0.6, 0.7],
-              repeat: Infinity,
-              ease: [0.42, 0, 0.58, 1],
-            }}
-          >
-            {/* Nib tip at (0,0), pointing down-right */}
-            <g>
-              <path
-                d="M0 0 L2.8 7 L0 6 L-1 9 L-3 9 L-2 6 L-4 5 Z"
-                fill="white"
-                stroke="#001F9E"
-                strokeWidth="0.4"
-                strokeLinejoin="round"
+            {/* Anchor callouts at key letter vertices */}
+            {[
+              { x: 26, y: 14, t: 0.2 },
+              { x: 74, y: 14, t: 0.22 },
+              { x: 50, y: 37, t: 0.24 },
+              { x: 26, y: 55, t: 0.26 },
+              { x: 74, y: 55, t: 0.28 },
+            ].map((p, i) => (
+              <motion.circle
+                key={i}
+                cx={p.x}
+                cy={p.y}
+                r="1"
+                fill="#3CFFC5"
+                animate={{ opacity: [0, 1, 1, 0], scale: [0, 1.4, 1, 0] }}
+                transition={{
+                  duration: DURATION,
+                  times: [p.t, p.t + 0.03, 0.8, 0.92],
+                  repeat: Infinity,
+                }}
+                style={{ transformOrigin: `${p.x}px ${p.y}px` }}
               />
-              <line
-                x1="-1"
-                y1="2"
-                x2="0.5"
-                y2="5"
-                stroke="#0029D6"
-                strokeWidth="0.3"
+            ))}
+          </svg>
+        </div>
+
+        {/* Wordmark lockup — diamond + Maatouk */}
+        <motion.div
+          className="shrink-0 flex items-center justify-center gap-2"
+          animate={{ opacity: [0, 0, 1, 1, 0] }}
+          transition={{
+            duration: DURATION,
+            times: [0, 0.4, 0.5, 0.85, 0.95],
+            repeat: Infinity,
+          }}
+        >
+          <span
+            className="w-[7px] h-[7px] rotate-45 bg-white"
+            style={{ boxShadow: "0 0 6px rgba(60,255,197,0.5)" }}
+            aria-hidden="true"
+          />
+          <span className="text-[8px] font-lyon font-bold tracking-[0.3em] text-white uppercase">
+            Maatouk
+          </span>
+        </motion.div>
+
+        {/* Brand palette — 4 swatches that pop in sequence */}
+        <motion.div
+          className="shrink-0 flex items-center justify-center gap-1.5"
+          animate={{ opacity: [0, 0, 1, 1, 0] }}
+          transition={{
+            duration: DURATION,
+            times: [0, 0.52, 0.62, 0.85, 0.95],
+            repeat: Infinity,
+          }}
+        >
+          {["bg-brand-blue", "bg-brand-green", "bg-white", "bg-ink"].map(
+            (cls, i) => (
+              <motion.span
+                key={i}
+                className={`w-[18px] h-[18px] rounded-[2px] ring-1 ring-white/35 ${cls}`}
+                animate={{ scale: [0, 0, 1.25, 1, 1, 0.92] }}
+                transition={{
+                  duration: DURATION,
+                  times: [
+                    0,
+                    0.55 + i * 0.02,
+                    0.62 + i * 0.02,
+                    0.68 + i * 0.02,
+                    0.85,
+                    0.95,
+                  ],
+                  repeat: Infinity,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                style={{ transformOrigin: "center" }}
+                aria-hidden="true"
               />
-            </g>
-          </motion.g>
-        </svg>
+            )
+          )}
+        </motion.div>
       </div>
-
-      {/* Wordmark reveal — after the shape fills */}
-      <motion.div
-        className="absolute inset-x-0 bottom-3.5 flex items-center justify-center gap-[1.5px] text-[9px] font-lyon font-bold tracking-[0.38em] text-white uppercase"
-        animate={{ opacity: [0, 0, 1, 1, 0] }}
-        transition={{
-          duration: DURATION,
-          times: [0, 0.72, 0.8, 0.9, 0.97],
-          repeat: Infinity,
-        }}
-      >
-        {"Maatouk".split("").map((ch, i) => (
-          <motion.span
-            key={i}
-            animate={{ y: [5, 0], opacity: [0, 1] }}
-            transition={{
-              duration: 0.3,
-              delay: 0.3 + i * 0.04,
-              repeat: Infinity,
-              repeatDelay: DURATION - 0.3 - 0.04 * 7 - 0.3,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="inline-block"
-          >
-            {ch}
-          </motion.span>
-        ))}
-      </motion.div>
     </div>
   );
 }
