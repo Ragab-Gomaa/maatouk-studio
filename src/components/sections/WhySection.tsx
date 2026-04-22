@@ -2,64 +2,65 @@
 
 import { motion } from "framer-motion";
 import { useTranslation } from "@/lib/LocaleContext";
-import { fadeUp, staggerContainer } from "@/lib/animations";
-import SectionLabel from "@/components/ui/SectionLabel";
 
-type Pillar = {
-  numeral: string;
+type Principle = {
+  icon: React.ReactNode;
   title: { en: string; ar: string };
   body: { en: string; ar: string };
-  aside: { en: string; ar: string };
 };
 
-const pillars: Pillar[] = [
+const principles: Principle[] = [
   {
-    numeral: "I",
-    title: {
-      en: "Strategy-led design",
-      ar: "تصميم تقوده الاستراتيجية",
-    },
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 7v5l3.5 2" strokeLinecap="round" />
+      </svg>
+    ),
+    title: { en: "Strategy first", ar: "استراتيجية أولاً" },
     body: {
-      en: "Research, positioning, and business logic come before aesthetic decisions. Beautiful work that doesn't perform is just decoration.",
-      ar: "البحث والتموضع والمنطق التجاري يسبقان القرارات الجمالية. العمل الجميل الذي لا يؤدي وظيفته ليس إلا زخرفة.",
+      en: "Every project starts with research, positioning, and business logic — not moodboards. Beautiful work that doesn't perform is just decoration.",
+      ar: "كل مشروع يبدأ ببحث وتموضع ومنطق تجاري — لا بـ moodboards. العمل الجميل الذي لا يؤدّي وظيفته مجرد زخرفة.",
     },
-    aside: { en: "Every project begins with a brief, not a template.", ar: "كل مشروع يبدأ بملخص، لا بقالب." },
   },
   {
-    numeral: "II",
-    title: {
-      en: "Bilingual by craft",
-      ar: "ثنائي اللغة بالحرفية",
-    },
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
+        <path d="M3 6h6M6 6v12M3 18h6" strokeLinecap="round" />
+        <path d="M15 18l3-12 3 12M16 14h4" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+    title: { en: "Bilingual by craft", ar: "ثنائي اللغة بالحرفية" },
     body: {
-      en: "Arabic and Latin are treated as equals — shared type pairings, shared layout logic, shared attention to detail. Not translation, not localization — original bilingual design.",
-      ar: "العربية واللاتينية متساويتان — اقترانات خطية مشتركة، منطق تخطيط مشترك، واهتمام بالتفاصيل مشترك. ليست ترجمة ولا توطين — تصميم ثنائي أصلي.",
+      en: "Arabic isn't a translation. It's a first draft, shaped with the same care as Latin — type pairings, layout, cultural nuance, all from scratch.",
+      ar: "العربية ليست ترجمة. هي مسوّدة أولى، تُصاغ بنفس العناية مثل اللاتينية — اقتران الخطوط، التخطيط، الفروق الثقافية، كلها من الصفر.",
     },
-    aside: { en: "RTL is foundation, not an afterthought.", ar: "RTL أساس، لا فكرة لاحقة." },
   },
   {
-    numeral: "III",
-    title: {
-      en: "Full-stack delivery",
-      ar: "تسليم شامل",
-    },
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <path d="M3 9h18M9 3v18" />
+      </svg>
+    ),
+    title: { en: "Full-stack delivery", ar: "تسليم شامل" },
     body: {
-      en: "Strategy to identity to motion to production code — all under one roof, by the same team. One responsibility, one accountability, zero handoff friction.",
-      ar: "من الاستراتيجية إلى الهوية إلى الحركة إلى كود الإنتاج — كلها تحت سقف واحد، بنفس الفريق. مسؤولية واحدة، محاسبة واحدة، بلا احتكاك في التسليم.",
+      en: "Strategy, identity, motion, and product — all in-house, one team. The brand you saw in the deck is the one that ships, without compromise.",
+      ar: "الاستراتيجية، الهوية، الحركة، والمنتج — كلها داخل الاستوديو، فريق واحد. الهوية التي وافقت عليها هي نفسها التي تنطلق، بلا تنازل.",
     },
-    aside: { en: "One team, one outcome.", ar: "فريق واحد، نتيجة واحدة." },
   },
   {
-    numeral: "IV",
-    title: {
-      en: "Built to scale",
-      ar: "مبني للتوسع",
-    },
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
+        <path d="M3 17l6-8 5 6 7-10" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M16 5h5v5" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+    title: { en: "Built to scale", ar: "مبني للتوسع" },
     body: {
-      en: "We think in systems from day one. Colors, type, components, code — all modular and documented, so the work keeps performing long after handoff.",
-      ar: "نفكّر في أنظمة من اليوم الأول. الألوان، الخطوط، المكونات، الكود — كلها موحدة وموثقة، ليستمر العمل بالأداء بعد التسليم بكثير.",
+      en: "We think in systems from day one. Components, tokens, guidelines — everything documented so the work keeps performing long after launch.",
+      ar: "نفكّر في أنظمة من اليوم الأول. مكونات، tokens، دلائل — كلها موثقة ليستمر العمل بالأداء طويلاً بعد الإطلاق.",
     },
-    aside: { en: "Our handoff is a foundation, not an ending.", ar: "تسليمنا أساس، لا نهاية." },
   },
 ];
 
@@ -67,83 +68,83 @@ export default function WhySection() {
   const { t } = useTranslation();
 
   return (
-    <section className="py-24 md:py-36 bg-white relative overflow-hidden">
-      {/* Subtle background mark */}
+    <section className="py-24 md:py-36 bg-ink text-white relative overflow-hidden">
+      {/* Ambient glow */}
       <div
-        className="absolute -left-20 top-1/3 text-[22rem] lg:text-[32rem] font-lyon font-bold text-brand-blue/[0.025] leading-none hidden xl:block select-none pointer-events-none"
+        className="absolute top-[-150px] right-[-100px] w-[500px] h-[500px] rounded-full bg-brand-blue/20 blur-3xl pointer-events-none"
         aria-hidden="true"
-      >
-        §
-      </div>
+      />
+      <div
+        className="absolute bottom-[-100px] left-[-100px] w-[400px] h-[400px] rounded-full bg-brand-green/10 blur-3xl pointer-events-none"
+        aria-hidden="true"
+      />
 
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 sm:px-8 md:px-12 lg:px-20">
-        {/* ─── Header ─── */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-16 items-end mb-20 md:mb-28">
+      <div className="relative z-10 max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7 }}
+          className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-6 lg:gap-16 items-end mb-14 md:mb-20"
+        >
           <div>
-            <SectionLabel>{t("Why Maatouk", "لماذا معتوق")}</SectionLabel>
-            <motion.h2
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="text-4xl md:text-6xl lg:text-7xl font-lyon font-bold tracking-tight mt-6 leading-[0.95]"
-            >
+            <span className="inline-flex items-center gap-2 pl-2 pr-4 py-1 bg-white/10 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold text-white/80 mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-green" />
+              {t("Why Maatouk", "لماذا معتوق")}
+            </span>
+            <h2 className="font-lyon font-bold tracking-[-0.03em] text-4xl md:text-5xl lg:text-6xl leading-[0.95] max-w-2xl">
               {t("Four principles,", "أربع مبادئ،")}
               <br />
-              <span className="text-brand-blue italic">
+              <span className="text-brand-green italic">
                 {t("one way of working.", "طريقة عمل واحدة.")}
               </span>
-            </motion.h2>
+            </h2>
           </div>
-          <motion.p
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="text-base md:text-lg text-black/60 leading-relaxed max-w-lg"
-          >
+          <p className="text-base md:text-lg text-white/65 leading-relaxed max-w-lg lg:pb-3">
             {t(
-              "What it's like to work with us — and what you can count on no matter what the brief is.",
-              "كيف هي تجربة العمل معنا — وما يمكنك الاعتماد عليه مهما كان الملف."
+              "How we work — and what you can count on, regardless of the brief.",
+              "كيف نعمل — وما يمكنك الاعتماد عليه، مهما كان الملف."
             )}
-          </motion.p>
-        </div>
+          </p>
+        </motion.div>
 
-        {/* ─── Pillars ─── */}
+        {/* Principles grid */}
         <motion.div
-          variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          className="border-t border-black/[0.08]"
+          viewport={{ once: true, margin: "-60px" }}
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.1 } },
+          }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5"
         >
-          {pillars.map((p, i) => (
+          {principles.map((p, i) => (
             <motion.article
               key={i}
-              variants={fadeUp}
-              className="grid grid-cols-1 lg:grid-cols-[auto_1fr_1.3fr] items-start gap-6 lg:gap-16 py-10 md:py-14 border-b border-black/[0.08] group"
+              variants={{
+                hidden: { opacity: 0, y: 16 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="group relative rounded-[24px] md:rounded-[28px] bg-white/[0.04] hover:bg-white/[0.06] border border-white/[0.08] p-7 md:p-9 transition-colors duration-500"
             >
-              {/* Roman numeral */}
-              <div className="lg:w-28 font-lyon text-brand-blue font-bold text-4xl md:text-5xl leading-none">
-                {p.numeral}
+              <div className="flex items-start justify-between mb-8">
+                <div className="w-11 h-11 rounded-2xl bg-brand-green/15 text-brand-green flex items-center justify-center">
+                  {p.icon}
+                </div>
+                <span className="font-lyon text-2xl font-bold text-white/30">
+                  0{i + 1}
+                </span>
               </div>
 
-              {/* Title + aside */}
-              <div>
-                <h3 className="text-2xl md:text-3xl lg:text-4xl font-lyon font-bold tracking-tight leading-[1.05] mb-3 group-hover:text-brand-blue transition-colors duration-700">
-                  {t(p.title.en, p.title.ar)}
-                </h3>
-                <p className="font-lyon italic text-lg md:text-xl text-black/55">
-                  &ldquo;{t(p.aside.en, p.aside.ar)}&rdquo;
-                </p>
-              </div>
-
-              {/* Body */}
-              <div>
-                <p className="text-base md:text-lg text-black/70 leading-relaxed max-w-2xl">
-                  {t(p.body.en, p.body.ar)}
-                </p>
-              </div>
+              <h3 className="font-lyon font-bold text-2xl md:text-[1.65rem] tracking-[-0.02em] mb-3 leading-tight">
+                {t(p.title.en, p.title.ar)}
+              </h3>
+              <p className="text-sm md:text-[15px] text-white/65 leading-relaxed">
+                {t(p.body.en, p.body.ar)}
+              </p>
             </motion.article>
           ))}
         </motion.div>

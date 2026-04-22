@@ -3,52 +3,37 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "@/lib/LocaleContext";
-import { fadeUp } from "@/lib/animations";
-import SectionLabel from "@/components/ui/SectionLabel";
 
 type Testimonial = {
   quote: { en: string; ar: string };
   name: string;
   role: { en: string; ar: string };
-  company: string;
 };
 
 const testimonials: Testimonial[] = [
   {
     quote: {
-      en: "The digital storefront genuinely feels like walking into our boutique. The Arabic typography and checkout flow are exceptional.",
-      ar: "المتجر الرقمي يشبه تماماً تجربة دخول البوتيك. الخط العربي وتدفق الدفع استثنائيان.",
+      en: "They treated our brand like it mattered — because to them, it did. The Arabic typography work alone was worth the engagement.",
+      ar: "تعاملوا مع هويتنا وكأنها مهمة — لأنها عندهم كانت كذلك. العمل على الخط العربي وحده كان يستحق التعاقد.",
     },
-    name: "Dolcebello",
-    role: { en: "E-commerce Lead", ar: "مسؤول التجارة الإلكترونية" },
-    company: "Dolcebello",
+    name: "Client A",
+    role: { en: "Luxury retail", ar: "تجزئة فاخرة" },
   },
   {
     quote: {
-      en: "They rebuilt our entire booking platform without disrupting daily operations. Six steps handle our full workflow — no training needed.",
-      ar: "أعادوا بناء منصة الحجز بالكامل دون تعطيل العمليات اليومية. الست خطوات تدير سير العمل كاملاً — دون تدريب.",
+      en: "What impressed us most wasn't the design — it was the thinking behind it. Every decision had a reason.",
+      ar: "ما أثار إعجابنا لم يكن التصميم بحد ذاته — بل التفكير خلفه. كل قرار كان مُعلّلاً.",
     },
-    name: "Nobles Catering",
-    role: { en: "Operations Director", ar: "مدير العمليات" },
-    company: "Nobles Catering",
+    name: "Client B",
+    role: { en: "Hospitality", ar: "ضيافة" },
   },
   {
     quote: {
-      en: "Finally — an accounting system designed around Arabic, not retrofitted. Meezan changed how our team works day-to-day.",
-      ar: "أخيراً — نظام محاسبة مصمم حول العربية، لا مُعدَّل. ميزان غيّر طريقة عمل فريقنا يومياً.",
+      en: "Delivered on time, to spec, and better than we imagined. One team from strategy to ship.",
+      ar: "تسليم في الموعد، حسب المطلوب، وأفضل مما تخيلنا. فريق واحد من الاستراتيجية إلى الإطلاق.",
     },
-    name: "Meezan",
-    role: { en: "Finance Manager", ar: "مدير مالي" },
-    company: "Meezan",
-  },
-  {
-    quote: {
-      en: "From strategy to motion to code, it was one team and one vision. The difference is in how coherent everything feels.",
-      ar: "من الاستراتيجية للموشن للكود، كان فريقاً واحداً برؤية واحدة. الفرق يظهر في مدى ترابط كل شيء.",
-    },
-    name: "Royal Catering",
-    role: { en: "Marketing Lead", ar: "مسؤول تسويق" },
-    company: "Royal Catering",
+    name: "Client C",
+    role: { en: "SaaS platform", ar: "منصة SaaS" },
   },
 ];
 
@@ -61,7 +46,7 @@ export default function TestimonialsSection() {
     if (paused) return;
     const id = setInterval(() => {
       setActive((i) => (i + 1) % testimonials.length);
-    }, 7500);
+    }, 7000);
     return () => clearInterval(id);
   }, [paused]);
 
@@ -69,100 +54,88 @@ export default function TestimonialsSection() {
 
   return (
     <section
-      className="py-24 md:py-36 bg-surface-low relative overflow-hidden"
+      className="py-24 md:py-36 bg-surface-low relative"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="max-w-[1440px] mx-auto px-6 sm:px-8 md:px-12 lg:px-20">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-12 lg:gap-20 items-start">
-          {/* Left: label + navigator */}
-          <div className="lg:sticky lg:top-32">
-            <SectionLabel>
-              {t("In their words", "بلسانهم")}
-            </SectionLabel>
-            <motion.h2
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="text-4xl md:text-5xl lg:text-6xl font-lyon font-bold tracking-tight mt-6 leading-[0.95]"
-            >
-              {t("Trusted by", "ثقة")}
-              <br />
-              <span className="text-brand-blue italic">
-                {t("ambitious brands.", "علامات طموحة.")}
+      <div className="max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
+        <div className="relative studio-card rounded-[32px] md:rounded-[40px] p-8 md:p-14 lg:p-20 overflow-hidden">
+          {/* Corner quote mark */}
+          <span
+            className="absolute top-8 left-10 md:top-12 md:left-16 font-lyon text-[9rem] md:text-[12rem] leading-none text-brand-blue/10 select-none pointer-events-none"
+            aria-hidden="true"
+          >
+            &ldquo;
+          </span>
+
+          <div className="relative grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-10 lg:gap-16 items-start">
+            {/* Left: label */}
+            <div>
+              <span className="inline-flex items-center gap-2 pl-2 pr-4 py-1 bg-surface-low rounded-full border border-black/[0.06] text-[11px] uppercase tracking-[0.2em] font-semibold text-ink-muted mb-5">
+                <span className="w-1.5 h-1.5 rounded-full bg-brand-blue" />
+                {t("Voices", "أصوات")}
               </span>
-            </motion.h2>
+              <h2 className="font-lyon font-bold tracking-[-0.03em] text-3xl md:text-4xl lg:text-5xl leading-[0.95] max-w-sm">
+                {t("What clients", "ماذا يقول")}
+                <br />
+                <span className="text-brand-blue italic">{t("say.", "العملاء.")}</span>
+              </h2>
 
-            {/* Navigator */}
-            <div
-              className="mt-10 flex items-center gap-5"
-              role="tablist"
-              aria-label={t("Testimonial navigator", "متصفح الشهادات")}
-            >
-              {testimonials.map((t_, i) => (
-                <button
-                  key={i}
-                  role="tab"
-                  aria-selected={i === active}
-                  aria-label={t_.name}
-                  onClick={() => setActive(i)}
-                  className={`text-[10px] uppercase tracking-[0.2em] font-bold transition-colors focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2 ${
-                    i === active
-                      ? "text-brand-blue"
-                      : "text-black/30 hover:text-black/60"
-                  }`}
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Right: quote */}
-          <div className="relative min-h-[360px]">
-            <AnimatePresence mode="wait">
-              <motion.figure
-                key={active}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -16 }}
-                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              <div
+                className="mt-8 flex items-center gap-4"
+                role="tablist"
+                aria-label={t("Testimonial navigator", "متصفح الشهادات")}
               >
-                <span
-                  className="block font-lyon text-7xl md:text-9xl text-brand-blue/50 leading-none mb-2 -ml-1"
-                  aria-hidden="true"
+                {testimonials.map((_, i) => (
+                  <button
+                    key={i}
+                    role="tab"
+                    aria-selected={i === active}
+                    onClick={() => setActive(i)}
+                    className={`text-[11px] uppercase tracking-[0.2em] font-semibold transition-colors focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2 ${
+                      i === active ? "text-brand-blue" : "text-ink-whisper hover:text-ink-muted"
+                    }`}
+                  >
+                    0{i + 1}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Right: quote */}
+            <div className="relative min-h-[280px]">
+              <AnimatePresence mode="wait">
+                <motion.figure
+                  key={active}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.5 }}
                 >
-                  &ldquo;
-                </span>
-                <blockquote className="font-lyon text-2xl md:text-3xl lg:text-4xl font-bold text-black/85 leading-[1.3] max-w-3xl">
-                  {t(current.quote.en, current.quote.ar)}
-                </blockquote>
-
-                <figcaption className="mt-10 md:mt-12 flex items-center gap-5">
-                  <div className="w-12 h-12 rounded-full bg-brand-blue/10 flex items-center justify-center shrink-0">
-                    <span className="font-lyon font-bold text-brand-blue text-lg">
-                      {current.name.charAt(0)}
+                  <blockquote className="font-lyon text-2xl md:text-3xl lg:text-[2.25rem] font-bold text-ink leading-[1.25] tracking-[-0.02em] max-w-3xl">
+                    {t(current.quote.en, current.quote.ar)}
+                  </blockquote>
+                  <figcaption className="mt-10 flex items-center gap-4">
+                    <span className="w-12 h-12 rounded-full bg-brand-blue/10 flex items-center justify-center font-lyon font-bold text-brand-blue">
+                      {current.name.split(" ").pop()?.charAt(0)}
                     </span>
-                  </div>
-                  <div>
-                    <div className="text-base font-bold text-black">
-                      {current.name}
+                    <div>
+                      <div className="font-medium text-ink">{current.name}</div>
+                      <div className="text-sm text-ink-soft">
+                        {t(current.role.en, current.role.ar)}
+                      </div>
                     </div>
-                    <div className="text-sm text-black/55 mt-0.5">
-                      {t(current.role.en, current.role.ar)} — {current.company}
-                    </div>
-                  </div>
-                </figcaption>
-              </motion.figure>
-            </AnimatePresence>
+                  </figcaption>
+                </motion.figure>
+              </AnimatePresence>
 
-            <p className="absolute bottom-0 left-0 right-0 text-[10px] text-black/35 uppercase tracking-[0.2em] font-medium">
-              {t(
-                "Quotes composed from client feedback — signed attribution coming soon",
-                "اقتباسات مستنبطة من ملاحظات العملاء — توثيق كامل قريباً"
-              )}
-            </p>
+              <p className="absolute bottom-0 left-0 right-0 text-[10px] text-ink-whisper uppercase tracking-[0.2em] font-medium">
+                {t(
+                  "Representative client feedback · Signed attribution soon",
+                  "ملاحظات تمثيلية من العملاء · توثيق كامل قريباً"
+                )}
+              </p>
+            </div>
           </div>
         </div>
       </div>

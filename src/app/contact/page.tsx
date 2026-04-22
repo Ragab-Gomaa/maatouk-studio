@@ -3,14 +3,12 @@
 import { useState, FormEvent } from "react";
 import { motion } from "framer-motion";
 import { useTranslation } from "@/lib/LocaleContext";
-import { siteContent } from "@/data/content";
-import { fadeUp, staggerContainer } from "@/lib/animations";
 import Button from "@/components/ui/Button";
 
 const services = [
   { en: "Branding", ar: "هوية بصرية" },
   { en: "Motion Design", ar: "تصميم حركة" },
-  { en: "Website", ar: "موقع إلكتروني" },
+  { en: "Digital Product", ar: "منتج رقمي" },
   { en: "Full Package", ar: "حزمة كاملة" },
 ];
 
@@ -22,29 +20,23 @@ const budgets = [
 ];
 
 type Status = "idle" | "submitting" | "success" | "error";
-
-type FieldErrors = {
-  name?: string;
-  email?: string;
-  message?: string;
-};
+type Errors = { name?: string; email?: string; message?: string };
 
 export default function ContactPage() {
   const { t } = useTranslation();
-  const labels = siteContent.contact.formLabels;
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
-  const [selectedService, setSelectedService] = useState("");
-  const [selectedBudget, setSelectedBudget] = useState("");
+  const [service, setService] = useState("");
+  const [budget, setBudget] = useState("");
   const [message, setMessage] = useState("");
   const [website, setWebsite] = useState(""); // honeypot
   const [status, setStatus] = useState<Status>("idle");
-  const [errors, setErrors] = useState<FieldErrors>({});
+  const [errors, setErrors] = useState<Errors>({});
 
-  const validate = (): FieldErrors => {
-    const e: FieldErrors = {};
+  const validate = (): Errors => {
+    const e: Errors = {};
     if (!name.trim()) e.name = t("Please enter your name", "من فضلك أدخل اسمك");
     if (!email.trim()) {
       e.email = t("Email is required", "البريد الإلكتروني مطلوب");
@@ -52,10 +44,7 @@ export default function ContactPage() {
       e.email = t("Please enter a valid email", "من فضلك أدخل بريداً صحيحاً");
     }
     if (!message.trim() || message.trim().length < 10) {
-      e.message = t(
-        "Message is too short (min 10 characters)",
-        "الرسالة قصيرة جداً (١٠ أحرف على الأقل)"
-      );
+      e.message = t("Message is too short", "الرسالة قصيرة جداً");
     }
     return e;
   };
@@ -65,7 +54,6 @@ export default function ContactPage() {
     const v = validate();
     setErrors(v);
     if (Object.keys(v).length) return;
-
     setStatus("submitting");
     try {
       const res = await fetch("/api/contact", {
@@ -75,10 +63,10 @@ export default function ContactPage() {
           name: name.trim(),
           email: email.trim(),
           company: company.trim(),
-          service: selectedService,
-          budget: selectedBudget,
+          service,
+          budget,
           message: message.trim(),
-          website, // honeypot
+          website,
         }),
       });
       if (!res.ok) throw new Error("bad response");
@@ -86,8 +74,8 @@ export default function ContactPage() {
       setName("");
       setEmail("");
       setCompany("");
-      setSelectedService("");
-      setSelectedBudget("");
+      setService("");
+      setBudget("");
       setMessage("");
     } catch {
       setStatus("error");
@@ -95,183 +83,150 @@ export default function ContactPage() {
   }
 
   const inputBase =
-    "w-full px-0 py-4 border-0 border-b-2 outline-none text-lg bg-transparent transition-colors focus:ring-0";
-  const inputOk = "border-black/15 focus:border-brand-blue";
-  const inputErr = "border-red-500 focus:border-red-500";
-  const labelBase =
-    "block text-xs font-bold uppercase tracking-[0.15em] text-black/60 mb-3";
+    "w-full px-5 py-4 bg-surface-low border rounded-2xl text-[15px] text-ink placeholder:text-ink-whisper outline-none transition-colors focus:border-brand-blue focus:bg-surface-raised";
+  const inputOk = "border-black/[0.08]";
+  const inputErr = "border-red-400";
+
+  const labelBase = "block text-[11px] uppercase tracking-[0.2em] font-semibold text-ink-muted mb-2.5";
 
   return (
-    <main className="pt-40 pb-20 bg-surface relative overflow-hidden">
-      <div className="max-w-[1440px] mx-auto px-8 md:px-12 lg:px-20 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
-        {/* Left — Info */}
-        <motion.section
-          variants={staggerContainer}
-          initial="hidden"
-          animate="visible"
-          className="space-y-16"
-        >
-          <motion.div variants={fadeUp} className="space-y-8">
-            <div className="flex items-center gap-3">
-              <span className="w-2 h-2 rotate-45 bg-brand-blue" />
-              <span className="text-xs font-medium uppercase tracking-[0.25em] text-brand-blue">
-                {t("Contact", "تواصل")}
-              </span>
-              <span className="h-px w-12 bg-brand-blue/20" />
-            </div>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-lyon font-bold tracking-tight leading-[0.9]">
-              {t("Let's build", "لنبنِ معاً")}
-              <br />
-              <span className="text-brand-blue">
-                {t("something remarkable.", "شيئاً استثنائياً.")}
-              </span>
-            </h1>
-            <p className="text-xl text-black/60 max-w-md leading-relaxed">
-              {t(siteContent.contact.sub.en, siteContent.contact.sub.ar)}
-            </p>
-          </motion.div>
+    <main className="pt-32 md:pt-40 pb-20 bg-surface relative overflow-hidden">
+      <div
+        className="absolute top-[-200px] right-[-150px] w-[500px] h-[500px] rounded-full bg-brand-blue/[0.06] blur-3xl pointer-events-none"
+        aria-hidden="true"
+      />
 
-          <motion.div variants={fadeUp} className="space-y-6">
+      <div className="relative z-10 max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12 lg:gap-24 items-start">
+        {/* Left — info */}
+        <motion.section
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="lg:sticky lg:top-32"
+        >
+          <span className="inline-flex items-center gap-2 pl-2 pr-4 py-1 bg-surface-raised rounded-full border border-black/[0.06] text-[11px] uppercase tracking-[0.2em] font-semibold text-ink-muted mb-6 shadow-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-brand-blue" />
+            {t("Get in touch", "تواصل")}
+          </span>
+
+          <h1 className="font-lyon font-bold tracking-[-0.035em] leading-[0.92] text-5xl md:text-7xl lg:text-[5.5rem] text-ink mb-8">
+            {t("Let's build", "لنبنِ معاً")}
+            <br />
+            <span className="text-brand-blue italic">
+              {t("something real.", "شيئاً حقيقياً.")}
+            </span>
+          </h1>
+
+          <p className="text-base md:text-lg text-ink-soft leading-relaxed max-w-md mb-10">
+            {t(
+              "Tell us what you're building and what success looks like. We'll respond within 24 hours with next steps.",
+              "أخبرنا بما تبنيه وكيف يبدو النجاح. نرد خلال ٢٤ ساعة بالخطوات التالية."
+            )}
+          </p>
+
+          <div className="space-y-5">
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-black/50 mb-2 font-bold">
-                {t("Direct Line", "خط مباشر")}
-              </p>
+              <div className="text-[11px] uppercase tracking-[0.2em] font-semibold text-ink-muted mb-2">
+                {t("Direct email", "بريد مباشر")}
+              </div>
               <a
-                href={`mailto:${siteContent.contact.email}`}
-                className="text-3xl md:text-4xl font-lyon font-bold text-brand-blue hover:text-brand-blue-dark transition-colors"
+                href="mailto:hello@maatouk.studio"
+                className="font-lyon text-2xl md:text-3xl font-bold text-brand-blue hover:text-brand-blue-dark transition-colors"
               >
-                {siteContent.contact.email}
+                hello@maatouk.studio
               </a>
             </div>
-          </motion.div>
+            <div>
+              <div className="text-[11px] uppercase tracking-[0.2em] font-semibold text-ink-muted mb-2">
+                {t("Response time", "وقت الرد")}
+              </div>
+              <div className="font-medium text-ink">
+                {t("Within 24 hours", "خلال ٢٤ ساعة")}
+              </div>
+            </div>
+          </div>
         </motion.section>
 
-        {/* Right — Form */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
+        {/* Right — form */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.7, delay: 0.1 }}
         >
           {status === "success" ? (
-            <div className="bg-white p-8 md:p-12 text-center">
+            <div className="studio-card rounded-[28px] p-10 md:p-14 text-center">
               <div className="mx-auto mb-6 w-14 h-14 rounded-full bg-brand-green/20 flex items-center justify-center">
-                <svg
-                  className="w-7 h-7 text-brand-blue"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  aria-hidden="true"
-                >
+                <svg className="w-6 h-6 text-brand-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
                   <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
-              <h2 className="text-3xl md:text-4xl font-lyon font-bold mb-4">
+              <h2 className="font-lyon text-3xl font-bold mb-3">
                 {t("Thank you.", "شكراً لك.")}
               </h2>
-              <p className="text-black/60 leading-relaxed mb-8">
+              <p className="text-ink-soft leading-relaxed mb-8">
                 {t(
                   "We received your inquiry and will respond within 24 hours.",
                   "استلمنا استفسارك وسنرد خلال ٢٤ ساعة."
                 )}
               </p>
-              <button
-                onClick={() => setStatus("idle")}
-                className="text-brand-blue font-medium hover:underline"
-              >
-                {t("Send another inquiry", "إرسال استفسار آخر")}
-              </button>
+              <Button onClick={() => setStatus("idle")} variant="secondary" size="md">
+                {t("Send another", "إرسال آخر")}
+              </Button>
             </div>
           ) : (
-            <form
-              className="space-y-8 bg-white p-8 md:p-12"
-              onSubmit={handleSubmit}
-              noValidate
-            >
-              {/* Honeypot — hidden from users */}
-              <div
-                aria-hidden="true"
-                style={{
-                  position: "absolute",
-                  left: "-9999px",
-                  width: 1,
-                  height: 1,
-                  overflow: "hidden",
-                }}
-              >
-                <label>
-                  Website (do not fill)
-                  <input
-                    type="text"
-                    name="website"
-                    tabIndex={-1}
-                    autoComplete="off"
-                    value={website}
-                    onChange={(e) => setWebsite(e.target.value)}
-                  />
-                </label>
+            <form onSubmit={handleSubmit} noValidate className="studio-card rounded-[28px] p-8 md:p-10 space-y-6">
+              {/* Honeypot */}
+              <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", width: 1, height: 1, overflow: "hidden" }}>
+                <input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                />
               </div>
 
-              {/* Name */}
               <div>
-                <label htmlFor="contact-name" className={labelBase}>
-                  {t(labels.name.en, labels.name.ar)}{" "}
-                  <span className="text-red-500" aria-hidden="true">*</span>
+                <label htmlFor="name" className={labelBase}>
+                  {t("Your name", "اسمك")} *
                 </label>
                 <input
-                  id="contact-name"
-                  name="name"
+                  id="name"
                   type="text"
                   required
                   autoComplete="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  aria-invalid={!!errors.name}
-                  aria-describedby={errors.name ? "err-name" : undefined}
                   className={`${inputBase} ${errors.name ? inputErr : inputOk}`}
                   placeholder={t("John Doe", "محمد أحمد")}
                 />
-                {errors.name && (
-                  <p id="err-name" className="text-sm text-red-500 mt-2">
-                    {errors.name}
-                  </p>
-                )}
+                {errors.name && <p className="text-sm text-red-500 mt-2">{errors.name}</p>}
               </div>
 
-              {/* Email */}
               <div>
-                <label htmlFor="contact-email" className={labelBase}>
-                  {t(labels.email.en, labels.email.ar)}{" "}
-                  <span className="text-red-500" aria-hidden="true">*</span>
+                <label htmlFor="email" className={labelBase}>
+                  {t("Email address", "البريد الإلكتروني")} *
                 </label>
                 <input
-                  id="contact-email"
-                  name="email"
+                  id="email"
                   type="email"
                   required
                   autoComplete="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  aria-invalid={!!errors.email}
-                  aria-describedby={errors.email ? "err-email" : undefined}
                   className={`${inputBase} ${errors.email ? inputErr : inputOk}`}
                   placeholder="name@company.com"
                 />
-                {errors.email && (
-                  <p id="err-email" className="text-sm text-red-500 mt-2">
-                    {errors.email}
-                  </p>
-                )}
+                {errors.email && <p className="text-sm text-red-500 mt-2">{errors.email}</p>}
               </div>
 
-              {/* Company */}
               <div>
-                <label htmlFor="contact-company" className={labelBase}>
-                  {t(labels.company.en, labels.company.ar)}
+                <label htmlFor="company" className={labelBase}>
+                  {t("Company", "الشركة")}
                 </label>
                 <input
-                  id="contact-company"
-                  name="company"
+                  id="company"
                   type="text"
                   autoComplete="organization"
                   value={company}
@@ -281,25 +236,24 @@ export default function ContactPage() {
                 />
               </div>
 
-              {/* Service */}
               <fieldset>
                 <legend className={labelBase}>
-                  {t(labels.service.en, labels.service.ar)}
+                  {t("What do you need?", "ماذا تحتاج؟")}
                 </legend>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-2">
                   {services.map((s, i) => {
                     const val = t(s.en, s.ar);
-                    const selected = selectedService === val;
+                    const sel = service === val;
                     return (
                       <button
                         key={i}
                         type="button"
-                        onClick={() => setSelectedService(selected ? "" : val)}
-                        aria-pressed={selected}
-                        className={`px-5 py-2.5 text-sm font-medium border transition-all duration-300 ${
-                          selected
-                            ? "border-brand-blue bg-brand-blue text-white"
-                            : "border-black/15 text-black/70 hover:border-brand-blue/40"
+                        onClick={() => setService(sel ? "" : val)}
+                        aria-pressed={sel}
+                        className={`pill text-[13px] font-medium transition-colors ${
+                          sel
+                            ? "bg-brand-blue text-white"
+                            : "bg-surface-low text-ink-muted hover:bg-surface-raised"
                         }`}
                       >
                         {val}
@@ -309,25 +263,24 @@ export default function ContactPage() {
                 </div>
               </fieldset>
 
-              {/* Budget */}
               <fieldset>
                 <legend className={labelBase}>
-                  {t(labels.budget.en, labels.budget.ar)}
+                  {t("Budget range", "نطاق الميزانية")}
                 </legend>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-2">
                   {budgets.map((b, i) => {
                     const val = t(b.en, b.ar);
-                    const selected = selectedBudget === val;
+                    const sel = budget === val;
                     return (
                       <button
                         key={i}
                         type="button"
-                        onClick={() => setSelectedBudget(selected ? "" : val)}
-                        aria-pressed={selected}
-                        className={`px-5 py-2.5 text-sm font-medium border transition-all duration-300 ${
-                          selected
-                            ? "border-brand-blue bg-brand-blue text-white"
-                            : "border-black/15 text-black/70 hover:border-brand-blue/40"
+                        onClick={() => setBudget(sel ? "" : val)}
+                        aria-pressed={sel}
+                        className={`pill text-[13px] font-medium transition-colors ${
+                          sel
+                            ? "bg-brand-blue text-white"
+                            : "bg-surface-low text-ink-muted hover:bg-surface-raised"
                         }`}
                       >
                         {val}
@@ -337,64 +290,46 @@ export default function ContactPage() {
                 </div>
               </fieldset>
 
-              {/* Message */}
               <div>
-                <label htmlFor="contact-message" className={labelBase}>
-                  {t(labels.message.en, labels.message.ar)}{" "}
-                  <span className="text-red-500" aria-hidden="true">*</span>
+                <label htmlFor="message" className={labelBase}>
+                  {t("Tell us about your project", "أخبرنا عن مشروعك")} *
                 </label>
                 <textarea
-                  id="contact-message"
-                  name="message"
+                  id="message"
                   rows={5}
                   required
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  aria-invalid={!!errors.message}
-                  aria-describedby={errors.message ? "err-message" : undefined}
-                  className={`${inputBase} resize-none ${
-                    errors.message ? inputErr : inputOk
-                  }`}
-                  placeholder={t(
-                    "Tell us about your project...",
-                    "أخبرنا عن مشروعك..."
-                  )}
+                  className={`${inputBase} resize-none ${errors.message ? inputErr : inputOk}`}
+                  placeholder={t("Goals, timeline, context...", "الأهداف، الجدول، السياق...")}
                 />
-                {errors.message && (
-                  <p id="err-message" className="text-sm text-red-500 mt-2">
-                    {errors.message}
-                  </p>
-                )}
+                {errors.message && <p className="text-sm text-red-500 mt-2">{errors.message}</p>}
               </div>
 
-              {/* Error banner */}
               {status === "error" && (
-                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 text-sm">
+                <div className="px-4 py-3 rounded-xl bg-red-50 border border-red-200 text-sm text-red-700">
                   {t(
                     "Something went wrong. Please try again or email us directly.",
-                    "حدث خطأ ما. من فضلك حاول مرة أخرى أو راسلنا مباشرة."
+                    "حدث خطأ ما. حاول مجدداً أو راسلنا مباشرة."
                   )}
                 </div>
               )}
 
-              {/* Submit */}
-              <div>
-                <Button
-                  type="submit"
-                  variant="primary"
-                  size="lg"
-                  disabled={status === "submitting"}
-                  className="w-full"
-                  withArrow={status !== "submitting"}
-                >
-                  {status === "submitting"
-                    ? t("Sending…", "جاري الإرسال…")
-                    : t(labels.submit.en, labels.submit.ar)}
-                </Button>
-              </div>
+              <Button
+                type="submit"
+                variant="primary"
+                size="lg"
+                disabled={status === "submitting"}
+                withArrow={status !== "submitting"}
+                className="w-full"
+              >
+                {status === "submitting"
+                  ? t("Sending…", "جاري الإرسال…")
+                  : t("Send inquiry", "أرسل الاستفسار")}
+              </Button>
             </form>
           )}
-        </motion.div>
+        </motion.section>
       </div>
     </main>
   );
