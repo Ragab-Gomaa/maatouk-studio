@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useTranslation } from "@/lib/LocaleContext";
 import Button from "@/components/ui/Button";
@@ -170,7 +171,7 @@ function ComposedMark() {
         transition={{ duration: 0.7, delay: 0.5 }}
         className="absolute top-[32%] start-0 w-[65%] aspect-square rounded-[20px] overflow-hidden studio-card bg-ink"
       >
-        <CornerLabel text={t("Motion", "تصميم الحركة")} tone="dark" />
+        <CornerLabel text={t("Motion Graphics", "الموشن جرافيك")} tone="dark" />
         <MotionAnimation />
       </motion.div>
 
@@ -267,51 +268,193 @@ function BrandingAnimation() {
   );
 }
 
+/**
+ * MotionAnimation — a compact video player. Inside the screen: a scene
+ * that plays on a 8s loop — morphing brand shape, a pulsing halo, a
+ * title reveal, plus corner markers like a cinema slate. Below the
+ * screen: a progress bar that fills in sync with the scene and a
+ * running timecode so the whole thing reads as a live reel.
+ */
 function MotionAnimation() {
+  const DURATION = 8;
+
   return (
     <div className="absolute inset-0 bg-ink overflow-hidden">
-      {[0, 1, 2, 3].map((i) => (
-        <motion.div
-          key={i}
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/20"
-          initial={{ width: 40, height: 40, opacity: 0 }}
-          animate={{ width: 220, height: 220, opacity: [0, 0.55, 0] }}
-          transition={{ duration: 3.4, delay: i * 0.85, repeat: Infinity, ease: "easeOut" }}
-        />
-      ))}
-
-      <motion.div
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[150px] h-[150px]"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 9, repeat: Infinity, ease: "linear" }}
+      {/* Player body — fills the card below the corner label */}
+      <div
+        className="absolute start-3 end-3 top-12 bottom-3 rounded-[8px] bg-black border border-white/[0.1] overflow-hidden flex flex-col shadow-[0_14px_32px_-10px_rgba(60,255,197,0.18)]"
+        style={{ direction: "ltr" }}
       >
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-brand-green shadow-[0_0_10px_rgba(60,255,197,0.6)]" />
-      </motion.div>
+        {/* Top status strip — Reel marker + live timecode */}
+        <div className="relative shrink-0 flex items-center justify-between px-2 py-1 text-[6px] font-mono uppercase tracking-[0.15em] text-white/55 bg-gradient-to-b from-white/[0.04] to-transparent z-10">
+          <span className="flex items-center gap-1">
+            <span className="w-1 h-1 rounded-full bg-brand-green animate-pulse" />
+            <span className="font-semibold">Reel · 2026</span>
+          </span>
+          <span className="tabular-nums">REC 4K · 24p</span>
+        </div>
 
-      <div className="absolute inset-0 flex items-center justify-center">
-        <motion.div
-          animate={{ scale: [0.95, 1.05, 0.95] }}
-          transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
-          className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-[0_8px_24px_-6px_rgba(60,255,197,0.5)]"
-        >
-          <svg viewBox="0 0 24 24" className="w-4 h-4 text-ink ml-0.5" aria-hidden="true">
-            <polygon points="7,4 20,12 7,20" fill="currentColor" />
-          </svg>
-        </motion.div>
-      </div>
-
-      {/* Waveform along the bottom */}
-      <div className="absolute bottom-3 left-3 right-3 flex items-end gap-0.5 h-3">
-        {[0.3, 0.7, 0.5, 0.9, 0.45, 0.75, 0.6, 0.85, 0.35, 0.65, 0.5, 0.8].map((h, i) => (
-          <motion.span
-            key={i}
-            className="flex-1 bg-white/30 rounded-full"
-            animate={{ height: [`${h * 60}%`, `${(1 - h) * 60 + 20}%`, `${h * 60}%`] }}
-            transition={{ duration: 1.5 + i * 0.1, repeat: Infinity, ease: "easeInOut", delay: i * 0.08 }}
+        {/* Scene — the motion graphic playing inside */}
+        <div className="relative flex-1 overflow-hidden">
+          {/* Moving color wash background */}
+          <motion.div
+            className="absolute inset-0"
+            animate={{
+              background: [
+                "radial-gradient(circle at 30% 40%, rgba(0,41,214,0.45) 0%, transparent 55%)",
+                "radial-gradient(circle at 70% 60%, rgba(60,255,197,0.28) 0%, transparent 55%)",
+                "radial-gradient(circle at 40% 70%, rgba(0,41,214,0.45) 0%, transparent 55%)",
+                "radial-gradient(circle at 30% 40%, rgba(0,41,214,0.45) 0%, transparent 55%)",
+              ],
+            }}
+            transition={{ duration: DURATION, repeat: Infinity, ease: "easeInOut" }}
           />
-        ))}
+
+          {/* Halo rings */}
+          {[0, 1, 2].map((i) => (
+            <motion.div
+              key={i}
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-brand-green/30"
+              initial={{ width: 24, height: 24, opacity: 0 }}
+              animate={{
+                width: [24, 150],
+                height: [24, 150],
+                opacity: [0, 0.55, 0],
+              }}
+              transition={{
+                duration: 3.2,
+                delay: i * 1.05,
+                repeat: Infinity,
+                ease: "easeOut",
+              }}
+            />
+          ))}
+
+          {/* Center morphing shape — the "brand animating" moment */}
+          <motion.div
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+            animate={{ rotate: [0, 45, 90, 180, 270, 360] }}
+            transition={{ duration: DURATION, repeat: Infinity, ease: [0.45, 0, 0.55, 1] }}
+          >
+            <motion.div
+              className="w-10 h-10 bg-white"
+              animate={{
+                borderRadius: ["16px", "50%", "2px", "50%", "16px"],
+                backgroundColor: ["#ffffff", "#3CFFC5", "#ffffff", "#0029D6", "#ffffff"],
+                scale: [1, 1.12, 0.95, 1.12, 1],
+              }}
+              transition={{ duration: DURATION, repeat: Infinity, ease: "easeInOut" }}
+              style={{ boxShadow: "0 10px 30px -6px rgba(60,255,197,0.5)" }}
+            />
+          </motion.div>
+
+          {/* Title reveal — letters stagger */}
+          <motion.div
+            className="absolute inset-x-0 bottom-3 flex items-center justify-center gap-[2px] text-[9px] font-lyon font-bold tracking-[0.35em] text-white/90 uppercase"
+            animate={{ opacity: [0, 0, 1, 1, 0] }}
+            transition={{
+              duration: DURATION,
+              times: [0, 0.2, 0.35, 0.85, 0.95],
+              repeat: Infinity,
+            }}
+          >
+            {"Studio".split("").map((ch, i) => (
+              <motion.span
+                key={i}
+                animate={{ y: [6, 0], opacity: [0, 1] }}
+                transition={{
+                  duration: 0.35,
+                  delay: 0.3 + i * 0.05,
+                  repeat: Infinity,
+                  repeatDelay: DURATION - 0.35 - 0.05 * 6 - 0.3,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="inline-block"
+              >
+                {ch}
+              </motion.span>
+            ))}
+          </motion.div>
+
+          {/* Cinema-slate corner markers */}
+          {[
+            "top-1.5 left-1.5 border-t border-l",
+            "top-1.5 right-1.5 border-t border-r",
+            "bottom-1.5 left-1.5 border-b border-l",
+            "bottom-1.5 right-1.5 border-b border-r",
+          ].map((cls, i) => (
+            <div
+              key={i}
+              className={`absolute w-2 h-2 border-brand-green/70 ${cls}`}
+              aria-hidden="true"
+            />
+          ))}
+        </div>
+
+        {/* Bottom controls — timeline, timecode, small control icons */}
+        <div className="shrink-0 px-2 pt-1 pb-1.5 bg-gradient-to-t from-black via-black/90 to-black/30 backdrop-blur-sm">
+          {/* Progress bar with scrubber */}
+          <div className="relative h-[2px] bg-white/10 rounded-full mb-1.5 overflow-visible">
+            <motion.div
+              className="absolute inset-y-0 start-0 bg-brand-green rounded-full"
+              animate={{ width: ["0%", "100%"] }}
+              transition={{ duration: DURATION, repeat: Infinity, ease: "linear" }}
+            />
+            <motion.div
+              className="absolute top-1/2 -translate-y-1/2 w-[7px] h-[7px] rounded-full bg-brand-green shadow-[0_0_8px_rgba(60,255,197,0.9)]"
+              style={{ marginLeft: -3.5 }}
+              animate={{ left: ["0%", "100%"] }}
+              transition={{ duration: DURATION, repeat: Infinity, ease: "linear" }}
+            />
+          </div>
+
+          {/* Controls row */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1.5">
+              {/* Pause icon — because it's playing */}
+              <div className="flex items-center gap-[1.5px]">
+                <span className="w-[2px] h-[7px] bg-white rounded-sm" />
+                <span className="w-[2px] h-[7px] bg-white rounded-sm" />
+              </div>
+              <TimeCode duration={DURATION} />
+            </div>
+            <div className="flex items-center gap-1.5 text-white/40">
+              {/* Volume */}
+              <svg width="9" height="9" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
+                <path d="M4 4h2l2-2v8l-2-2H4V4z" />
+              </svg>
+              {/* Fullscreen */}
+              <svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.2" aria-hidden="true">
+                <path d="M2 4V2h2M10 4V2H8M2 8v2h2M10 8v2H8" />
+              </svg>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+  );
+}
+
+/**
+ * TimeCode — mm:ss counter that loops with the scene. Client-only so
+ * the mount timestamp becomes the loop's zero point.
+ */
+function TimeCode({ duration }: { duration: number }) {
+  const [tick, setTick] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setTick((n) => n + 1), 1000);
+    return () => clearInterval(id);
+  }, []);
+  const secs = tick % duration;
+  const mm = Math.floor(secs / 60)
+    .toString()
+    .padStart(1, "0");
+  const ss = (secs % 60).toString().padStart(2, "0");
+  const total = `0:${duration.toString().padStart(2, "0")}`;
+  return (
+    <span className="text-[6px] font-mono text-white/60 tabular-nums">
+      {mm}:{ss} / {total}
+    </span>
   );
 }
 
