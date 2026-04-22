@@ -260,6 +260,23 @@ export interface CaseStudy {
   /** Text color on brand bg */
   onColor?: "light" | "dark";
 
+  /** Per-project palette used for case study visual identity */
+  palette: {
+    background: string;
+    surface: string;
+    primary: string;
+    accent: string;
+    ink: string;
+    inkSoft: string;
+  };
+
+  /** Typography the project uses (short labels shown in the type specimen) */
+  typography: {
+    displayName: string;
+    bodyName: string;
+    note?: Bilingual;
+  };
+
   shortDescription: Bilingual;
   summary: Bilingual;
 
@@ -278,7 +295,14 @@ export interface CaseStudy {
   techStack: string[];
   stats?: Stat[];
 
-  screenshots?: Screenshot[];
+  /** Screenshots captured from the live site */
+  shots?: {
+    desktopHome?: string;
+    mobileHome?: string;
+    desktopInner?: string;
+    mobileInner?: string;
+    extra?: { src: string; caption: Bilingual }[];
+  };
 }
 
 export type MotionKind = "client" | "spec";
@@ -314,6 +338,28 @@ export const caseStudies: CaseStudy[] = [
     color: "#1A1A1A",
     accent: "#D4AF37",
     onColor: "light",
+    palette: {
+      background: "#13100D",
+      surface: "#1E1A16",
+      primary: "#D4AF37",
+      accent: "#F5E6C3",
+      ink: "#F6EFDF",
+      inkSoft: "rgba(246,239,223,0.65)",
+    },
+    typography: {
+      displayName: "Playfair Display",
+      bodyName: "Inter · System",
+      note: {
+        en: "Serif display for elegance, clean sans for product copy.",
+        ar: "خط سيرف للفخامة، سانس نظيف لنصوص المنتجات.",
+      },
+    },
+    shots: {
+      desktopHome: "/images/projects/dolcebello/home-desktop.png",
+      mobileHome: "/images/projects/dolcebello/home-mobile.png",
+      desktopInner: "/images/projects/dolcebello/inner-desktop.png",
+      mobileInner: "/images/projects/dolcebello/inner-mobile.png",
+    },
     shortDescription: {
       en: "A premium luxury sweets storefront built for Kuwait's most refined gifting occasions.",
       ar: "متجر فاخر للحلويات صُمم لأرقى مناسبات الهدايا في الكويت.",
@@ -414,6 +460,26 @@ export const caseStudies: CaseStudy[] = [
     color: "#0A3D2E",
     accent: "#C6A664",
     onColor: "light",
+    palette: {
+      background: "#082620",
+      surface: "#0F3A30",
+      primary: "#C6A664",
+      accent: "#E7D8AF",
+      ink: "#F5EFE0",
+      inkSoft: "rgba(245,239,224,0.65)",
+    },
+    typography: {
+      displayName: "Cormorant Garamond",
+      bodyName: "Inter",
+      note: {
+        en: "Warm serif for editorial warmth, pragmatic sans for the booking flow.",
+        ar: "خط سيرف دافئ للإحساس التحريري، سانس عملي لتدفق الحجز.",
+      },
+    },
+    shots: {
+      desktopHome: "/images/projects/nobles-catering/home-desktop.png",
+      mobileHome: "/images/projects/nobles-catering/home-mobile.png",
+    },
     shortDescription: {
       en: "A premium catering booking platform for Kuwait with a six-step wizard and full admin backend.",
       ar: "منصة حجز تموين فاخرة في الكويت بمعالج من ست خطوات ولوحة إدارية كاملة.",
@@ -513,6 +579,26 @@ export const caseStudies: CaseStudy[] = [
     color: "#0C2340",
     accent: "#3CFFC5",
     onColor: "light",
+    palette: {
+      background: "#081828",
+      surface: "#102A45",
+      primary: "#3CFFC5",
+      accent: "#82B4FF",
+      ink: "#EAF2FF",
+      inkSoft: "rgba(234,242,255,0.65)",
+    },
+    typography: {
+      displayName: "IBM Plex Sans Arabic",
+      bodyName: "Inter",
+      note: {
+        en: "Clear technical sans pairs with Arabic that handles dense financial data without fatigue.",
+        ar: "خط سانس تقني واضح مع عربي يتعامل مع البيانات المالية الكثيفة دون إرهاق.",
+      },
+    },
+    shots: {
+      desktopHome: "/images/projects/meezan/home-desktop.png",
+      mobileHome: "/images/projects/meezan/home-mobile.png",
+    },
     shortDescription: {
       en: "An Arabic-first cloud ERP and accounting system built for ambitious Gulf-region businesses.",
       ar: "نظام محاسبة و ERP سحابي عربي أولاً لشركات الخليج الطموحة.",
@@ -612,6 +698,26 @@ export const caseStudies: CaseStudy[] = [
     color: "#7B1E3A",
     accent: "#D4AF37",
     onColor: "light",
+    palette: {
+      background: "#3A0D1C",
+      surface: "#5C152A",
+      primary: "#D4AF37",
+      accent: "#F1DDA0",
+      ink: "#F9EEE4",
+      inkSoft: "rgba(249,238,228,0.7)",
+    },
+    typography: {
+      displayName: "Libre Caslon",
+      bodyName: "Inter",
+      note: {
+        en: "Heritage serif anchors the brand; modern sans handles operational UI.",
+        ar: "خط سيرف تراثي يرسّخ الهوية؛ سانس حديث يدير واجهة التشغيل.",
+      },
+    },
+    shots: {
+      desktopHome: "/images/projects/royal-catering/home-desktop.png",
+      mobileHome: "/images/projects/royal-catering/home-mobile.png",
+    },
     shortDescription: {
       en: "A full rebuild of an established Kuwaiti catering brand's online booking experience.",
       ar: "إعادة بناء كاملة لتجربة الحجز عبر الإنترنت لعلامة تموين كويتية عريقة.",
@@ -695,6 +801,26 @@ export const caseStudies: CaseStudy[] = [
     color: "#0A5540",
     accent: "#3CFFC5",
     onColor: "light",
+    palette: {
+      background: "#083B2D",
+      surface: "#0E4C3A",
+      primary: "#3CFFC5",
+      accent: "#A9FFE3",
+      ink: "#EEFFF7",
+      inkSoft: "rgba(238,255,247,0.65)",
+    },
+    typography: {
+      displayName: "IBM Plex Sans",
+      bodyName: "Inter",
+      note: {
+        en: "Operational, legible, and confident under field conditions.",
+        ar: "تشغيلي، مقروء، وثابت في ظروف الميدان.",
+      },
+    },
+    shots: {
+      desktopHome: "/images/projects/nobles-respond/home-desktop.png",
+      mobileHome: "/images/projects/nobles-respond/home-mobile.png",
+    },
     shortDescription: {
       en: "An enterprise operational response platform with bilingual dashboards and PWA capabilities.",
       ar: "منصة استجابة تشغيلية مؤسسية بلوحات تحكم ثنائية اللغة وقدرات PWA.",
