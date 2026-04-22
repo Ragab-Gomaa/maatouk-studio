@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useTranslation } from "@/lib/LocaleContext";
 import { siteContent } from "@/data/content";
-import BrandMark from "@/components/ui/BrandMark";
 import Button from "@/components/ui/Button";
 
 const navLinks = [
@@ -50,29 +49,43 @@ export default function Header() {
           scrolled ? "pt-3" : "pt-5"
         }`}
       >
-        <div className="max-w-[1320px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+        <div className="max-w-[1320px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10">
           <nav
-            className={`flex items-center justify-between gap-4 transition-all duration-500 rounded-full pr-2 pl-5 md:pl-7 ${
+            className={`flex items-center justify-between gap-4 transition-all duration-500 rounded-full pl-6 sm:pl-7 lg:pl-8 pr-2.5 ${
               scrolled
-                ? "bg-surface-raised/90 backdrop-blur-md shadow-md py-2"
-                : "bg-surface-raised/60 backdrop-blur-sm py-2.5"
+                ? "bg-surface-raised/95 backdrop-blur-md shadow-[0_6px_24px_rgba(18,18,20,0.08)] py-3"
+                : "bg-surface-raised/90 backdrop-blur-md shadow-[0_2px_12px_rgba(18,18,20,0.04)] py-4"
             }`}
             aria-label={t("Primary navigation", "التنقل الرئيسي")}
           >
-            {/* Logo */}
+            {/* ── Rotating mark + horizontal logo wordmark ── */}
             <Link
               href="/"
-              className="flex items-center gap-2.5 shrink-0"
+              className="flex items-center gap-2.5 md:gap-3 shrink-0 group focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-4 rounded-full"
               aria-label={t("Maatouk Studio — Home", "ستوديو معتوق — الرئيسية")}
             >
-              <BrandMark color="#0029D6" size={26} />
-              <span className="hidden sm:block font-lyon text-[15px] font-bold tracking-tight text-ink">
-                {t("Maatouk", "ماتوك")}
+              {/* Mark — rotates 180° smoothly on hover */}
+              <span className="block transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:rotate-180">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/images/logos/mark-blue.svg"
+                  alt=""
+                  className="w-6 h-6 md:w-[26px] md:h-[26px] block"
+                />
+              </span>
+
+              {/* Wordmark — full brand name in proper typography */}
+              <span
+                className={`hidden sm:inline-block font-bold tracking-[-0.01em] text-ink leading-none ${
+                  locale === "ar" ? "font-mizan text-[17px] md:text-[18px]" : "font-lyon text-[16px] md:text-[17px]"
+                }`}
+              >
+                {t("Maatouk Studio", "ستوديو معتوق")}
               </span>
             </Link>
 
-            {/* Desktop nav */}
-            <div className="hidden lg:flex items-center gap-1">
+            {/* ── Desktop nav — smooth hover with animated pill + underline ── */}
+            <div className="hidden lg:flex items-center gap-0.5 relative">
               {navLinks.map((link) => {
                 const active = isActive(link.href);
                 return (
@@ -80,23 +93,49 @@ export default function Header() {
                     key={link.href}
                     href={link.href}
                     aria-current={active ? "page" : undefined}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-300 ${
-                      active
-                        ? "bg-ink text-white"
-                        : "text-ink-muted hover:text-ink hover:bg-black/[0.04]"
+                    className={`group/link relative px-4 py-2 rounded-full text-[14px] font-medium transition-all duration-300 focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2 ${
+                      active ? "text-white" : "text-ink-muted hover:text-ink"
                     }`}
                   >
-                    {t(link.label.en, link.label.ar)}
+                    {/* Active pill — slides between items */}
+                    {active && (
+                      <motion.span
+                        layoutId="nav-pill"
+                        className="absolute inset-0 bg-ink rounded-full -z-10"
+                        transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                      />
+                    )}
+
+                    {/* Hover pill — subtle fade-in under inactive items */}
+                    {!active && (
+                      <span
+                        className="absolute inset-0 rounded-full bg-black/[0.04] opacity-0 scale-[0.92] group-hover/link:opacity-100 group-hover/link:scale-100 transition-all duration-400 ease-out -z-10"
+                        aria-hidden="true"
+                      />
+                    )}
+
+                    {/* Label with subtle lift on hover */}
+                    <span className="relative inline-block transition-transform duration-300 group-hover/link:-translate-y-[1px]">
+                      {t(link.label.en, link.label.ar)}
+                    </span>
+
+                    {/* Accent underline on hover (inactive only) */}
+                    {!active && (
+                      <span
+                        className="absolute left-1/2 -translate-x-1/2 bottom-1 h-[2px] w-0 bg-brand-blue rounded-full group-hover/link:w-4 transition-[width] duration-400 ease-out"
+                        aria-hidden="true"
+                      />
+                    )}
                   </Link>
                 );
               })}
             </div>
 
-            {/* Right */}
+            {/* ── Right actions ── */}
             <div className="flex items-center gap-2">
               <button
                 onClick={toggleLocale}
-                className="hidden sm:inline-flex items-center justify-center w-10 h-10 rounded-full border border-black/[0.08] text-xs font-semibold text-ink-muted hover:text-brand-blue hover:border-brand-blue/30 transition-colors focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2"
+                className="hidden sm:inline-flex items-center justify-center w-10 h-10 rounded-full border border-black/[0.08] text-xs font-semibold text-ink-muted hover:text-brand-blue hover:border-brand-blue/40 hover:bg-brand-blue/5 transition-all duration-300 focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2"
                 aria-label={`Switch to ${locale === "en" ? "Arabic" : "English"}`}
               >
                 {locale === "en" ? "عربي" : "EN"}
@@ -108,10 +147,10 @@ export default function Header() {
                 </Button>
               </div>
 
-              {/* Mobile */}
+              {/* Mobile toggle */}
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
-                className="lg:hidden w-10 h-10 rounded-full flex items-center justify-center border border-black/[0.08] focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2"
+                className="lg:hidden w-10 h-10 rounded-full flex items-center justify-center border border-black/[0.08] hover:border-brand-blue/40 transition-colors focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2"
                 aria-label={menuOpen ? t("Close menu", "إغلاق") : t("Open menu", "فتح القائمة")}
                 aria-expanded={menuOpen}
                 aria-controls="mobile-menu"
