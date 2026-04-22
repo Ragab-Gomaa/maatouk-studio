@@ -158,9 +158,9 @@ function ComposedMark() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.3 }}
-        className="absolute top-0 end-0 w-[65%] aspect-square rounded-[20px] overflow-hidden studio-card"
+        className="absolute top-0 end-0 w-[65%] aspect-square rounded-[20px] overflow-hidden studio-card bg-brand-blue"
       >
-        <CornerLabel text={t("Branding", "الهوية البصرية")} tone="blue" />
+        <CornerLabel text={t("Branding", "الهوية البصرية")} tone="on-blue" />
         <BrandingAnimation />
       </motion.div>
 
@@ -205,10 +205,10 @@ function CornerLabel({
   tone,
 }: {
   text: string;
-  tone: "blue" | "dark" | "light";
+  tone: "on-blue" | "dark" | "light";
 }) {
   const palette = {
-    blue: "bg-brand-blue-soft text-brand-blue",
+    "on-blue": "bg-white text-brand-blue",
     dark: "bg-white/10 text-white",
     light: "bg-surface-low text-ink-muted",
   }[tone];
@@ -226,44 +226,191 @@ function CornerLabel({
 
 /* ─────────────────── Animations ─────────────────── */
 
+/**
+ * BrandingAnimation — the BrandMark identity reveal on a full brand-blue
+ * canvas. Guidelines fade in, construction accents mark the anchor
+ * points in brand-green, then the 4 diamond triangles assemble in
+ * white, finishing with a wordmark reveal below. Loops every 9s.
+ */
 function BrandingAnimation() {
+  const DURATION = 9;
+
   return (
-    <div className="absolute inset-0 bg-brand-blue-soft/50">
-      <svg viewBox="0 0 200 200" className="w-full h-full" aria-hidden="true">
-        <line x1="30" y1="100" x2="170" y2="100" stroke="rgba(0,41,214,0.08)" strokeWidth="0.5" />
-        <line x1="100" y1="30" x2="100" y2="170" stroke="rgba(0,41,214,0.08)" strokeWidth="0.5" />
+    <div
+      className="absolute inset-0 bg-brand-blue overflow-hidden"
+      style={{ direction: "ltr" }}
+    >
+      {/* Soft green wash that breathes */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        animate={{
+          background: [
+            "radial-gradient(circle at 50% 55%, rgba(60,255,197,0.16) 0%, transparent 60%)",
+            "radial-gradient(circle at 50% 55%, rgba(60,255,197,0.28) 0%, transparent 55%)",
+            "radial-gradient(circle at 50% 55%, rgba(60,255,197,0.16) 0%, transparent 60%)",
+          ],
+        }}
+        transition={{ duration: DURATION, repeat: Infinity, ease: "easeInOut" }}
+        aria-hidden="true"
+      />
 
-        <motion.circle
-          cx="100" cy="100" r="42"
-          stroke="#0029D6" strokeWidth="6" strokeLinecap="round" fill="none"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: [0, 1, 1, 0] }}
-          transition={{ duration: 5, times: [0, 0.55, 0.75, 1], repeat: Infinity, ease: [0.22, 1, 0.36, 1] }}
-          style={{ transformOrigin: "100px 100px", rotate: "-90deg" }}
+      {/* Subtle white dot grid */}
+      <div
+        className="absolute inset-0 opacity-[0.18] pointer-events-none"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, rgba(255,255,255,0.95) 0.7px, transparent 0.7px)",
+          backgroundSize: "13px 13px",
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Corner construction markers — cinema-slate style */}
+      {[
+        "top-3 left-3 border-t border-l",
+        "top-3 right-3 border-t border-r",
+        "bottom-3 left-3 border-b border-l",
+        "bottom-3 right-3 border-b border-r",
+      ].map((cls, i) => (
+        <motion.div
+          key={i}
+          className={`absolute w-2 h-2 border-brand-green/80 ${cls}`}
+          animate={{ opacity: [0, 1, 1, 0.3] }}
+          transition={{
+            duration: DURATION,
+            times: [0, 0.15, 0.82, 1],
+            delay: i * 0.05,
+            repeat: Infinity,
+          }}
+          aria-hidden="true"
         />
+      ))}
 
-        <motion.g
-          animate={{ rotate: 360 }}
-          transition={{ duration: 5, repeat: Infinity, ease: [0.22, 1, 0.36, 1] }}
-          style={{ transformOrigin: "100px 100px" }}
+      {/* Mark construction canvas */}
+      <div className="absolute inset-0 flex items-center justify-center pt-5 pb-6">
+        <svg
+          viewBox="0 0 120 120"
+          className="w-[58%] h-[58%]"
+          aria-hidden="true"
         >
-          <g transform="translate(100 58)">
-            <circle cx="0" cy="0" r="7" fill="#0029D6" />
-            <circle cx="0" cy="0" r="2.5" fill="#3CFFC5" />
-          </g>
-        </motion.g>
+          {/* Guidelines — cross + bounding circle */}
+          <motion.g
+            stroke="white"
+            strokeWidth="0.3"
+            fill="none"
+            animate={{ opacity: [0, 0.5, 0.5, 0] }}
+            transition={{
+              duration: DURATION,
+              times: [0, 0.15, 0.82, 0.95],
+              repeat: Infinity,
+            }}
+          >
+            <line x1="60" y1="14" x2="60" y2="106" strokeDasharray="2 2" />
+            <line x1="14" y1="60" x2="106" y2="60" strokeDasharray="2 2" />
+            <circle cx="60" cy="60" r="36" strokeDasharray="2 2" />
+          </motion.g>
 
-        <g fill="#0029D6" opacity="0.25">
-          <rect x="28" y="28" width="4" height="1" />
-          <rect x="28" y="28" width="1" height="4" />
-          <rect x="169" y="28" width="4" height="1" />
-          <rect x="172" y="28" width="1" height="4" />
-          <rect x="28" y="172" width="4" height="1" />
-          <rect x="28" y="169" width="1" height="4" />
-          <rect x="169" y="172" width="4" height="1" />
-          <rect x="172" y="169" width="1" height="4" />
-        </g>
-      </svg>
+          {/* Anchor points in brand-green */}
+          {[
+            { x: 60, y: 24 },
+            { x: 96, y: 60 },
+            { x: 60, y: 96 },
+            { x: 24, y: 60 },
+          ].map((p, i) => (
+            <motion.circle
+              key={i}
+              cx={p.x}
+              cy={p.y}
+              r="1.8"
+              fill="#3CFFC5"
+              animate={{
+                opacity: [0, 1, 1, 0],
+                scale: [0.3, 1, 1, 0.3],
+              }}
+              transition={{
+                duration: DURATION,
+                times: [0.12 + i * 0.03, 0.22 + i * 0.03, 0.8, 0.92],
+                repeat: Infinity,
+              }}
+              style={{ transformOrigin: `${p.x}px ${p.y}px` }}
+            />
+          ))}
+
+          {/* BrandMark — 4 triangles of the diamond assemble */}
+          {[
+            { d: "M60 24 L96 60 L60 60 Z", delay: 0.32 },
+            { d: "M96 60 L60 96 L60 60 Z", delay: 0.4 },
+            { d: "M60 96 L24 60 L60 60 Z", delay: 0.48 },
+            { d: "M24 60 L60 24 L60 60 Z", delay: 0.56 },
+          ].map((piece, i) => (
+            <motion.path
+              key={i}
+              d={piece.d}
+              fill="white"
+              animate={{
+                opacity: [0, 0, 1, 1, 0.15],
+                scale: [0.3, 0.3, 1, 1, 0.85],
+              }}
+              transition={{
+                duration: DURATION,
+                times: [0, piece.delay, piece.delay + 0.06, 0.84, 0.96],
+                repeat: Infinity,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              style={{ transformOrigin: "60px 60px" }}
+            />
+          ))}
+
+          {/* Center signature glow — brand-green ping */}
+          <motion.circle
+            cx="60"
+            cy="60"
+            r="2.2"
+            fill="#3CFFC5"
+            animate={{
+              opacity: [0, 0, 1, 0.6, 1, 0],
+              scale: [0, 0, 1, 1.6, 1, 0],
+            }}
+            transition={{
+              duration: DURATION,
+              times: [0, 0.65, 0.7, 0.78, 0.85, 0.95],
+              repeat: Infinity,
+            }}
+            style={{
+              transformOrigin: "60px 60px",
+              filter: "drop-shadow(0 0 5px rgba(60,255,197,0.9))",
+            }}
+          />
+        </svg>
+      </div>
+
+      {/* Wordmark reveal — letters stagger in once the mark is built */}
+      <motion.div
+        className="absolute inset-x-0 bottom-3.5 flex items-center justify-center gap-[1.5px] text-[9px] font-lyon font-bold tracking-[0.38em] text-white uppercase"
+        animate={{ opacity: [0, 0, 1, 1, 0] }}
+        transition={{
+          duration: DURATION,
+          times: [0, 0.68, 0.78, 0.9, 0.97],
+          repeat: Infinity,
+        }}
+      >
+        {"Maatouk".split("").map((ch, i) => (
+          <motion.span
+            key={i}
+            animate={{ y: [6, 0], opacity: [0, 1] }}
+            transition={{
+              duration: 0.32,
+              delay: 0.3 + i * 0.045,
+              repeat: Infinity,
+              repeatDelay: DURATION - 0.32 - 0.045 * 7 - 0.3,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="inline-block"
+          >
+            {ch}
+          </motion.span>
+        ))}
+      </motion.div>
     </div>
   );
 }
