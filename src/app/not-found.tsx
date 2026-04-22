@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useTranslation } from "@/lib/LocaleContext";
 import { siteContent } from "@/data/content";
 import BrandMark from "@/components/ui/BrandMark";
+import Button from "@/components/ui/Button";
 
 export default function NotFound() {
   const { t } = useTranslation();
@@ -47,24 +48,25 @@ export default function NotFound() {
             {t(siteContent.notFound.sub.en, siteContent.notFound.sub.ar)}
           </motion.p>
 
-          <motion.a
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            href="/"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-brand-blue text-white font-medium hover:bg-brand-blue-dark transition-colors duration-300"
           >
-            <svg
-              className="w-4 h-4 rotate-180"
-              viewBox="0 0 16 16"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            >
-              <path d="M3 8h10M9 4l4 4-4 4" />
-            </svg>
-            {t(siteContent.notFound.cta.en, siteContent.notFound.cta.ar)}
-          </motion.a>
+            <Button href="/" variant="primary" size="md">
+              <svg
+                className="w-4 h-4 rotate-180 rtl-flip"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                aria-hidden="true"
+              >
+                <path d="M3 8h10M9 4l4 4-4 4" />
+              </svg>
+              <span>{t(siteContent.notFound.cta.en, siteContent.notFound.cta.ar)}</span>
+            </Button>
+          </motion.div>
         </div>
       </div>
     </section>

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useTranslation } from "@/lib/LocaleContext";
 import { siteContent } from "@/data/content";
 import { fadeUp, staggerContainer } from "@/lib/animations";
+import Button from "@/components/ui/Button";
 
 export default function ServicesPage() {
   const { t } = useTranslation();
@@ -103,15 +104,9 @@ export default function ServicesPage() {
             <h3 className="text-3xl md:text-4xl font-lyon font-bold tracking-tight mb-8">
               {t("Have a project in mind?", "لديك مشروع في ذهنك؟")}
             </h3>
-            <a
-              href="/contact"
-              className="inline-flex items-center gap-3 px-10 py-5 bg-brand-blue text-white text-lg font-bold hover:bg-brand-blue-dark transition-colors duration-300 shine-sweep"
-            >
+            <Button href="/contact" variant="primary" size="lg" withArrow>
               {t("Let's talk", "لنتحدث")}
-              <svg className="w-5 h-5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M3 8h10M9 4l4 4-4 4" />
-              </svg>
-            </a>
+            </Button>
           </motion.div>
         </div>
       </section>

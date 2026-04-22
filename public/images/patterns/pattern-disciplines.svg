@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+  <defs>
+    <style>
+      .pat { fill: currentColor; }
+      .ln { stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+  </defs>
+
+  <!-- Top-left: Typography — stylized T -->
+  <g transform="translate(20,20)">
+    <rect class="pat" x="0" y="0" width="24" height="3" />
+    <rect class="pat" x="10.5" y="0" width="3" height="22" />
+  </g>
+
+  <!-- Top-center: Code brackets </> -->
+  <g transform="translate(104,24)">
+    <path class="ln" d="M 0 8 L -8 16 L 0 24" />
+    <path class="ln" d="M 22 8 L 30 16 L 22 24" />
+    <path class="ln" d="M 16 4 L 6 28" />
+  </g>
+
+  <!-- Top-right: Motion — play triangle -->
+  <g transform="translate(200,22)">
+    <polygon class="pat" points="0,0 16,8 0,16" />
+  </g>
+
+  <!-- Middle-left: diamond -->
+  <g transform="translate(30,110)">
+    <rect class="pat" x="0" y="0" width="10" height="10" transform="rotate(45 5 5)" />
+  </g>
+
+  <!-- Middle-center: Motion — circle with dot (record) -->
+  <g transform="translate(110,110)">
+    <circle class="ln" cx="10" cy="10" r="12" />
+    <circle class="pat" cx="10" cy="10" r="3" />
+  </g>
+
+  <!-- Middle-right: Code cursor bar -->
+  <g transform="translate(196,108)">
+    <rect class="pat" x="0" y="0" width="2" height="18" />
+    <rect class="pat" x="-4" y="0" width="10" height="2" />
+    <rect class="pat" x="-4" y="16" width="10" height="2" />
+  </g>
+
+  <!-- Bottom-left: Typography — serif A -->
+  <g transform="translate(22,196)">
+    <path class="ln" d="M 2 22 L 12 0 L 22 22" />
+    <path class="ln" d="M 6 14 L 18 14" />
+  </g>
+
+  <!-- Bottom-center: Motion — arcs (waveform) -->
+  <g transform="translate(104,200)">
+    <path class="ln" d="M 0 10 Q 4 0, 8 10 T 16 10 T 24 10 T 32 10" />
+  </g>
+
+  <!-- Bottom-right: Branding — small grid mark -->
+  <g transform="translate(196,196)">
+    <rect class="pat" x="0" y="0" width="8" height="8" transform="rotate(45 4 4)" />
+    <rect class="pat" x="16" y="16" width="8" height="8" transform="rotate(45 20 20)" />
+  </g>
+</svg>

@@ -6,6 +6,7 @@ import { siteContent } from "@/data/content";
 import { fadeUp, staggerContainer } from "@/lib/animations";
 import SectionLabel from "@/components/ui/SectionLabel";
 import DiamondDivider from "@/components/ui/DiamondDivider";
+import Button from "@/components/ui/Button";
 
 const serviceIcons = [
   <svg key="brand" viewBox="0 0 64 64" className="w-12 h-12" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -110,15 +111,9 @@ export default function ServicesSection() {
         </motion.div>
 
         <div className="mt-16 text-center">
-          <a
-            href="/services"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-brand-blue text-white text-base font-medium hover:bg-brand-blue-dark transition-colors duration-300"
-          >
+          <Button href="/services" variant="primary" size="lg" withArrow>
             {t("Explore all services", "استكشف جميع الخدمات")}
-            <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M3 8h10M9 4l4 4-4 4" />
-            </svg>
-          </a>
+          </Button>
         </div>
       </div>
 

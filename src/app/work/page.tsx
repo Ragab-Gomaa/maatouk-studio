@@ -1,43 +1,90 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "@/lib/LocaleContext";
-import { siteContent, caseStudies } from "@/data/content";
-import { fadeUp, staggerContainer } from "@/lib/animations";
+import { siteContent, caseStudies, motionProjects } from "@/data/content";
+import { fadeUp } from "@/lib/animations";
+import VimeoPlayer from "@/components/case-study/VimeoPlayer";
 
-const filters = [
-  { key: "all", en: "All", ar: "الكل" },
-  { key: "branding", en: "Branding", ar: "هوية بصرية" },
-  { key: "motion", en: "Motion", ar: "موشن" },
-  { key: "website", en: "Websites", ar: "مواقع" },
+type Filter =
+  | "all"
+  | "websites"
+  | "ecommerce"
+  | "erp"
+  | "motion-client"
+  | "motion-spec";
+
+const filters: { key: Filter; label: { en: string; ar: string } }[] = [
+  { key: "all", label: { en: "All", ar: "الكل" } },
+  { key: "websites", label: { en: "Websites", ar: "مواقع" } },
+  { key: "ecommerce", label: { en: "E-commerce", ar: "تجارة إلكترونية" } },
+  { key: "erp", label: { en: "ERP / Apps", ar: "أنظمة / تطبيقات" } },
+  { key: "motion-client", label: { en: "Motion — Client", ar: "موشن — عملاء" } },
+  { key: "motion-spec", label: { en: "Motion — Personal", ar: "موشن — شخصي" } },
 ];
 
 export default function WorkPage() {
   const { t } = useTranslation();
-  const [activeFilter, setActiveFilter] = useState("all");
+  const [filter, setFilter] = useState<Filter>("all");
 
-  const filtered = activeFilter === "all"
-    ? caseStudies
-    : caseStudies.filter((project) => {
-        const cat = project.category.en.toLowerCase();
-        if (activeFilter === "branding") return cat.includes("branding");
-        if (activeFilter === "motion") return cat.includes("motion");
-        if (activeFilter === "website") return cat.includes("website");
-        return true;
-      });
+  const visibleCaseStudies = useMemo(() => {
+    if (filter === "all" || filter === "websites") {
+      return [...caseStudies].sort((a, b) => a.order - b.order);
+    }
+    if (filter === "ecommerce") {
+      return caseStudies.filter((c) => c.categories.includes("ecommerce"));
+    }
+    if (filter === "erp") {
+      return caseStudies.filter(
+        (c) => c.categories.includes("erp") || c.categories.includes("enterprise")
+      );
+    }
+    return [];
+  }, [filter]);
+
+  const visibleMotion = useMemo(() => {
+    if (filter === "all") {
+      return [...motionProjects].sort((a, b) => a.order - b.order);
+    }
+    if (filter === "motion-client") {
+      return motionProjects
+        .filter((m) => m.kind === "client")
+        .sort((a, b) => a.order - b.order);
+    }
+    if (filter === "motion-spec") {
+      return motionProjects
+        .filter((m) => m.kind === "spec")
+        .sort((a, b) => a.order - b.order);
+    }
+    return [];
+  }, [filter]);
+
+  const showClientGroup = filter === "all" || filter === "motion-client";
+  const showSpecGroup = filter === "all" || filter === "motion-spec";
 
   return (
     <>
-      {/* Hero */}
-      <section className="pt-40 md:pt-48 pb-16 md:pb-24 bg-surface">
-        <div className="max-w-[1440px] mx-auto px-8 md:px-12 lg:px-20">
+      {/* ─── Hero ─── */}
+      <section className="pt-32 md:pt-40 pb-14 md:pb-20 bg-surface relative overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-[0.03] text-brand-blue pointer-events-none"
+          style={{
+            backgroundImage: "url('/images/patterns/pattern-disciplines.svg')",
+            backgroundSize: "180px",
+            backgroundRepeat: "repeat",
+          }}
+          aria-hidden="true"
+        />
+
+        <div className="relative z-10 max-w-[1440px] mx-auto px-6 sm:px-8 md:px-12 lg:px-20">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.7 }}
           >
-            <div className="flex items-center gap-3 mb-8">
+            <div className="flex items-center gap-3 mb-6 md:mb-8">
               <span className="w-2 h-2 rotate-45 bg-brand-blue" />
               <span className="text-xs font-medium uppercase tracking-[0.25em] text-brand-blue">
                 {t("Portfolio", "أعمالنا")}
@@ -47,104 +94,278 @@ export default function WorkPage() {
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-lyon font-bold tracking-tight leading-[0.95] mb-6">
               {t("Selected", "أعمال")}
               <br />
-              <span className="text-black/30">
-                {t("Work", "مختارة")}
-              </span>
+              <span className="text-black/30">{t("Work", "مختارة")}</span>
             </h1>
-            <p className="text-lg text-black/50 max-w-2xl leading-relaxed">
+            <p className="text-base md:text-lg text-black/55 max-w-2xl leading-relaxed">
               {t(siteContent.work.sub.en, siteContent.work.sub.ar)}
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Filter + Projects Grid */}
-      <section className="py-16 md:py-24 bg-surface">
-        <div className="max-w-[1440px] mx-auto px-8 md:px-12 lg:px-20">
-          {/* Filter Tabs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-wrap gap-3 mb-14"
+      {/* ─── Filter Bar ─── */}
+      <section className="sticky top-20 md:top-24 z-30 bg-surface/85 backdrop-blur-md border-y border-black/[0.06]">
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 md:px-12 lg:px-20 py-4 md:py-5">
+          <div
+            role="tablist"
+            aria-label={t("Project filters", "مرشحات المشاريع")}
+            className="flex gap-2 md:gap-3 overflow-x-auto -mx-6 px-6 sm:mx-0 sm:px-0"
           >
-            {filters.map((filter) => (
-              <button
-                key={filter.key}
-                onClick={() => setActiveFilter(filter.key)}
-                className={`px-6 py-2.5 text-sm font-medium border transition-all duration-300 ${
-                  activeFilter === filter.key
-                    ? "border-brand-blue bg-brand-blue text-white"
-                    : "border-black/10 text-black/50 hover:border-brand-blue/30 hover:text-brand-blue"
-                }`}
-              >
-                {t(filter.en, filter.ar)}
-              </button>
-            ))}
-          </motion.div>
-
-          {/* Projects */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeFilter}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.4 }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-10"
-            >
-              {filtered.length > 0 ? (
-                filtered.map((project) => (
-                  <motion.a
-                    key={project.slug}
-                    href={`/work/${project.slug}`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="group"
-                  >
-                    <div
-                      className="relative aspect-[4/3] overflow-hidden mb-6"
-                      style={{ backgroundColor: project.color }}
-                    >
-                      {/* Brand mark watermark */}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <svg viewBox="0 0 473.71 473.15" className="w-32 h-32 text-white/10">
-                          <rect fill="currentColor" x="271.74" y="271.46" width="167.08" height="167.08" transform="translate(-146.96 355.2) rotate(-45)" />
-                          <polygon fill="currentColor" points="236.57 355 118.43 236.85 .28 355 1.2 355.92 0 355.92 0 473.15 118.43 473.15 118.43 473.15 118.43 473.15 236.85 473.15 236.85 355.92 235.66 355.92 236.57 355" />
-                          <rect fill="currentColor" x="34.89" y="34.6" width="167.08" height="167.08" transform="translate(-48.86 118.34) rotate(-45)" />
-                          <polygon fill="currentColor" points="356.84 1.55 355.28 0 353.73 1.55 236.85 1.55 236.85 118.78 237.77 118.78 355.28 236.29 472.79 118.78 473.71 118.78 473.71 1.55 356.84 1.55" />
-                        </svg>
-                      </div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500" />
-                    </div>
-
-                    <div>
-                      <h2 className="text-2xl md:text-3xl font-lyon font-bold group-hover:text-brand-blue transition-colors">
-                        {t(project.title.en, project.title.ar)}
-                      </h2>
-                      <p className="text-sm text-black/40 mt-1 font-medium">
-                        {t(project.category.en, project.category.ar)} — {project.year}
-                      </p>
-                      <p className="text-sm text-black/50 mt-3 max-w-md leading-relaxed">
-                        {t(project.description.en, project.description.ar)}
-                      </p>
-                    </div>
-                  </motion.a>
-                ))
-              ) : (
-                <div className="md:col-span-2 py-20 text-center">
-                  <span className="w-3 h-3 rotate-45 bg-black/10 inline-block mb-4" />
-                  <p className="text-black/30 text-lg font-medium">
-                    {t("No projects in this category yet.", "لا توجد مشاريع في هذه الفئة بعد.")}
-                  </p>
-                </div>
-              )}
-            </motion.div>
-          </AnimatePresence>
+            {filters.map((f) => {
+              const active = filter === f.key;
+              return (
+                <button
+                  key={f.key}
+                  role="tab"
+                  aria-selected={active}
+                  onClick={() => setFilter(f.key)}
+                  className={`shrink-0 px-4 md:px-5 py-2 md:py-2.5 text-xs md:text-sm font-medium border transition-colors duration-300 focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2 ${
+                    active
+                      ? "border-brand-blue bg-brand-blue text-white"
+                      : "border-black/15 text-black/70 hover:border-brand-blue/40 hover:text-brand-blue"
+                  }`}
+                >
+                  {t(f.label.en, f.label.ar)}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </section>
+
+      {/* ─── Web Case Studies ─── */}
+      {visibleCaseStudies.length > 0 && (
+        <section className="py-14 md:py-20 bg-surface">
+          <div className="max-w-[1440px] mx-auto px-6 sm:px-8 md:px-12 lg:px-20">
+            <div className="flex items-center gap-3 mb-8 md:mb-12">
+              <span className="w-2 h-2 rotate-45 bg-brand-blue" />
+              <span className="text-xs font-medium uppercase tracking-[0.2em] text-brand-blue">
+                {t("Case Studies", "دراسات حالة")}
+              </span>
+              <span className="h-px flex-1 bg-brand-blue/10" />
+            </div>
+
+            <motion.div
+              layout
+              className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8"
+            >
+              <AnimatePresence mode="popLayout">
+                {visibleCaseStudies.map((project, i) => (
+                  <motion.div
+                    key={project.slug}
+                    layout
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.5, delay: i * 0.06 }}
+                    className={i === 0 ? "md:col-span-2" : ""}
+                  >
+                    <Link
+                      href={`/work/${project.slug}`}
+                      className="group relative block focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-4"
+                    >
+                      <div
+                        className={`relative overflow-hidden ${
+                          i === 0 ? "aspect-[2/1]" : "aspect-[4/3]"
+                        }`}
+                        style={{ backgroundColor: project.color }}
+                      >
+                        <div
+                          className="absolute inset-0 opacity-10 text-white pointer-events-none"
+                          style={{
+                            backgroundImage:
+                              "url('/images/patterns/pattern-disciplines.svg')",
+                            backgroundSize: "160px",
+                            backgroundRepeat: "repeat",
+                          }}
+                          aria-hidden="true"
+                        />
+
+                        <div className="absolute inset-0 flex flex-col justify-between p-6 md:p-10 text-white">
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="flex flex-wrap gap-2">
+                              {project.tags.slice(0, 3).map((tag, ti) => (
+                                <span
+                                  key={ti}
+                                  className="text-[10px] uppercase tracking-[0.2em] font-medium text-white/70 border border-white/20 px-2.5 py-1"
+                                >
+                                  {t(tag.en, tag.ar)}
+                                </span>
+                              ))}
+                            </div>
+                            <span className="text-xs text-white/50 font-medium shrink-0">
+                              {project.year}
+                            </span>
+                          </div>
+
+                          <div>
+                            <h3
+                              className={`font-lyon font-bold tracking-tight mb-3 ${
+                                i === 0
+                                  ? "text-4xl md:text-6xl lg:text-7xl"
+                                  : "text-3xl md:text-4xl"
+                              }`}
+                            >
+                              {t(project.title.en, project.title.ar)}
+                            </h3>
+                            <p className="text-sm md:text-base text-white/70 max-w-xl leading-relaxed">
+                              {t(
+                                project.shortDescription.en,
+                                project.shortDescription.ar
+                              )}
+                            </p>
+                            <div className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-brand-green opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                              {t(
+                                siteContent.work.viewProject.en,
+                                siteContent.work.viewProject.ar
+                              )}
+                              <svg
+                                className="w-4 h-4 rtl-flip"
+                                viewBox="0 0 16 16"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                aria-hidden="true"
+                              >
+                                <path d="M3 8h10M9 4l4 4-4 4" />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500 pointer-events-none" />
+                      </div>
+                    </Link>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          </div>
+        </section>
+      )}
+
+      {/* ─── Motion Projects ─── */}
+      {visibleMotion.length > 0 && (
+        <section className="py-14 md:py-20 bg-black text-white">
+          <div className="max-w-[1440px] mx-auto px-6 sm:px-8 md:px-12 lg:px-20">
+            <div className="flex items-center gap-3 mb-8 md:mb-12">
+              <span className="w-2 h-2 rotate-45 bg-brand-green" />
+              <span className="text-xs font-medium uppercase tracking-[0.2em] text-brand-green">
+                {t("Motion Projects", "أعمال الموشن")}
+              </span>
+              <span className="h-px flex-1 bg-white/10" />
+            </div>
+
+            {/* Client work */}
+            {showClientGroup &&
+              visibleMotion.filter((m) => m.kind === "client").length > 0 && (
+                <>
+                  <h2 className="text-2xl md:text-3xl font-lyon font-bold tracking-tight mb-8">
+                    {t("Client work", "أعمال عملاء")}
+                  </h2>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+                    {visibleMotion
+                      .filter((m) => m.kind === "client")
+                      .map((m) => (
+                        <motion.div
+                          key={m.slug}
+                          variants={fadeUp}
+                          initial="hidden"
+                          whileInView="visible"
+                          viewport={{ once: true, margin: "-60px" }}
+                        >
+                          <VimeoPlayer
+                            vimeoId={m.vimeoId}
+                            title={`${m.title.en} — ${m.client.en}`}
+                          />
+                          <div className="mt-4 flex items-start justify-between gap-4">
+                            <div>
+                              <h3 className="text-lg md:text-xl font-lyon font-bold">
+                                {t(m.title.en, m.title.ar)}
+                              </h3>
+                              <p className="text-xs md:text-sm text-white/50 mt-1">
+                                {t(m.client.en, m.client.ar)} — {m.year}
+                              </p>
+                            </div>
+                            <span className="text-[10px] uppercase tracking-[0.15em] font-bold px-2.5 py-1 border border-brand-green/40 text-brand-green shrink-0">
+                              {t("Client", "عميل")}
+                            </span>
+                          </div>
+                        </motion.div>
+                      ))}
+                  </div>
+                </>
+              )}
+
+            {/* Personal / Spec work */}
+            {showSpecGroup &&
+              visibleMotion.filter((m) => m.kind === "spec").length > 0 && (
+                <>
+                  <div className="my-14 md:my-20 flex items-center gap-4">
+                    <span className="h-px flex-1 bg-white/10" />
+                    <div className="text-center max-w-xl">
+                      <h2 className="text-2xl md:text-3xl font-lyon font-bold tracking-tight mb-2">
+                        {t("Personal projects", "مشاريع شخصية")}
+                      </h2>
+                      <p className="text-[11px] md:text-sm text-white/50 leading-relaxed">
+                        {t(
+                          "Spec work and explorations. Not affiliated with the brands shown.",
+                          "أعمال استكشافية ومشاريع تدريبية. غير مرتبطة بالعلامات التجارية الظاهرة."
+                        )}
+                      </p>
+                    </div>
+                    <span className="h-px flex-1 bg-white/10" />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+                    {visibleMotion
+                      .filter((m) => m.kind === "spec")
+                      .map((m) => (
+                        <motion.div
+                          key={m.slug}
+                          variants={fadeUp}
+                          initial="hidden"
+                          whileInView="visible"
+                          viewport={{ once: true, margin: "-60px" }}
+                        >
+                          <VimeoPlayer
+                            vimeoId={m.vimeoId}
+                            title={`${m.title.en} (Personal)`}
+                          />
+                          <div className="mt-4 flex items-start justify-between gap-4">
+                            <div>
+                              <h3 className="text-lg md:text-xl font-lyon font-bold">
+                                {t(m.title.en, m.title.ar)}
+                              </h3>
+                              <p className="text-xs md:text-sm text-white/50 mt-1">
+                                {t(m.client.en, m.client.ar)} — {m.year}
+                              </p>
+                            </div>
+                            <span className="text-[10px] uppercase tracking-[0.15em] font-bold px-2.5 py-1 border border-white/20 text-white/60 shrink-0">
+                              {t("Personal", "شخصي")}
+                            </span>
+                          </div>
+                        </motion.div>
+                      ))}
+                  </div>
+                </>
+              )}
+          </div>
+        </section>
+      )}
+
+      {/* ─── Empty state ─── */}
+      {visibleCaseStudies.length === 0 && visibleMotion.length === 0 && (
+        <section className="py-32 bg-surface text-center">
+          <p className="text-black/50">
+            {t(
+              "No projects match this filter yet.",
+              "لا توجد مشاريع تطابق هذا الفلتر بعد."
+            )}
+          </p>
+        </section>
+      )}
     </>
   );
 }

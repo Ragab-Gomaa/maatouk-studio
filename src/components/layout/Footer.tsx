@@ -6,6 +6,7 @@ import { siteContent } from "@/data/content";
 import { fadeUp, staggerContainer } from "@/lib/animations";
 import BrandMark from "@/components/ui/BrandMark";
 import DiamondDivider from "@/components/ui/DiamondDivider";
+import Button from "@/components/ui/Button";
 
 const socialLinks = [
   { name: "Instagram", href: "#" },
@@ -55,25 +56,17 @@ export default function Footer() {
               "أخبرنا عن مشروعك القادم. سنرد خلال ٢٤ ساعة."
             )}
           </motion.p>
-          <motion.a
+          <motion.div
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            href="/contact"
-            className="inline-flex items-center gap-3 px-10 py-5 bg-brand-green text-black text-lg font-bold hover:bg-white transition-colors duration-300"
+            className="inline-block"
           >
-            {t("Start a project", "ابدأ مشروعك")}
-            <svg
-              className="w-5 h-5"
-              viewBox="0 0 16 16"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M3 8h10M9 4l4 4-4 4" />
-            </svg>
-          </motion.a>
+            <Button href="/contact" variant="accent" size="lg" withArrow>
+              {t("Start a project", "ابدأ مشروعك")}
+            </Button>
+          </motion.div>
         </div>
 
         <DiamondDivider color="#ffffff" className="opacity-20" />
@@ -108,8 +101,8 @@ export default function Footer() {
               {Object.entries(siteContent.nav).map(([key, val]) => (
                 <li key={key}>
                   <a
-                    href={`/${key === "journal" ? "#" : key}`}
-                    className="text-white/70 hover:text-brand-green transition-colors duration-300 text-sm"
+                    href={`/${key}`}
+                    className="text-white/75 hover:text-brand-green transition-colors duration-300 text-sm focus:outline-none focus:text-brand-green"
                   >
                     {t(val.en, val.ar)}
                   </a>

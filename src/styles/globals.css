@@ -118,6 +118,31 @@
   ::-webkit-scrollbar-thumb:hover {
     background: var(--color-brand-blue);
   }
+
+  /* ─── Accessibility: Focus States ─── */
+  :focus-visible {
+    outline: 2px solid var(--color-brand-blue);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* ─── RTL: Flip directional arrow icons ─── */
+  [dir="rtl"] .rtl-flip {
+    transform: scaleX(-1);
+  }
+
+  /* ─── RTL: Arabic line-height tweak ─── */
+  [dir="rtl"] h1,
+  [dir="rtl"] h2,
+  [dir="rtl"] h3 {
+    line-height: 1.2;
+    letter-spacing: 0;
+  }
+
+  /* ─── RTL: Marquee direction ─── */
+  [dir="rtl"] .marquee-ltr-only {
+    direction: ltr;
+  }
 }
 
 /* ─── Reduced Motion ─── */
