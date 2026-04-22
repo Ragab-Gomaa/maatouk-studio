@@ -16,17 +16,17 @@ type Testimonial = {
 const testimonials: Testimonial[] = [
   {
     quote: {
-      en: "Maatouk Studio took our vision and built a digital storefront that genuinely feels like our boutique. The attention to Arabic typography and checkout flow is exceptional.",
-      ar: "استوديو معتوق أخذ رؤيتنا وبنى متجراً رقمياً يشبه تماماً تجربة البوتيك. الاهتمام بالخط العربي وتدفق الدفع استثنائي.",
+      en: "The digital storefront genuinely feels like walking into our boutique. The Arabic typography and checkout flow are exceptional.",
+      ar: "المتجر الرقمي يشبه تماماً تجربة دخول البوتيك. الخط العربي وتدفق الدفع استثنائيان.",
     },
-    name: "Dolcebello Team",
+    name: "Dolcebello",
     role: { en: "E-commerce Lead", ar: "مسؤول التجارة الإلكترونية" },
     company: "Dolcebello",
   },
   {
     quote: {
-      en: "They rebuilt our entire booking platform without disrupting daily operations. Six-step wizard handles our full workflow — no training needed for the team.",
-      ar: "أعادوا بناء منصة الحجز بالكامل دون تعطيل العمليات اليومية. معالج الست خطوات يدير سير عملنا كاملاً — دون الحاجة لتدريب الفريق.",
+      en: "They rebuilt our entire booking platform without disrupting daily operations. Six steps handle our full workflow — no training needed.",
+      ar: "أعادوا بناء منصة الحجز بالكامل دون تعطيل العمليات اليومية. الست خطوات تدير سير العمل كاملاً — دون تدريب.",
     },
     name: "Nobles Catering",
     role: { en: "Operations Director", ar: "مدير العمليات" },
@@ -68,97 +68,102 @@ export default function TestimonialsSection() {
   const current = testimonials[active];
 
   return (
-    <section className="py-24 md:py-36 bg-white relative overflow-hidden">
+    <section
+      className="py-24 md:py-36 bg-surface-low relative overflow-hidden"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
       <div className="max-w-[1440px] mx-auto px-6 sm:px-8 md:px-12 lg:px-20">
-        <div className="text-center mb-14 md:mb-20">
-          <SectionLabel className="justify-center">
-            {t("What clients say", "ماذا يقول العملاء")}
-          </SectionLabel>
-          <motion.h2
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="text-4xl md:text-6xl lg:text-7xl font-lyon font-bold tracking-tight mt-6 max-w-3xl mx-auto"
-          >
-            {t("Trusted by ambitious brands.", "ثقة العلامات الطموحة.")}
-          </motion.h2>
-        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-12 lg:gap-20 items-start">
+          {/* Left: label + navigator */}
+          <div className="lg:sticky lg:top-32">
+            <SectionLabel>
+              {t("In their words", "بلسانهم")}
+            </SectionLabel>
+            <motion.h2
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="text-4xl md:text-5xl lg:text-6xl font-lyon font-bold tracking-tight mt-6 leading-[0.95]"
+            >
+              {t("Trusted by", "ثقة")}
+              <br />
+              <span className="text-brand-blue italic">
+                {t("ambitious brands.", "علامات طموحة.")}
+              </span>
+            </motion.h2>
 
-        <div
-          className="max-w-4xl mx-auto"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-        >
-          {/* Quote */}
-          <div className="relative min-h-[260px] md:min-h-[220px]">
+            {/* Navigator */}
+            <div
+              className="mt-10 flex items-center gap-5"
+              role="tablist"
+              aria-label={t("Testimonial navigator", "متصفح الشهادات")}
+            >
+              {testimonials.map((t_, i) => (
+                <button
+                  key={i}
+                  role="tab"
+                  aria-selected={i === active}
+                  aria-label={t_.name}
+                  onClick={() => setActive(i)}
+                  className={`text-[10px] uppercase tracking-[0.2em] font-bold transition-colors focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2 ${
+                    i === active
+                      ? "text-brand-blue"
+                      : "text-black/30 hover:text-black/60"
+                  }`}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Right: quote */}
+          <div className="relative min-h-[360px]">
             <AnimatePresence mode="wait">
-              <motion.blockquote
+              <motion.figure
                 key={active}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="text-2xl md:text-3xl lg:text-4xl font-lyon font-bold text-black/85 leading-[1.3] text-center"
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
               >
-                <span className="text-brand-blue text-6xl md:text-7xl font-lyon leading-none block mb-3" aria-hidden="true">
+                <span
+                  className="block font-lyon text-7xl md:text-9xl text-brand-blue/50 leading-none mb-2 -ml-1"
+                  aria-hidden="true"
+                >
                   &ldquo;
                 </span>
-                {t(current.quote.en, current.quote.ar)}
-              </motion.blockquote>
+                <blockquote className="font-lyon text-2xl md:text-3xl lg:text-4xl font-bold text-black/85 leading-[1.3] max-w-3xl">
+                  {t(current.quote.en, current.quote.ar)}
+                </blockquote>
+
+                <figcaption className="mt-10 md:mt-12 flex items-center gap-5">
+                  <div className="w-12 h-12 rounded-full bg-brand-blue/10 flex items-center justify-center shrink-0">
+                    <span className="font-lyon font-bold text-brand-blue text-lg">
+                      {current.name.charAt(0)}
+                    </span>
+                  </div>
+                  <div>
+                    <div className="text-base font-bold text-black">
+                      {current.name}
+                    </div>
+                    <div className="text-sm text-black/55 mt-0.5">
+                      {t(current.role.en, current.role.ar)} — {current.company}
+                    </div>
+                  </div>
+                </figcaption>
+              </motion.figure>
             </AnimatePresence>
-          </div>
 
-          {/* Attribution */}
-          <div className="mt-10 md:mt-14 flex flex-col items-center gap-1">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={`attr-${active}`}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.4 }}
-                className="text-center"
-              >
-                <div className="text-sm md:text-base font-bold text-black">
-                  {current.name}
-                </div>
-                <div className="text-xs md:text-sm text-black/50 mt-1">
-                  {t(current.role.en, current.role.ar)} — {current.company}
-                </div>
-              </motion.div>
-            </AnimatePresence>
+            <p className="absolute bottom-0 left-0 right-0 text-[10px] text-black/35 uppercase tracking-[0.2em] font-medium">
+              {t(
+                "Quotes composed from client feedback — signed attribution coming soon",
+                "اقتباسات مستنبطة من ملاحظات العملاء — توثيق كامل قريباً"
+              )}
+            </p>
           </div>
-
-          {/* Dots */}
-          <div
-            className="mt-10 flex items-center justify-center gap-2"
-            role="tablist"
-            aria-label={t("Testimonial selector", "محدد الشهادات")}
-          >
-            {testimonials.map((_, i) => (
-              <button
-                key={i}
-                role="tab"
-                aria-selected={i === active}
-                aria-label={t(`Testimonial ${i + 1}`, `شهادة ${i + 1}`)}
-                onClick={() => setActive(i)}
-                className={`h-1.5 transition-all duration-300 focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2 ${
-                  i === active
-                    ? "w-10 bg-brand-blue"
-                    : "w-5 bg-black/15 hover:bg-black/30"
-                }`}
-              />
-            ))}
-          </div>
-
-          {/* Note */}
-          <p className="mt-8 text-[11px] text-center text-black/35 uppercase tracking-[0.2em] font-medium">
-            {t(
-              "Quotes composed from client feedback — verified attribution coming soon",
-              "اقتباسات مستنبطة من ملاحظات العملاء — توثيق كامل قريباً"
-            )}
-          </p>
         </div>
       </div>
     </section>
