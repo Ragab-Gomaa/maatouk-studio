@@ -316,33 +316,44 @@ function MotionAnimation() {
 }
 
 /**
- * DigitalAnimation — v2
+ * DigitalAnimation — v3
  *
- * Narrative: a full browser window builds itself in real time — nav
- * appears, then a hero section with a headline + CTAs, then a card
- * grid, and finally a small phone peeks in showing the responsive
- * mobile version. A cursor tracks across and "clicks" the primary CTA,
- * the button ripples, then the whole sequence resets. 6s loop.
+ * Narrative: a code editor opens, lines of JSX type in one by one,
+ * a Run button pulses and gets pressed, and the code is replaced by
+ * the live website it produced. The browser then builds its own
+ * interior (nav, headline, CTAs, cards). A cursor clicks the primary
+ * CTA and a "Shipped" badge confirms it all went live.
+ *
+ * 7s loop.
  */
 function DigitalAnimation() {
-  const DURATION = 6;
+  const DURATION = 7;
 
-  // Animation keyframe times (as a fraction of DURATION).
+  // Keyframe times (fraction of DURATION)
   const t = {
-    navIn: 0.08,
-    headlineIn: 0.17,
-    ctaIn: 0.27,
-    cardsIn: 0.37,
-    phoneIn: 0.5,
-    cursorMove: 0.58,
-    cursorClick: 0.72,
-    hold: 0.85,
-    fade: 0.95,
+    editorIn: 0.04,
+    line1: 0.08,
+    line2: 0.16,
+    line3: 0.24,
+    line4: 0.32,
+    line5: 0.40,
+    runPulse: 0.46,
+    runPressed: 0.50,
+    editorOut: 0.53,
+    browserIn: 0.55,
+    navIn: 0.58,
+    headlineIn: 0.62,
+    ctaIn: 0.68,
+    cardsIn: 0.72,
+    cursorMove: 0.78,
+    cursorClick: 0.87,
+    hold: 0.93,
+    fade: 0.97,
   };
 
   return (
     <div className="absolute inset-0 bg-gradient-to-br from-surface-low via-surface-raised to-surface-low overflow-hidden">
-      {/* Subtle dotted grid background */}
+      {/* Dotted grid background */}
       <div
         className="absolute inset-0 opacity-[0.35] pointer-events-none"
         style={{
@@ -353,14 +364,137 @@ function DigitalAnimation() {
         aria-hidden="true"
       />
 
-      {/* ── Main browser window ── */}
+      {/* ══════ CODE EDITOR ══════ */}
       <motion.div
-        className="absolute top-[12%] start-[6%] end-[18%] bottom-[28%] rounded-[6px] bg-white border border-black/[0.08] shadow-[0_10px_30px_-8px_rgba(0,41,214,0.15)] overflow-hidden"
-        initial={{ opacity: 0, y: 4 }}
-        animate={{ opacity: [0, 1, 1, 0], y: [4, 0, 0, 4] }}
-        transition={{ duration: DURATION, times: [0, t.navIn, t.fade, 1], repeat: Infinity, ease: [0.22, 1, 0.36, 1] }}
+        className="absolute inset-3 rounded-[6px] bg-ink overflow-hidden shadow-[0_10px_30px_-8px_rgba(0,0,0,0.3)]"
+        style={{ direction: "ltr" }}
+        initial={{ opacity: 0, scale: 0.96 }}
+        animate={{
+          opacity: [0, 1, 1, 0],
+          scale: [0.96, 1, 1, 0.97],
+        }}
+        transition={{
+          duration: DURATION,
+          times: [0, t.editorIn, t.editorOut, t.browserIn],
+          repeat: Infinity,
+          ease: [0.22, 1, 0.36, 1],
+        }}
       >
-        {/* Browser chrome */}
+        {/* Editor chrome */}
+        <div className="flex items-center justify-between px-2 py-1.5 bg-white/[0.05] border-b border-white/10">
+          <div className="flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FF5F57]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FEBC2E]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#28C840]" />
+          </div>
+          <span className="text-[6px] font-mono text-white/35">
+            Hero.tsx
+          </span>
+          {/* Run button (top-right) */}
+          <motion.span
+            className="inline-flex items-center gap-0.5 px-1.5 py-[1px] rounded-sm bg-brand-green text-ink text-[6px] font-semibold uppercase tracking-wider"
+            initial={{ scale: 1 }}
+            animate={{
+              scale: [1, 1, 1, 1.12, 0.92, 1, 1],
+              opacity: [0, 0, 1, 1, 1, 1, 0],
+            }}
+            transition={{
+              duration: DURATION,
+              times: [0, t.editorIn, t.editorIn + 0.02, t.runPulse, t.runPressed, t.runPressed + 0.02, t.editorOut],
+              repeat: Infinity,
+            }}
+          >
+            <svg width="5" height="5" viewBox="0 0 10 10" fill="currentColor">
+              <polygon points="2,1 8,5 2,9" />
+            </svg>
+            <span>Run</span>
+          </motion.span>
+        </div>
+
+        {/* Code body */}
+        <div className="flex p-2 font-mono text-[8px] leading-[1.6]">
+          {/* Line numbers */}
+          <div className="flex flex-col items-end pe-2 text-white/20 select-none">
+            {[1, 2, 3, 4, 5].map((n) => (
+              <span key={n}>{n}</span>
+            ))}
+          </div>
+
+          {/* Code lines */}
+          <div className="flex-1 space-y-0">
+            {[
+              { segs: [{ c: "#FF79C6", t: "const" }, { c: "white", t: " " }, { c: "#60D4FF", t: "Hero" }, { c: "white", t: " = () => (" }], time: t.line1 },
+              { segs: [{ c: "white", t: "  <" }, { c: "#FFD580", t: "section" }, { c: "white", t: ">" }], time: t.line2 },
+              { segs: [{ c: "white", t: "    <" }, { c: "#FFD580", t: "h1" }, { c: "white", t: ">" }, { c: "#3CFFC5", t: "Studio" }, { c: "white", t: "</" }, { c: "#FFD580", t: "h1" }, { c: "white", t: ">" }], time: t.line3 },
+              { segs: [{ c: "white", t: "    <" }, { c: "#FFD580", t: "Button" }, { c: "white", t: ">" }, { c: "#3CFFC5", t: "Start" }, { c: "white", t: "</" }, { c: "#FFD580", t: "Button" }, { c: "white", t: ">" }], time: t.line4 },
+              { segs: [{ c: "white", t: "  </" }, { c: "#FFD580", t: "section" }, { c: "white", t: ">)" }], time: t.line5 },
+            ].map((line, i) => (
+              <motion.div
+                key={i}
+                className="relative whitespace-pre"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 0, 1, 1, 0] }}
+                transition={{
+                  duration: DURATION,
+                  times: [0, line.time - 0.02, line.time, t.editorOut, t.browserIn],
+                  repeat: Infinity,
+                }}
+              >
+                {line.segs.map((seg, si) => (
+                  <span key={si} style={{ color: seg.c }}>
+                    {seg.t}
+                  </span>
+                ))}
+              </motion.div>
+            ))}
+
+            {/* Typing cursor at the end of the active line */}
+            <motion.span
+              className="inline-block w-[4px] h-[9px] bg-white/70 ms-0.5"
+              animate={{ opacity: [1, 0, 1] }}
+              transition={{ duration: 0.9, repeat: Infinity, ease: "easeInOut" }}
+              aria-hidden="true"
+            />
+          </div>
+        </div>
+
+        {/* Running indicator strip at the bottom */}
+        <motion.div
+          className="absolute bottom-0 left-0 right-0 flex items-center gap-1 px-2 py-1 bg-brand-green/20 border-t border-brand-green/40 text-[6px] font-semibold tracking-wider uppercase text-brand-green"
+          initial={{ y: 12, opacity: 0 }}
+          animate={{
+            y: [12, 12, 0, 0, 12],
+            opacity: [0, 0, 1, 1, 0],
+          }}
+          transition={{
+            duration: DURATION,
+            times: [0, t.runPressed - 0.005, t.runPressed, t.editorOut - 0.01, t.editorOut],
+            repeat: Infinity,
+          }}
+        >
+          <span className="w-1 h-1 rounded-full bg-brand-green animate-pulse" />
+          <span>Compiling…</span>
+        </motion.div>
+      </motion.div>
+
+      {/* ══════ BROWSER ══════ */}
+      <motion.div
+        className="absolute inset-3 rounded-[6px] bg-white border border-black/[0.08] shadow-[0_10px_30px_-8px_rgba(0,41,214,0.15)] overflow-hidden"
+        style={{ direction: "ltr" }}
+        initial={{ opacity: 0, scale: 0.96 }}
+        animate={{
+          opacity: [0, 0, 1, 1, 0],
+          scale: [0.96, 0.96, 1, 1, 0.96],
+          y: [4, 4, 0, 0, 4],
+        }}
+        transition={{
+          duration: DURATION,
+          times: [0, t.editorOut, t.browserIn, t.fade, 1],
+          repeat: Infinity,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+      >
+        {/* Chrome */}
         <div className="flex items-center gap-1 px-2 py-1.5 bg-surface-low border-b border-black/[0.06]">
           <span className="w-1.5 h-1.5 rounded-full bg-[#FF5F57]" />
           <span className="w-1.5 h-1.5 rounded-full bg-[#FEBC2E]" />
@@ -373,12 +507,19 @@ function DigitalAnimation() {
 
         {/* Content */}
         <div className="relative h-full p-2.5">
-          {/* Nav row */}
+          {/* Nav */}
           <motion.div
             className="flex items-center justify-between mb-3"
             initial={{ opacity: 0, y: -3 }}
-            animate={{ opacity: [0, 0, 1, 1, 0], y: [-3, -3, 0, 0, -3] }}
-            transition={{ duration: DURATION, times: [0, t.navIn, t.navIn + 0.04, t.fade, 1], repeat: Infinity }}
+            animate={{
+              opacity: [0, 0, 1, 1, 0],
+              y: [-3, -3, 0, 0, -3],
+            }}
+            transition={{
+              duration: DURATION,
+              times: [0, t.navIn - 0.02, t.navIn, t.fade, 1],
+              repeat: Infinity,
+            }}
           >
             <div className="w-5 h-1.5 bg-ink rounded-sm" />
             <div className="flex gap-1">
@@ -388,15 +529,15 @@ function DigitalAnimation() {
             </div>
           </motion.div>
 
-          {/* Headline lines */}
+          {/* Headline */}
           <div className="space-y-0.5 mb-2">
             <motion.div
               className="h-1.5 bg-ink rounded-sm"
               initial={{ width: 0 }}
-              animate={{ width: ["0%", "80%", "80%", "80%", "0%"] }}
+              animate={{ width: ["0%", "0%", "80%", "80%", "0%"] }}
               transition={{
                 duration: DURATION,
-                times: [0, t.headlineIn + 0.05, t.headlineIn + 0.08, t.fade, 1],
+                times: [0, t.headlineIn - 0.02, t.headlineIn + 0.03, t.fade, 1],
                 repeat: Infinity,
                 ease: [0.22, 1, 0.36, 1],
               }}
@@ -404,24 +545,24 @@ function DigitalAnimation() {
             <motion.div
               className="h-1.5 bg-brand-blue rounded-sm"
               initial={{ width: 0 }}
-              animate={{ width: ["0%", "55%", "55%", "55%", "0%"] }}
+              animate={{ width: ["0%", "0%", "55%", "55%", "0%"] }}
               transition={{
                 duration: DURATION,
-                times: [0, t.headlineIn + 0.08, t.headlineIn + 0.12, t.fade, 1],
+                times: [0, t.headlineIn + 0.02, t.headlineIn + 0.06, t.fade, 1],
                 repeat: Infinity,
                 ease: [0.22, 1, 0.36, 1],
               }}
             />
           </div>
 
-          {/* Sub text */}
+          {/* Subtext */}
           <motion.div
             className="space-y-0.5 mb-2"
             initial={{ opacity: 0 }}
             animate={{ opacity: [0, 0, 1, 1, 0] }}
             transition={{
               duration: DURATION,
-              times: [0, t.headlineIn + 0.08, t.headlineIn + 0.13, t.fade, 1],
+              times: [0, t.headlineIn + 0.04, t.headlineIn + 0.08, t.fade, 1],
               repeat: Infinity,
             }}
           >
@@ -429,15 +570,21 @@ function DigitalAnimation() {
             <div className="h-[3px] w-2/3 bg-ink/15 rounded-sm" />
           </motion.div>
 
-          {/* CTAs — primary gets a pulse when clicked */}
+          {/* CTAs */}
           <div className="flex gap-1 mb-2">
             <motion.div
               className="relative h-3 bg-brand-blue rounded-full overflow-visible"
               initial={{ opacity: 0, width: 0 }}
-              animate={{ opacity: [0, 0, 1, 1, 0], width: ["0px", "0px", "32px", "32px", "0px"] }}
-              transition={{ duration: DURATION, times: [0, t.ctaIn - 0.02, t.ctaIn + 0.04, t.fade, 1], repeat: Infinity }}
+              animate={{
+                opacity: [0, 0, 1, 1, 0],
+                width: ["0px", "0px", "32px", "32px", "0px"],
+              }}
+              transition={{
+                duration: DURATION,
+                times: [0, t.ctaIn - 0.02, t.ctaIn + 0.03, t.fade, 1],
+                repeat: Infinity,
+              }}
             >
-              {/* click ripple */}
               <motion.span
                 className="absolute inset-0 rounded-full bg-brand-green/30"
                 initial={{ opacity: 0, scale: 1 }}
@@ -447,7 +594,7 @@ function DigitalAnimation() {
                 }}
                 transition={{
                   duration: DURATION,
-                  times: [0, t.cursorClick - 0.01, t.cursorClick, t.cursorClick + 0.03, t.cursorClick + 0.1, 1],
+                  times: [0, t.cursorClick - 0.01, t.cursorClick, t.cursorClick + 0.02, t.cursorClick + 0.08, 1],
                   repeat: Infinity,
                 }}
               />
@@ -455,83 +602,54 @@ function DigitalAnimation() {
             <motion.div
               className="h-3 bg-ink/10 rounded-full"
               initial={{ opacity: 0, width: 0 }}
-              animate={{ opacity: [0, 0, 1, 1, 0], width: ["0px", "0px", "22px", "22px", "0px"] }}
-              transition={{ duration: DURATION, times: [0, t.ctaIn, t.ctaIn + 0.06, t.fade, 1], repeat: Infinity }}
+              animate={{
+                opacity: [0, 0, 1, 1, 0],
+                width: ["0px", "0px", "22px", "22px", "0px"],
+              }}
+              transition={{
+                duration: DURATION,
+                times: [0, t.ctaIn, t.ctaIn + 0.04, t.fade, 1],
+                repeat: Infinity,
+              }}
             />
           </div>
 
-          {/* Card grid */}
-          <motion.div
-            className="grid grid-cols-3 gap-1"
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: { opacity: 0 },
-              visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
-            }}
-          >
+          {/* Cards */}
+          <div className="grid grid-cols-3 gap-1">
             {[0, 1, 2].map((i) => (
               <motion.div
                 key={i}
                 className="aspect-[4/3] bg-gradient-to-br from-brand-blue/20 to-brand-blue/5 rounded-sm"
                 initial={{ opacity: 0, y: 3 }}
-                animate={{ opacity: [0, 0, 1, 1, 0], y: [3, 3, 0, 0, 3] }}
+                animate={{
+                  opacity: [0, 0, 1, 1, 0],
+                  y: [3, 3, 0, 0, 3],
+                }}
                 transition={{
                   duration: DURATION,
-                  times: [0, t.cardsIn + i * 0.02, t.cardsIn + i * 0.02 + 0.05, t.fade, 1],
+                  times: [0, t.cardsIn + i * 0.015, t.cardsIn + i * 0.015 + 0.03, t.fade, 1],
                   repeat: Infinity,
                 }}
               />
             ))}
-          </motion.div>
-        </div>
-      </motion.div>
-
-      {/* ── Phone mockup — slides in showing the responsive view ── */}
-      <motion.div
-        className="absolute bottom-[6%] end-[4%] w-[26%] aspect-[9/17] rounded-[6px] bg-ink p-[2px] shadow-[0_12px_24px_-8px_rgba(0,0,0,0.35)]"
-        initial={{ opacity: 0, y: 10, rotate: -6 }}
-        animate={{
-          opacity: [0, 0, 0, 1, 1, 0],
-          y: [10, 10, 10, 0, 0, 10],
-          rotate: [-6, -6, -6, 0, 0, -6],
-        }}
-        transition={{
-          duration: DURATION,
-          times: [0, t.phoneIn - 0.08, t.phoneIn, t.phoneIn + 0.06, t.fade, 1],
-          repeat: Infinity,
-          ease: [0.22, 1, 0.36, 1],
-        }}
-      >
-        <div className="relative h-full w-full bg-white rounded-[4px] overflow-hidden">
-          {/* Notch */}
-          <div className="absolute top-[3px] left-1/2 -translate-x-1/2 h-1 w-4 rounded-full bg-black z-10" />
-          <div className="p-1 pt-2.5 space-y-0.5">
-            <div className="h-1 w-full bg-ink rounded-sm" />
-            <div className="h-0.5 w-3/4 bg-ink/30 rounded-sm" />
-            <div className="h-1.5 w-8 bg-brand-blue rounded-full mt-1" />
-            <div className="grid grid-cols-2 gap-0.5 mt-1">
-              <div className="aspect-square bg-brand-blue/10 rounded-sm" />
-              <div className="aspect-square bg-brand-blue/15 rounded-sm" />
-            </div>
           </div>
         </div>
       </motion.div>
 
-      {/* ── Animated cursor — moves toward the primary CTA and clicks ── */}
+      {/* ── Animated cursor — only during the browser phase ── */}
       <motion.div
         className="absolute z-30"
         style={{ filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.15))" }}
-        initial={{ opacity: 0, left: "40%", top: "60%" }}
+        initial={{ opacity: 0, left: "45%", top: "65%" }}
         animate={{
           opacity: [0, 0, 0, 1, 1, 1, 0, 0],
-          left: ["40%", "40%", "40%", "60%", "28%", "28%", "28%", "28%"],
-          top: ["60%", "60%", "60%", "60%", "42%", "42%", "42%", "42%"],
+          left: ["45%", "45%", "45%", "45%", "20%", "20%", "20%", "20%"],
+          top: ["65%", "65%", "65%", "65%", "45%", "45%", "45%", "45%"],
           scale: [1, 1, 1, 1, 1, 0.85, 0.85, 0.85],
         }}
         transition={{
           duration: DURATION,
-          times: [0, t.cursorMove - 0.1, t.cursorMove - 0.05, t.cursorMove, t.cursorClick - 0.02, t.cursorClick + 0.01, t.hold, 1],
+          times: [0, t.browserIn, t.cursorMove - 0.05, t.cursorMove, t.cursorClick - 0.02, t.cursorClick + 0.01, t.hold, 1],
           repeat: Infinity,
           ease: [0.22, 1, 0.36, 1],
         }}
@@ -548,9 +666,9 @@ function DigitalAnimation() {
         </svg>
       </motion.div>
 
-      {/* ── "Shipped" confirmation — briefly flashes after the click ── */}
+      {/* ── "Shipped" confirmation ── */}
       <motion.div
-        className="absolute bottom-[4%] start-[6%] inline-flex items-center gap-1 px-2 py-1 rounded-full bg-brand-green text-ink shadow-md"
+        className="absolute bottom-[4%] start-[6%] inline-flex items-center gap-1 px-2 py-1 rounded-full bg-brand-green text-ink shadow-md z-30"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{
           opacity: [0, 0, 0, 0, 1, 1, 0, 0],
