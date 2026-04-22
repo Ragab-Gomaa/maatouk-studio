@@ -79,17 +79,25 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.15 }}
               className="text-base md:text-lg text-ink-soft max-w-xl leading-relaxed mb-8"
             >
-              {t(
-                "A bilingual design studio for brand identities, motion, and digital products. We design the whole thing, under one roof — from first sketch to shipped product.",
-                "استوديو تصميم ثنائي اللغة للهويات البصرية والموشن والمنتجات الرقمية. نصمّم العمل بالكامل تحت سقف واحد — من أول رسمة إلى آخر تسليم."
-              )}
+              <span className="block">
+                {t(
+                  "A bilingual design studio for brand identities, motion, and digital products.",
+                  "استوديو تصميم ثنائي اللغة للهويات البصرية والموشن والمنتجات الرقمية."
+                )}
+              </span>
+              <span className="block mt-1">
+                {t(
+                  "We design the whole thing, under one roof — from first sketch to shipped product.",
+                  "نصمّم العمل بالكامل تحت سقف واحد — من أول رسمة إلى آخر تسليم."
+                )}
+              </span>
             </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.25 }}
-              className="flex flex-wrap items-center gap-3 mb-8 md:mb-10"
+              className="flex flex-wrap items-center gap-3 mb-5 md:mb-6"
             >
               <Button href="/contact" variant="primary" size="lg" withArrow>
                 {t("Start a project", "ابدأ مشروعك")}
@@ -103,7 +111,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.35 }}
-              className="flex flex-wrap items-baseline gap-5 md:gap-8 pt-6 border-t border-black/[0.08]"
+              className="flex flex-wrap items-baseline gap-5 md:gap-8 pt-4 md:pt-5 border-t border-black/[0.08]"
             >
               {features.map((f, i) => (
                 <div key={i} className="flex items-baseline gap-2.5">
