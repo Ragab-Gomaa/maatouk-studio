@@ -175,12 +175,12 @@ function ComposedMark() {
         <MotionAnimation />
       </motion.div>
 
-      {/* ── Card 3 — Digital (bottom, aligned to end) ── */}
+      {/* ── Card 3 — Digital (bottom, nudged inward from the end) ── */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.7 }}
-        className="absolute bottom-0 end-0 w-[65%] aspect-square rounded-[20px] overflow-hidden studio-card"
+        className="absolute bottom-0 end-[7%] w-[65%] aspect-square rounded-[20px] overflow-hidden studio-card"
       >
         <CornerLabel text={t("Digital", "المنتجات الرقمية")} tone="light" />
         <DigitalAnimation />
@@ -227,34 +227,29 @@ function CornerLabel({
 /* ─────────────────── Animations ─────────────────── */
 
 /**
- * BrandingAnimation — the BrandMark identity reveal on a full brand-blue
- * canvas. Guidelines fade in, construction accents mark the anchor
- * points in brand-green, then the 4 diamond triangles assemble in
- * white, finishing with a wordmark reveal below. Loops every 9s.
+ * BrandingAnimation — a pen-tool drawing scene on a full brand-blue
+ * canvas. A pen cursor clicks anchor points one by one, the path
+ * strokes in white between them, bezier handles flicker out at each
+ * node, and finally the closed shape fills to reveal the BrandMark.
+ * Loops every 9s.
  */
 function BrandingAnimation() {
   const DURATION = 9;
+
+  // Anchor points the pen lays down around the diamond
+  const anchors = [
+    { x: 60, y: 22, t: 0.08 },
+    { x: 96, y: 60, t: 0.22 },
+    { x: 60, y: 98, t: 0.36 },
+    { x: 24, y: 60, t: 0.5 },
+  ];
 
   return (
     <div
       className="absolute inset-0 bg-brand-blue overflow-hidden"
       style={{ direction: "ltr" }}
     >
-      {/* Soft green wash that breathes */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        animate={{
-          background: [
-            "radial-gradient(circle at 50% 55%, rgba(60,255,197,0.16) 0%, transparent 60%)",
-            "radial-gradient(circle at 50% 55%, rgba(60,255,197,0.28) 0%, transparent 55%)",
-            "radial-gradient(circle at 50% 55%, rgba(60,255,197,0.16) 0%, transparent 60%)",
-          ],
-        }}
-        transition={{ duration: DURATION, repeat: Infinity, ease: "easeInOut" }}
-        aria-hidden="true"
-      />
-
-      {/* Subtle white dot grid */}
+      {/* Subtle white dot grid — the "canvas" */}
       <div
         className="absolute inset-0 opacity-[0.18] pointer-events-none"
         style={{
@@ -265,144 +260,176 @@ function BrandingAnimation() {
         aria-hidden="true"
       />
 
-      {/* Corner construction markers — cinema-slate style */}
-      {[
-        "top-3 left-3 border-t border-l",
-        "top-3 right-3 border-t border-r",
-        "bottom-3 left-3 border-b border-l",
-        "bottom-3 right-3 border-b border-r",
-      ].map((cls, i) => (
-        <motion.div
-          key={i}
-          className={`absolute w-2 h-2 border-brand-green/80 ${cls}`}
-          animate={{ opacity: [0, 1, 1, 0.3] }}
-          transition={{
-            duration: DURATION,
-            times: [0, 0.15, 0.82, 1],
-            delay: i * 0.05,
-            repeat: Infinity,
-          }}
-          aria-hidden="true"
-        />
-      ))}
+      {/* Tool indicator — Pen pill in the top-right */}
+      <motion.div
+        className="absolute top-3 end-3 z-20 flex items-center gap-1 px-1.5 py-0.5 rounded-[3px] bg-white/15 backdrop-blur-sm border border-white/20"
+        animate={{ opacity: [0, 1, 1, 0.35] }}
+        transition={{
+          duration: DURATION,
+          times: [0, 0.1, 0.85, 0.98],
+          repeat: Infinity,
+        }}
+      >
+        <svg width="7" height="7" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+          <path
+            d="M1 11 L4.5 7.5 L9.5 2.5 L10.5 3.5 L5.5 8.5 L2 12 Z"
+            fill="white"
+            stroke="#001F9E"
+            strokeWidth="0.5"
+            strokeLinejoin="round"
+          />
+          <path d="M9 3 L10 4" stroke="#001F9E" strokeWidth="0.6" />
+        </svg>
+        <span className="text-[6px] font-mono uppercase tracking-[0.18em] text-white font-semibold">
+          Pen
+        </span>
+      </motion.div>
 
-      {/* Mark construction canvas */}
-      <div className="absolute inset-0 flex items-center justify-center pt-5 pb-6">
-        <svg
-          viewBox="0 0 120 120"
-          className="w-[58%] h-[58%]"
-          aria-hidden="true"
-        >
-          {/* Guidelines — cross + bounding circle */}
-          <motion.g
-            stroke="white"
-            strokeWidth="0.3"
+      {/* Drawing canvas */}
+      <div className="absolute inset-0 flex items-center justify-center pt-6 pb-6">
+        <svg viewBox="0 0 120 120" className="w-[78%] h-[78%]" aria-hidden="true">
+          {/* Drawn stroke — pathLength animates as the pen moves */}
+          <motion.path
+            d="M60 22 L96 60 L60 98 L24 60 Z"
             fill="none"
-            animate={{ opacity: [0, 0.5, 0.5, 0] }}
+            stroke="white"
+            strokeWidth="1.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: [0, 0, 1, 1, 0] }}
             transition={{
               duration: DURATION,
-              times: [0, 0.15, 0.82, 0.95],
+              times: [0, 0.08, 0.62, 0.86, 0.96],
               repeat: Infinity,
+              ease: [0.22, 1, 0.36, 1],
             }}
-          >
-            <line x1="60" y1="14" x2="60" y2="106" strokeDasharray="2 2" />
-            <line x1="14" y1="60" x2="106" y2="60" strokeDasharray="2 2" />
-            <circle cx="60" cy="60" r="36" strokeDasharray="2 2" />
-          </motion.g>
+          />
 
-          {/* Anchor points in brand-green */}
-          {[
-            { x: 60, y: 24 },
-            { x: 96, y: 60 },
-            { x: 60, y: 96 },
-            { x: 24, y: 60 },
-          ].map((p, i) => (
-            <motion.circle
-              key={i}
-              cx={p.x}
-              cy={p.y}
-              r="1.8"
-              fill="#3CFFC5"
-              animate={{
-                opacity: [0, 1, 1, 0],
-                scale: [0.3, 1, 1, 0.3],
-              }}
-              transition={{
-                duration: DURATION,
-                times: [0.12 + i * 0.03, 0.22 + i * 0.03, 0.8, 0.92],
-                repeat: Infinity,
-              }}
-              style={{ transformOrigin: `${p.x}px ${p.y}px` }}
-            />
-          ))}
-
-          {/* BrandMark — 4 triangles of the diamond assemble */}
-          {[
-            { d: "M60 24 L96 60 L60 60 Z", delay: 0.32 },
-            { d: "M96 60 L60 96 L60 60 Z", delay: 0.4 },
-            { d: "M60 96 L24 60 L60 60 Z", delay: 0.48 },
-            { d: "M24 60 L60 24 L60 60 Z", delay: 0.56 },
-          ].map((piece, i) => (
-            <motion.path
-              key={i}
-              d={piece.d}
-              fill="white"
-              animate={{
-                opacity: [0, 0, 1, 1, 0.15],
-                scale: [0.3, 0.3, 1, 1, 0.85],
-              }}
-              transition={{
-                duration: DURATION,
-                times: [0, piece.delay, piece.delay + 0.06, 0.84, 0.96],
-                repeat: Infinity,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              style={{ transformOrigin: "60px 60px" }}
-            />
-          ))}
-
-          {/* Center signature glow — brand-green ping */}
-          <motion.circle
-            cx="60"
-            cy="60"
-            r="2.2"
-            fill="#3CFFC5"
-            animate={{
-              opacity: [0, 0, 1, 0.6, 1, 0],
-              scale: [0, 0, 1, 1.6, 1, 0],
-            }}
+          {/* Filled shape — reveals once the path is closed */}
+          <motion.path
+            d="M60 22 L96 60 L60 98 L24 60 Z"
+            fill="white"
+            animate={{ opacity: [0, 0, 0, 1, 1, 0] }}
             transition={{
               duration: DURATION,
-              times: [0, 0.65, 0.7, 0.78, 0.85, 0.95],
+              times: [0, 0.58, 0.64, 0.7, 0.88, 0.96],
               repeat: Infinity,
             }}
             style={{
-              transformOrigin: "60px 60px",
-              filter: "drop-shadow(0 0 5px rgba(60,255,197,0.9))",
+              filter: "drop-shadow(0 2px 10px rgba(255,255,255,0.35))",
             }}
           />
+
+          {/* Bezier handles — brief out-in flash at each anchor */}
+          {anchors.map((a, i) => {
+            const next = anchors[(i + 1) % anchors.length];
+            const angle = Math.atan2(next.y - a.y, next.x - a.x);
+            const hx = a.x + Math.cos(angle) * 10;
+            const hy = a.y + Math.sin(angle) * 10;
+            return (
+              <motion.g
+                key={`h-${i}`}
+                animate={{ opacity: [0, 0, 1, 1, 0] }}
+                transition={{
+                  duration: DURATION,
+                  times: [0, a.t, a.t + 0.02, a.t + 0.1, 0.62],
+                  repeat: Infinity,
+                }}
+              >
+                <line
+                  x1={a.x}
+                  y1={a.y}
+                  x2={hx}
+                  y2={hy}
+                  stroke="#3CFFC5"
+                  strokeWidth="0.4"
+                />
+                <circle cx={hx} cy={hy} r="1" fill="#3CFFC5" />
+              </motion.g>
+            );
+          })}
+
+          {/* Anchor squares — drop in one at a time as the pen clicks */}
+          {anchors.map((a, i) => (
+            <motion.rect
+              key={`a-${i}`}
+              x={a.x - 1.6}
+              y={a.y - 1.6}
+              width="3.2"
+              height="3.2"
+              fill="white"
+              stroke="#0029D6"
+              strokeWidth="0.5"
+              animate={{
+                opacity: [0, 0, 1, 1, 0],
+                scale: [0, 0, 1.6, 1, 0.6],
+              }}
+              transition={{
+                duration: DURATION,
+                times: [0, a.t, a.t + 0.03, 0.7, 0.95],
+                repeat: Infinity,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              style={{ transformOrigin: `${a.x}px ${a.y}px` }}
+            />
+          ))}
+
+          {/* Pen tool cursor — travels between anchors, clicks each */}
+          <motion.g
+            animate={{
+              x: [60, 60, 96, 60, 24, 60, 60],
+              y: [14, 22, 60, 98, 60, 22, 22],
+              opacity: [0, 1, 1, 1, 1, 1, 0],
+            }}
+            transition={{
+              duration: DURATION,
+              times: [0, 0.08, 0.22, 0.36, 0.5, 0.6, 0.7],
+              repeat: Infinity,
+              ease: [0.42, 0, 0.58, 1],
+            }}
+          >
+            {/* Nib tip at (0,0), pointing down-right */}
+            <g>
+              <path
+                d="M0 0 L2.8 7 L0 6 L-1 9 L-3 9 L-2 6 L-4 5 Z"
+                fill="white"
+                stroke="#001F9E"
+                strokeWidth="0.4"
+                strokeLinejoin="round"
+              />
+              <line
+                x1="-1"
+                y1="2"
+                x2="0.5"
+                y2="5"
+                stroke="#0029D6"
+                strokeWidth="0.3"
+              />
+            </g>
+          </motion.g>
         </svg>
       </div>
 
-      {/* Wordmark reveal — letters stagger in once the mark is built */}
+      {/* Wordmark reveal — after the shape fills */}
       <motion.div
         className="absolute inset-x-0 bottom-3.5 flex items-center justify-center gap-[1.5px] text-[9px] font-lyon font-bold tracking-[0.38em] text-white uppercase"
         animate={{ opacity: [0, 0, 1, 1, 0] }}
         transition={{
           duration: DURATION,
-          times: [0, 0.68, 0.78, 0.9, 0.97],
+          times: [0, 0.72, 0.8, 0.9, 0.97],
           repeat: Infinity,
         }}
       >
         {"Maatouk".split("").map((ch, i) => (
           <motion.span
             key={i}
-            animate={{ y: [6, 0], opacity: [0, 1] }}
+            animate={{ y: [5, 0], opacity: [0, 1] }}
             transition={{
-              duration: 0.32,
-              delay: 0.3 + i * 0.045,
+              duration: 0.3,
+              delay: 0.3 + i * 0.04,
               repeat: Infinity,
-              repeatDelay: DURATION - 0.32 - 0.045 * 7 - 0.3,
+              repeatDelay: DURATION - 0.3 - 0.04 * 7 - 0.3,
               ease: [0.22, 1, 0.36, 1],
             }}
             className="inline-block"
@@ -416,165 +443,208 @@ function BrandingAnimation() {
 }
 
 /**
- * MotionAnimation — a compact video player. Inside the screen: a scene
- * that plays on a 8s loop — morphing brand shape, a pulsing halo, a
- * title reveal, plus corner markers like a cinema slate. Below the
- * screen: a progress bar that fills in sync with the scene and a
- * running timecode so the whole thing reads as a live reel.
+ * MotionAnimation — an After Effects-style composition panel. A small
+ * preview thumbnail sits beside transport controls; below, a timeline
+ * with a time ruler and four layer rows, each sprinkled with keyframe
+ * diamonds. A brand-green playhead scrubs across the timeline in sync
+ * with DURATION, and every keyframe pulses when the playhead passes
+ * over it. Loops every 8s.
  */
 function MotionAnimation() {
   const DURATION = 8;
 
+  // Layers with keyframe positions (0..1 along timeline)
+  const layers: { name: string; color: string; keys: number[] }[] = [
+    { name: "Shape", color: "#3CFFC5", keys: [0.05, 0.3, 0.55, 0.8] },
+    { name: "Scale", color: "#0029D6", keys: [0.15, 0.42, 0.7, 0.92] },
+    { name: "Rotate", color: "#3CFFC5", keys: [0.08, 0.35, 0.6, 0.86] },
+    { name: "Opacity", color: "#0029D6", keys: [0.22, 0.5, 0.78] },
+  ];
+
+  const LABEL_COL = 30; // percent of timeline container taken by layer labels
+
   return (
     <div className="absolute inset-0 bg-ink overflow-hidden">
-      {/* Player body — fills the card below the corner label */}
+      {/* Composition panel — sits below the corner label, fills the card */}
       <div
-        className="absolute start-3 end-3 top-12 bottom-3 rounded-[8px] bg-black border border-white/[0.1] overflow-hidden flex flex-col shadow-[0_14px_32px_-10px_rgba(60,255,197,0.18)]"
+        className="absolute start-3 end-3 top-12 bottom-3 rounded-[8px] bg-[#121212] border border-white/[0.08] overflow-hidden flex flex-col shadow-[0_14px_32px_-10px_rgba(60,255,197,0.18)]"
         style={{ direction: "ltr" }}
       >
-        {/* Top status strip — Reel marker + live timecode */}
-        <div className="relative shrink-0 flex items-center justify-between px-2 py-1 text-[6px] font-mono uppercase tracking-[0.15em] text-white/55 bg-gradient-to-b from-white/[0.04] to-transparent z-10">
+        {/* Top strip — composition name + live timecode */}
+        <div className="relative shrink-0 flex items-center justify-between px-2 py-1 text-[6px] font-mono uppercase tracking-[0.15em] text-white/55 bg-white/[0.04] border-b border-white/[0.06]">
           <span className="flex items-center gap-1">
             <span className="w-1 h-1 rounded-full bg-brand-green animate-pulse" />
-            <span className="font-semibold">Reel · 2026</span>
+            <span className="font-semibold">Comp 01 · 2026</span>
           </span>
-          <span className="tabular-nums">REC 4K · 24p</span>
+          <TimeCode duration={DURATION} />
         </div>
 
-        {/* Scene — the motion graphic playing inside */}
-        <div className="relative flex-1 overflow-hidden">
-          {/* Moving color wash background */}
-          <motion.div
-            className="absolute inset-0"
-            animate={{
-              background: [
-                "radial-gradient(circle at 30% 40%, rgba(0,41,214,0.45) 0%, transparent 55%)",
-                "radial-gradient(circle at 70% 60%, rgba(60,255,197,0.28) 0%, transparent 55%)",
-                "radial-gradient(circle at 40% 70%, rgba(0,41,214,0.45) 0%, transparent 55%)",
-                "radial-gradient(circle at 30% 40%, rgba(0,41,214,0.45) 0%, transparent 55%)",
-              ],
-            }}
-            transition={{ duration: DURATION, repeat: Infinity, ease: "easeInOut" }}
-          />
-
-          {/* Halo rings */}
-          {[0, 1, 2].map((i) => (
+        {/* Preview thumbnail + transport controls */}
+        <div className="shrink-0 flex items-stretch gap-1.5 p-1.5 border-b border-white/[0.06]">
+          {/* Mini preview */}
+          <div className="relative w-[36%] aspect-video rounded-[3px] bg-black overflow-hidden border border-white/[0.06]">
             <motion.div
-              key={i}
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-brand-green/30"
-              initial={{ width: 24, height: 24, opacity: 0 }}
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4"
               animate={{
-                width: [24, 150],
-                height: [24, 150],
-                opacity: [0, 0.55, 0],
+                rotate: [0, 90, 180, 270, 360],
+                borderRadius: ["3px", "50%", "3px", "50%", "3px"],
+                backgroundColor: [
+                  "#3CFFC5",
+                  "#ffffff",
+                  "#0029D6",
+                  "#ffffff",
+                  "#3CFFC5",
+                ],
               }}
               transition={{
-                duration: 3.2,
-                delay: i * 1.05,
+                duration: DURATION,
                 repeat: Infinity,
-                ease: "easeOut",
+                ease: "easeInOut",
               }}
+              style={{ boxShadow: "0 2px 10px rgba(60,255,197,0.5)" }}
             />
-          ))}
-
-          {/* Center morphing shape — the "brand animating" moment */}
-          <motion.div
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-            animate={{ rotate: [0, 45, 90, 180, 270, 360] }}
-            transition={{ duration: DURATION, repeat: Infinity, ease: [0.45, 0, 0.55, 1] }}
-          >
-            <motion.div
-              className="w-10 h-10 bg-white"
-              animate={{
-                borderRadius: ["16px", "50%", "2px", "50%", "16px"],
-                backgroundColor: ["#ffffff", "#3CFFC5", "#ffffff", "#0029D6", "#ffffff"],
-                scale: [1, 1.12, 0.95, 1.12, 1],
-              }}
-              transition={{ duration: DURATION, repeat: Infinity, ease: "easeInOut" }}
-              style={{ boxShadow: "0 10px 30px -6px rgba(60,255,197,0.5)" }}
-            />
-          </motion.div>
-
-          {/* Title reveal — letters stagger */}
-          <motion.div
-            className="absolute inset-x-0 bottom-3 flex items-center justify-center gap-[2px] text-[9px] font-lyon font-bold tracking-[0.35em] text-white/90 uppercase"
-            animate={{ opacity: [0, 0, 1, 1, 0] }}
-            transition={{
-              duration: DURATION,
-              times: [0, 0.2, 0.35, 0.85, 0.95],
-              repeat: Infinity,
-            }}
-          >
-            {"Studio".split("").map((ch, i) => (
-              <motion.span
+            {/* Corner brackets on preview */}
+            {[
+              "top-0.5 left-0.5 border-t border-l",
+              "top-0.5 right-0.5 border-t border-r",
+              "bottom-0.5 left-0.5 border-b border-l",
+              "bottom-0.5 right-0.5 border-b border-r",
+            ].map((cls, i) => (
+              <div
                 key={i}
-                animate={{ y: [6, 0], opacity: [0, 1] }}
-                transition={{
-                  duration: 0.35,
-                  delay: 0.3 + i * 0.05,
-                  repeat: Infinity,
-                  repeatDelay: DURATION - 0.35 - 0.05 * 6 - 0.3,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className="inline-block"
-              >
-                {ch}
-              </motion.span>
+                className={`absolute w-1 h-1 border-white/30 ${cls}`}
+                aria-hidden="true"
+              />
             ))}
-          </motion.div>
-
-          {/* Cinema-slate corner markers */}
-          {[
-            "top-1.5 left-1.5 border-t border-l",
-            "top-1.5 right-1.5 border-t border-r",
-            "bottom-1.5 left-1.5 border-b border-l",
-            "bottom-1.5 right-1.5 border-b border-r",
-          ].map((cls, i) => (
-            <div
-              key={i}
-              className={`absolute w-2 h-2 border-brand-green/70 ${cls}`}
-              aria-hidden="true"
-            />
-          ))}
-        </div>
-
-        {/* Bottom controls — timeline, timecode, small control icons */}
-        <div className="shrink-0 px-2 pt-1 pb-1.5 bg-gradient-to-t from-black via-black/90 to-black/30 backdrop-blur-sm">
-          {/* Progress bar with scrubber */}
-          <div className="relative h-[2px] bg-white/10 rounded-full mb-1.5 overflow-visible">
-            <motion.div
-              className="absolute inset-y-0 start-0 bg-brand-green rounded-full"
-              animate={{ width: ["0%", "100%"] }}
-              transition={{ duration: DURATION, repeat: Infinity, ease: "linear" }}
-            />
-            <motion.div
-              className="absolute top-1/2 -translate-y-1/2 w-[7px] h-[7px] rounded-full bg-brand-green shadow-[0_0_8px_rgba(60,255,197,0.9)]"
-              style={{ marginLeft: -3.5 }}
-              animate={{ left: ["0%", "100%"] }}
-              transition={{ duration: DURATION, repeat: Infinity, ease: "linear" }}
-            />
           </div>
 
-          {/* Controls row */}
-          <div className="flex items-center justify-between">
+          {/* Transport + meta */}
+          <div className="flex-1 flex flex-col justify-between py-0.5">
             <div className="flex items-center gap-1.5">
-              {/* Pause icon — because it's playing */}
-              <div className="flex items-center gap-[1.5px]">
-                <span className="w-[2px] h-[7px] bg-white rounded-sm" />
-                <span className="w-[2px] h-[7px] bg-white rounded-sm" />
+              {/* Stop */}
+              <span className="w-[6px] h-[6px] bg-white/50 rounded-[1px]" />
+              {/* Play — brand-green triangle, glowing */}
+              <motion.span
+                className="inline-block"
+                animate={{ opacity: [1, 0.75, 1] }}
+                transition={{
+                  duration: 1.2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                style={{
+                  width: 0,
+                  height: 0,
+                  borderLeft: "8px solid #3CFFC5",
+                  borderTop: "5px solid transparent",
+                  borderBottom: "5px solid transparent",
+                  filter: "drop-shadow(0 0 5px rgba(60,255,197,0.6))",
+                }}
+              />
+              {/* Pause */}
+              <span className="flex items-center gap-[1.5px]">
+                <span className="w-[1.5px] h-[6px] bg-white/50" />
+                <span className="w-[1.5px] h-[6px] bg-white/50" />
+              </span>
+            </div>
+            <div className="flex items-center justify-between text-[5.5px] font-mono text-white/45 tabular-nums">
+              <span>1920×1080</span>
+              <span>24fps</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Timeline section */}
+        <div className="relative flex-1 flex flex-col">
+          {/* Time ruler */}
+          <div className="shrink-0 relative h-3 bg-white/[0.02] border-b border-white/[0.06]">
+            <div
+              className="absolute inset-y-0 right-0"
+              style={{ left: `${LABEL_COL}%` }}
+            >
+              {[0, 2, 4, 6, 8].map((s) => (
+                <div
+                  key={s}
+                  className="absolute inset-y-0 w-[1px] bg-white/10"
+                  style={{ left: `${(s / 8) * 100}%` }}
+                >
+                  <span className="text-[4.5px] font-mono text-white/40 absolute top-[1px] ps-[2px] tabular-nums">
+                    {s}s
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Layers */}
+          <div className="flex-1 relative">
+            {layers.map((layer, i) => (
+              <div
+                key={i}
+                className="flex items-center border-b border-white/[0.04]"
+                style={{ height: `${100 / layers.length}%` }}
+              >
+                {/* Layer label */}
+                <div
+                  className="shrink-0 ps-1.5 text-[5.5px] font-mono text-white/65 truncate flex items-center gap-1"
+                  style={{ width: `${LABEL_COL}%` }}
+                >
+                  <span
+                    className="w-[4px] h-[4px] rounded-[1px]"
+                    style={{ backgroundColor: layer.color }}
+                  />
+                  <span>{layer.name}</span>
+                </div>
+                {/* Timeline track */}
+                <div className="flex-1 relative h-full">
+                  <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 h-[1px] bg-white/10" />
+                  {layer.keys.map((t, j) => (
+                    <motion.div
+                      key={j}
+                      className="absolute top-1/2 -translate-y-1/2 rotate-45"
+                      style={{
+                        left: `${t * 100}%`,
+                        marginLeft: -3,
+                        width: 6,
+                        height: 6,
+                        backgroundColor: layer.color,
+                        boxShadow: `0 0 5px ${layer.color}70`,
+                      }}
+                      animate={{ scale: [1, 1.8, 1] }}
+                      transition={{
+                        duration: 0.45,
+                        delay: t * DURATION,
+                        repeat: Infinity,
+                        repeatDelay: DURATION - 0.45,
+                        ease: "easeOut",
+                      }}
+                    />
+                  ))}
+                </div>
               </div>
-              <TimeCode duration={DURATION} />
-            </div>
-            <div className="flex items-center gap-1.5 text-white/40">
-              {/* Volume */}
-              <svg width="9" height="9" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
-                <path d="M4 4h2l2-2v8l-2-2H4V4z" />
-              </svg>
-              {/* Fullscreen */}
-              <svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.2" aria-hidden="true">
-                <path d="M2 4V2h2M10 4V2H8M2 8v2h2M10 8v2H8" />
-              </svg>
-            </div>
+            ))}
+
+            {/* Playhead — sweeps from the left edge of the timeline to the end */}
+            <motion.div
+              className="absolute top-0 bottom-0 w-[1px] bg-brand-green z-10 pointer-events-none"
+              style={{ boxShadow: "0 0 5px rgba(60,255,197,0.9)" }}
+              animate={{ left: [`${LABEL_COL}%`, "100%"] }}
+              transition={{
+                duration: DURATION,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+            >
+              <div
+                className="absolute -top-1 -translate-x-1/2 w-0 h-0"
+                style={{
+                  borderLeft: "3px solid transparent",
+                  borderRight: "3px solid transparent",
+                  borderTop: "4px solid #3CFFC5",
+                }}
+                aria-hidden="true"
+              />
+            </motion.div>
           </div>
         </div>
       </div>
