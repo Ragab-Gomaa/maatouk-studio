@@ -160,6 +160,11 @@
   [dir="rtl"] .marquee-ltr-only {
     direction: ltr;
   }
+
+  [dir="rtl"],
+  [dir="rtl"] * {
+    font-style: normal !important;
+  }
 }
 
 /* ─── Reduced Motion ─── */

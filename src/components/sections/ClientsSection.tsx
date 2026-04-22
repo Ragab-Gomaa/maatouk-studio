@@ -21,7 +21,7 @@ export default function ClientsSection() {
   const { t } = useTranslation();
 
   return (
-    <section className="py-20 md:py-24 bg-surface">
+    <section className="py-10 md:py-14 bg-surface">
       <div className="max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
         <div className="studio-card rounded-[28px] md:rounded-[36px] p-8 md:p-12 lg:p-14">
           <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-12 mb-10 md:mb-12">

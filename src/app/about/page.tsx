@@ -34,7 +34,7 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-32 md:pt-40 pb-16 md:pb-20 bg-surface relative overflow-hidden">
+      <section className="pt-28 md:pt-32 pb-10 md:pb-14 bg-surface relative overflow-hidden">
         <div
           className="absolute top-[-200px] right-[-150px] w-[500px] h-[500px] rounded-full bg-brand-blue/[0.06] blur-3xl pointer-events-none"
           aria-hidden="true"
@@ -67,7 +67,7 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="py-20 md:py-28 bg-surface-low">
+      <section className="py-12 md:py-16 bg-surface-low">
         <div className="max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
           <div className="flex items-center gap-3 mb-12 md:mb-16">
             <span className="text-[11px] uppercase tracking-[0.2em] font-semibold text-ink-muted">
@@ -112,7 +112,7 @@ export default function AboutPage() {
       </section>
 
       {/* Approach */}
-      <section className="py-20 md:py-28 bg-surface">
+      <section className="py-12 md:py-16 bg-surface">
         <div className="max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
             <motion.div
@@ -185,7 +185,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 md:py-28 bg-surface-low text-center">
+      <section className="py-12 md:py-16 bg-surface-low text-center">
         <Button href="/contact" variant="primary" size="lg" withArrow>
           {t("Start a project", "ابدأ مشروعك")}
         </Button>

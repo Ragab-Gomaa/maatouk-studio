@@ -122,7 +122,7 @@ export default function ServicesSection() {
   const { t } = useTranslation();
 
   return (
-    <section className="py-24 md:py-36 bg-surface relative">
+    <section className="py-14 md:py-20 bg-surface relative">
       <div className="max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
         {/* Header */}
         <motion.div

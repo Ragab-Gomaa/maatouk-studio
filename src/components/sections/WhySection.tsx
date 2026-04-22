@@ -68,7 +68,7 @@ export default function WhySection() {
   const { t } = useTranslation();
 
   return (
-    <section className="py-24 md:py-36 bg-ink text-white relative overflow-hidden">
+    <section className="py-14 md:py-20 bg-ink text-white relative overflow-hidden">
       {/* Ambient glow */}
       <div
         className="absolute top-[-150px] right-[-100px] w-[500px] h-[500px] rounded-full bg-brand-blue/20 blur-3xl pointer-events-none"

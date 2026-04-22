@@ -31,7 +31,7 @@ export default function CaseStudyPage() {
   return (
     <>
       <section
-        className="pt-32 md:pt-40 pb-20 md:pb-28 relative overflow-hidden"
+        className="pt-28 md:pt-32 pb-12 md:pb-16 relative overflow-hidden"
         style={{ backgroundColor: project.palette.background, color: project.palette.ink }}
       >
         <div className="max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
@@ -80,7 +80,7 @@ export default function CaseStudyPage() {
         </div>
       </section>
 
-      <section className="py-20 md:py-28 bg-surface text-center">
+      <section className="py-12 md:py-16 bg-surface text-center">
         <p className="text-ink-soft mb-6 max-w-xl mx-auto px-6">
           {t(
             "Full case study content coming soon. Visit the live site in the meantime.",

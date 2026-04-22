@@ -54,7 +54,7 @@ export default function TestimonialsSection() {
 
   return (
     <section
-      className="py-24 md:py-36 bg-surface-low relative"
+      className="py-14 md:py-20 bg-surface-low relative"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >

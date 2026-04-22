@@ -20,7 +20,7 @@ export default function WorkSection() {
   if (!dolcebello || !meezan || !sandah) return null;
 
   return (
-    <section className="py-24 md:py-36 bg-surface-low relative">
+    <section className="py-14 md:py-20 bg-surface-low relative">
       <div className="max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">

@@ -12,7 +12,7 @@ export default function ContactCTASection() {
   const { t } = useTranslation();
 
   return (
-    <section className="py-20 md:py-28 bg-surface">
+    <section className="py-12 md:py-16 bg-surface">
       <div className="max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

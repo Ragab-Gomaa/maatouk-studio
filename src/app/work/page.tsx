@@ -12,7 +12,7 @@ export default function WorkPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-32 md:pt-40 pb-16 md:pb-20 bg-surface relative overflow-hidden">
+      <section className="pt-28 md:pt-32 pb-10 md:pb-14 bg-surface relative overflow-hidden">
         <div
           className="absolute top-[-200px] right-[-150px] w-[500px] h-[500px] rounded-full bg-brand-blue/[0.06] blur-3xl pointer-events-none"
           aria-hidden="true"
@@ -43,7 +43,7 @@ export default function WorkPage() {
       </section>
 
       {/* Case studies */}
-      <section className="py-16 md:py-24 bg-surface-low">
+      <section className="py-12 md:py-16 bg-surface-low">
         <div className="max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
           <div className="flex items-center gap-3 mb-8 md:mb-12">
             <span className="text-[11px] uppercase tracking-[0.2em] font-semibold text-ink-muted">
@@ -128,7 +128,7 @@ export default function WorkPage() {
       </section>
 
       {/* Motion */}
-      <section className="py-16 md:py-24 bg-ink text-white">
+      <section className="py-12 md:py-16 bg-ink text-white">
         <div className="max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
           <div className="flex items-center gap-3 mb-8 md:mb-12">
             <span className="text-[11px] uppercase tracking-[0.2em] font-semibold text-white/60">
@@ -169,7 +169,7 @@ export default function WorkPage() {
         </div>
       </section>
 
-      <section className="py-20 md:py-28 bg-surface text-center">
+      <section className="py-12 md:py-16 bg-surface text-center">
         <Button href="/contact" variant="primary" size="lg" withArrow>
           {t("Start a project", "ابدأ مشروعك")}
         </Button>

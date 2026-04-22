@@ -90,7 +90,7 @@ export default function ContactPage() {
   const labelBase = "block text-[11px] uppercase tracking-[0.2em] font-semibold text-ink-muted mb-2.5";
 
   return (
-    <main className="pt-32 md:pt-40 pb-20 bg-surface relative overflow-hidden">
+    <main className="pt-28 md:pt-32 pb-14 bg-surface relative overflow-hidden">
       <div
         className="absolute top-[-200px] right-[-150px] w-[500px] h-[500px] rounded-full bg-brand-blue/[0.06] blur-3xl pointer-events-none"
         aria-hidden="true"
