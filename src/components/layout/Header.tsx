@@ -51,7 +51,7 @@ export default function Header() {
       >
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10">
           <nav
-            className={`flex items-center justify-between gap-4 transition-all duration-500 rounded-full ps-8 sm:ps-10 pe-5 sm:pe-6 ${
+            className={`flex items-center justify-between gap-4 transition-all duration-500 rounded-full px-6 sm:px-8 ${
               scrolled
                 ? "bg-surface-raised/95 backdrop-blur-md shadow-[0_6px_24px_rgba(18,18,20,0.08)] py-3"
                 : "bg-surface-raised/90 backdrop-blur-md shadow-[0_2px_12px_rgba(18,18,20,0.04)] py-4"
@@ -83,7 +83,7 @@ export default function Header() {
               </span>
             </Link>
 
-            {/* ── Desktop nav — clean underline reveal ── */}
+            {/* ── Desktop nav — simple color shift ── */}
             <div className="hidden lg:flex items-center gap-8">
               {navLinks.map((link) => {
                 const active = isActive(link.href);
@@ -92,24 +92,13 @@ export default function Header() {
                     key={link.href}
                     href={link.href}
                     aria-current={active ? "page" : undefined}
-                    className="group/link relative py-1 text-[14px] font-medium text-ink-muted hover:text-ink transition-colors duration-300 focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-4 rounded-sm"
+                    className={`relative py-1 text-[14px] transition-colors duration-300 focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-4 rounded-sm ${
+                      active
+                        ? "text-ink font-semibold"
+                        : "text-ink-whisper hover:text-ink font-medium"
+                    }`}
                   >
-                    <span
-                      className={`relative ${
-                        active ? "text-ink font-semibold" : ""
-                      }`}
-                    >
-                      {t(link.label.en, link.label.ar)}
-                    </span>
-                    {/* Underline — always visible for active, slides in on hover */}
-                    <span
-                      className={`absolute -bottom-0.5 left-0 right-0 h-[1.5px] bg-brand-blue origin-center transition-transform duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                        active
-                          ? "scale-x-100"
-                          : "scale-x-0 group-hover/link:scale-x-100"
-                      }`}
-                      aria-hidden="true"
-                    />
+                    {t(link.label.en, link.label.ar)}
                   </Link>
                 );
               })}
@@ -208,9 +197,9 @@ export default function Header() {
 }
 
 /**
- * LanguageSwitch — a quiet typographic link that shows the *target* language
- * (what clicking will switch to). On hover, a thin brand-blue underline
- * sweeps in from the start side. Honors text direction.
+ * LanguageSwitch — a quiet typographic link that shows the abbreviated
+ * target language (AR / EN). Minimal: globe icon + 2-letter code + a subtle
+ * color shift on hover.
  */
 function LanguageSwitch({
   locale,
@@ -219,23 +208,17 @@ function LanguageSwitch({
   locale: "en" | "ar";
   onToggle: () => void;
 }) {
-  const target = locale === "en" ? "عربي" : "English";
-  const targetIsArabic = locale === "en";
+  const target = locale === "en" ? "AR" : "EN";
 
   return (
     <button
       onClick={onToggle}
-      className="group relative inline-flex items-center gap-1.5 text-[13px] font-medium text-ink-muted hover:text-ink transition-colors duration-300 focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-4 rounded-sm py-1"
-      aria-label={`Switch language to ${targetIsArabic ? "Arabic" : "English"}`}
+      className="group inline-flex items-center gap-1.5 text-[13px] font-semibold tracking-wide text-ink-whisper hover:text-ink transition-colors duration-300 focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-4 rounded-sm py-1"
+      aria-label={`Switch language to ${locale === "en" ? "Arabic" : "English"}`}
+      style={{ direction: "ltr" }}
     >
-      <span
-        className={`relative ${targetIsArabic ? "font-mizan" : "font-body"}`}
-        style={{ direction: targetIsArabic ? "rtl" : "ltr" }}
-      >
-        {target}
-      </span>
       <svg
-        className="w-3.5 h-3.5 text-ink-whisper group-hover:text-brand-blue transition-colors duration-300"
+        className="w-3.5 h-3.5 text-ink-whisper group-hover:text-ink transition-colors duration-300"
         viewBox="0 0 14 14"
         fill="none"
         stroke="currentColor"
@@ -246,10 +229,7 @@ function LanguageSwitch({
         <path d="M1.5 7h11" />
         <path d="M7 1.5c1.6 2 2.5 3.8 2.5 5.5S8.6 10.5 7 12.5M7 1.5c-1.6 2-2.5 3.8-2.5 5.5S5.4 10.5 7 12.5" />
       </svg>
-      <span
-        className="absolute -bottom-0.5 left-0 right-0 h-px bg-brand-blue origin-center scale-x-0 group-hover:scale-x-100 transition-transform duration-400 ease-[cubic-bezier(0.22,1,0.36,1)]"
-        aria-hidden="true"
-      />
+      <span>{target}</span>
     </button>
   );
 }
