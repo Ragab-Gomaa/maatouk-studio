@@ -51,14 +51,14 @@ export default function Header() {
       >
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10">
           <nav
-            className={`flex items-center justify-between gap-4 transition-all duration-500 rounded-full ps-10 sm:ps-12 pe-2.5 ${
+            className={`flex items-center justify-between gap-4 transition-all duration-500 rounded-full ps-8 sm:ps-10 pe-5 sm:pe-6 ${
               scrolled
                 ? "bg-surface-raised/95 backdrop-blur-md shadow-[0_6px_24px_rgba(18,18,20,0.08)] py-3"
                 : "bg-surface-raised/90 backdrop-blur-md shadow-[0_2px_12px_rgba(18,18,20,0.04)] py-4"
             }`}
             aria-label={t("Primary navigation", "التنقل الرئيسي")}
           >
-            {/* ── Rotating mark + horizontal logo wordmark ── */}
+            {/* ── Logo ── */}
             <Link
               href="/"
               className="flex items-center gap-2.5 md:gap-3 shrink-0 group focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-4 rounded-full"
@@ -83,81 +83,41 @@ export default function Header() {
               </span>
             </Link>
 
-            {/* ── Desktop nav — character stagger hover with accent diamond ── */}
-            <div className="hidden lg:flex items-center gap-1 relative">
+            {/* ── Desktop nav — clean underline reveal ── */}
+            <div className="hidden lg:flex items-center gap-8">
               {navLinks.map((link) => {
                 const active = isActive(link.href);
-                const label = t(link.label.en, link.label.ar);
-
                 return (
                   <Link
                     key={link.href}
                     href={link.href}
                     aria-current={active ? "page" : undefined}
-                    className={`group/link relative inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[14px] font-medium overflow-hidden focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2 ${
-                      active ? "text-white" : "text-ink-muted"
-                    }`}
+                    className="group/link relative py-1 text-[14px] font-medium text-ink-muted hover:text-ink transition-colors duration-300 focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-4 rounded-sm"
                   >
-                    {active && (
-                      <motion.span
-                        layoutId="nav-pill"
-                        className="absolute inset-0 bg-ink rounded-full -z-10"
-                        transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                      />
-                    )}
-
-                    {/* Character-stagger hover effect: each letter cross-fades from
-                        its current position to a copy lifted in from below. */}
-                    <span className="relative inline-flex overflow-hidden leading-none">
-                      {label.split("").map((char, i) => {
-                        const delay = `${i * 22}ms`;
-                        return (
-                          <span
-                            key={i}
-                            className="relative inline-block"
-                            style={{ transitionDelay: delay }}
-                          >
-                            {/* Original letter */}
-                            <span
-                              className="inline-block transition-transform duration-400 ease-[cubic-bezier(0.77,0,0.175,1)] group-hover/link:-translate-y-full"
-                              style={{ transitionDelay: delay }}
-                            >
-                              {char === " " ? " " : char}
-                            </span>
-                            {/* Duplicate underneath that slides up on hover */}
-                            <span
-                              aria-hidden="true"
-                              className={`absolute inset-0 inline-block translate-y-full transition-transform duration-400 ease-[cubic-bezier(0.77,0,0.175,1)] group-hover/link:translate-y-0 ${
-                                active ? "text-white" : "text-brand-blue font-semibold"
-                              }`}
-                              style={{ transitionDelay: delay }}
-                            >
-                              {char === " " ? " " : char}
-                            </span>
-                          </span>
-                        );
-                      })}
+                    <span
+                      className={`relative ${
+                        active ? "text-ink font-semibold" : ""
+                      }`}
+                    >
+                      {t(link.label.en, link.label.ar)}
                     </span>
-
-                    {/* Accent diamond — fades/scales in next to the label */}
-                    {!active && (
-                      <span
-                        className="inline-block w-1 h-1 rotate-45 bg-brand-blue opacity-0 scale-0 group-hover/link:opacity-100 group-hover/link:scale-100 transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] delay-[120ms]"
-                        aria-hidden="true"
-                      />
-                    )}
+                    {/* Underline — always visible for active, slides in on hover */}
+                    <span
+                      className={`absolute -bottom-0.5 left-0 right-0 h-[1.5px] bg-brand-blue origin-center transition-transform duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                        active
+                          ? "scale-x-100"
+                          : "scale-x-0 group-hover/link:scale-x-100"
+                      }`}
+                      aria-hidden="true"
+                    />
                   </Link>
                 );
               })}
             </div>
 
             {/* ── Right actions ── */}
-            <div className="flex items-center gap-2">
-              <LanguageToggle
-                locale={locale}
-                onToggle={toggleLocale}
-                className="hidden sm:inline-flex"
-              />
+            <div className="flex items-center gap-4 md:gap-5">
+              <LanguageSwitch locale={locale} onToggle={toggleLocale} />
 
               <div className="hidden lg:block">
                 <Button href="/contact" variant="primary" size="sm" withArrow>
@@ -237,7 +197,7 @@ export default function Header() {
                 transition={{ delay: 0.55 }}
                 className="mt-6"
               >
-                <LanguageToggle locale={locale} onToggle={toggleLocale} />
+                <LanguageSwitch locale={locale} onToggle={toggleLocale} />
               </motion.div>
             </nav>
           </motion.div>
@@ -248,59 +208,48 @@ export default function Header() {
 }
 
 /**
- * LanguageToggle — a two-state pill with an ink indicator that slides
- * between EN and AR. Active state is rendered white-on-ink, inactive is a
- * muted label. A shared layoutId animates the indicator between positions.
+ * LanguageSwitch — a quiet typographic link that shows the *target* language
+ * (what clicking will switch to). On hover, a thin brand-blue underline
+ * sweeps in from the start side. Honors text direction.
  */
-function LanguageToggle({
+function LanguageSwitch({
   locale,
   onToggle,
-  className = "",
 }: {
   locale: "en" | "ar";
   onToggle: () => void;
-  className?: string;
 }) {
+  const target = locale === "en" ? "عربي" : "English";
+  const targetIsArabic = locale === "en";
+
   return (
     <button
       onClick={onToggle}
-      aria-label={`Switch language to ${locale === "en" ? "Arabic" : "English"}`}
-      className={`relative inline-flex items-center p-1 rounded-full bg-black/[0.04] hover:bg-black/[0.07] transition-colors duration-300 focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2 ${className}`}
-      style={{ direction: "ltr" }}
+      className="group relative inline-flex items-center gap-1.5 text-[13px] font-medium text-ink-muted hover:text-ink transition-colors duration-300 focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-4 rounded-sm py-1"
+      aria-label={`Switch language to ${targetIsArabic ? "Arabic" : "English"}`}
     >
-      {/* EN slot */}
       <span
-        className={`relative px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wide transition-colors duration-300 ${
-          locale === "en" ? "text-white" : "text-ink-whisper"
-        }`}
+        className={`relative ${targetIsArabic ? "font-mizan" : "font-body"}`}
+        style={{ direction: targetIsArabic ? "rtl" : "ltr" }}
       >
-        {locale === "en" && (
-          <motion.span
-            layoutId="lang-indicator"
-            className="absolute inset-0 bg-ink rounded-full -z-10"
-            transition={{ type: "spring", stiffness: 400, damping: 32 }}
-          />
-        )}
-        <span className="relative">EN</span>
+        {target}
       </span>
-
-      {/* AR slot */}
+      <svg
+        className="w-3.5 h-3.5 text-ink-whisper group-hover:text-brand-blue transition-colors duration-300"
+        viewBox="0 0 14 14"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        aria-hidden="true"
+      >
+        <circle cx="7" cy="7" r="5.5" />
+        <path d="M1.5 7h11" />
+        <path d="M7 1.5c1.6 2 2.5 3.8 2.5 5.5S8.6 10.5 7 12.5M7 1.5c-1.6 2-2.5 3.8-2.5 5.5S5.4 10.5 7 12.5" />
+      </svg>
       <span
-        className={`relative px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wide transition-colors duration-300 ${
-          locale === "ar" ? "text-white" : "text-ink-whisper"
-        }`}
-      >
-        {locale === "ar" && (
-          <motion.span
-            layoutId="lang-indicator"
-            className="absolute inset-0 bg-ink rounded-full -z-10"
-            transition={{ type: "spring", stiffness: 400, damping: 32 }}
-          />
-        )}
-        <span className="relative" style={{ fontFamily: "var(--font-mizan)" }}>
-          AR
-        </span>
-      </span>
+        className="absolute -bottom-0.5 left-0 right-0 h-px bg-brand-blue origin-center scale-x-0 group-hover:scale-x-100 transition-transform duration-400 ease-[cubic-bezier(0.22,1,0.36,1)]"
+        aria-hidden="true"
+      />
     </button>
   );
 }
