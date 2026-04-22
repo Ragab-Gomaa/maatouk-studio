@@ -327,30 +327,35 @@ function MotionAnimation() {
  * 9s loop — slow enough to actually read the code.
  */
 function DigitalAnimation() {
-  const DURATION = 9;
+  const DURATION = 13;
 
-  // Keyframe times (fraction of DURATION)
+  // Keyframe times (fraction of DURATION). Tuned so the editor is
+  // visible for ~7 seconds — enough to see every line type in, read
+  // the whole file, and watch the Run button pulse twice before it is
+  // pressed. Then the browser gets ~4.5 seconds to build and be acted
+  // on.
   const t = {
-    editorIn: 0.03,
-    line1: 0.08,
-    line2: 0.17,
-    line3: 0.26,
-    line4: 0.35,
-    readHold: 0.50,
-    runPulse: 0.53,
-    runPressed: 0.58,
-    compilingStart: 0.58,
-    compilingEnd: 0.66,
-    crossfadeStart: 0.64,
-    browserIn: 0.68,
-    navIn: 0.70,
-    headlineIn: 0.74,
-    ctaIn: 0.80,
-    cardsIn: 0.84,
-    cursorMove: 0.89,
-    cursorClick: 0.93,
-    hold: 0.96,
-    fade: 0.98,
+    editorIn: 0.035,     // 0.45s — editor fades in
+    line1: 0.10,         // 1.30s — <Hero>
+    line2: 0.20,         // 2.60s — <h1>Studio</h1>
+    line3: 0.30,         // 3.90s — <Button />
+    line4: 0.40,         // 5.20s — </Hero>
+    readHoldUntil: 0.46, // 5.98s — all lines written, read moment
+    runPulse1: 0.48,     // 6.24s — first pulse on Run
+    runPulse2: 0.53,     // 6.89s — second pulse
+    runPressed: 0.57,    // 7.41s — button physically pressed
+    compilingStart: 0.58,// 7.54s — compiling strip slides in
+    compilingEnd: 0.66,  // 8.58s — compiling strip slides out
+    crossfadeStart: 0.65,// 8.45s — editor starts fading out
+    browserIn: 0.69,     // 8.97s — browser fully visible
+    navIn: 0.71,         // 9.23s
+    headlineIn: 0.74,    // 9.62s
+    ctaIn: 0.79,         // 10.27s
+    cardsIn: 0.83,       // 10.79s
+    cursorMove: 0.89,    // 11.57s
+    cursorClick: 0.93,   // 12.09s
+    hold: 0.96,          // 12.48s
+    fade: 0.98,          // 12.74s
   };
 
   return (
@@ -396,18 +401,33 @@ function DigitalAnimation() {
             <span className="w-[5px] h-[5px] rounded-full bg-[#28C840]" />
           </div>
           <span className="text-[7px] font-mono text-white/40">Hero.jsx</span>
-          {/* Run button — prominent, readable */}
+          {/* Run button — pulses twice after code is written, then pressed */}
           <motion.span
             className="inline-flex items-center gap-1 px-1.5 py-[2px] rounded-[3px] bg-brand-green text-ink text-[7px] font-bold uppercase tracking-wider"
             initial={{ opacity: 0, scale: 1 }}
             animate={{
-              opacity: [0, 0, 1, 1, 1, 1, 0],
-              scale: [1, 1, 1, 1, 1.15, 0.9, 1],
+              opacity: [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+              scale: [1, 1, 1, 1, 1.18, 1, 1, 1.22, 1, 1, 0.82, 1.05, 1],
             }}
             transition={{
               duration: DURATION,
-              times: [0, t.editorIn - 0.01, t.editorIn + 0.02, t.runPulse - 0.005, t.runPulse, t.runPressed, t.crossfadeStart],
+              times: [
+                0,
+                t.editorIn - 0.005,
+                t.editorIn + 0.02,
+                t.runPulse1 - 0.01,
+                t.runPulse1,
+                t.runPulse1 + 0.02,
+                t.runPulse2 - 0.01,
+                t.runPulse2,
+                t.runPulse2 + 0.02,
+                t.runPressed - 0.005,
+                t.runPressed,
+                t.runPressed + 0.015,
+                t.crossfadeStart,
+              ],
               repeat: Infinity,
+              ease: [0.22, 1, 0.36, 1],
             }}
           >
             <svg width="5" height="5" viewBox="0 0 10 10" fill="currentColor">
