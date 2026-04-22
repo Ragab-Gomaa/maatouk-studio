@@ -51,7 +51,7 @@ export default function Header() {
       >
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 md:px-8 lg:px-10">
           <nav
-            className={`flex items-center justify-between gap-4 transition-all duration-500 rounded-full pl-6 sm:pl-7 lg:pl-8 pr-2.5 ${
+            className={`flex items-center justify-between gap-4 transition-all duration-500 rounded-full ps-10 sm:ps-12 pe-2.5 ${
               scrolled
                 ? "bg-surface-raised/95 backdrop-blur-md shadow-[0_6px_24px_rgba(18,18,20,0.08)] py-3"
                 : "bg-surface-raised/90 backdrop-blur-md shadow-[0_2px_12px_rgba(18,18,20,0.04)] py-4"
@@ -64,7 +64,6 @@ export default function Header() {
               className="flex items-center gap-2.5 md:gap-3 shrink-0 group focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-4 rounded-full"
               aria-label={t("Maatouk Studio — Home", "ستوديو معتوق — الرئيسية")}
             >
-              {/* Mark — rotates 180° smoothly on hover */}
               <span className="block transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:rotate-180">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -73,31 +72,32 @@ export default function Header() {
                   className="w-6 h-6 md:w-[26px] md:h-[26px] block"
                 />
               </span>
-
-              {/* Wordmark — full brand name in proper typography */}
               <span
                 className={`hidden sm:inline-block font-bold tracking-[-0.01em] text-ink leading-none ${
-                  locale === "ar" ? "font-mizan text-[17px] md:text-[18px]" : "font-lyon text-[16px] md:text-[17px]"
+                  locale === "ar"
+                    ? "font-mizan text-[17px] md:text-[18px]"
+                    : "font-lyon text-[16px] md:text-[17px]"
                 }`}
               >
                 {t("Maatouk Studio", "ستوديو معتوق")}
               </span>
             </Link>
 
-            {/* ── Desktop nav — smooth hover with animated pill + underline ── */}
-            <div className="hidden lg:flex items-center gap-0.5 relative">
+            {/* ── Desktop nav — character stagger hover with accent diamond ── */}
+            <div className="hidden lg:flex items-center gap-1 relative">
               {navLinks.map((link) => {
                 const active = isActive(link.href);
+                const label = t(link.label.en, link.label.ar);
+
                 return (
                   <Link
                     key={link.href}
                     href={link.href}
                     aria-current={active ? "page" : undefined}
-                    className={`group/link relative px-4 py-2 rounded-full text-[14px] font-medium transition-all duration-300 focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2 ${
-                      active ? "text-white" : "text-ink-muted hover:text-ink"
+                    className={`group/link relative inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[14px] font-medium overflow-hidden focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2 ${
+                      active ? "text-white" : "text-ink-muted"
                     }`}
                   >
-                    {/* Active pill — slides between items */}
                     {active && (
                       <motion.span
                         layoutId="nav-pill"
@@ -106,23 +106,43 @@ export default function Header() {
                       />
                     )}
 
-                    {/* Hover pill — subtle fade-in under inactive items */}
-                    {!active && (
-                      <span
-                        className="absolute inset-0 rounded-full bg-black/[0.04] opacity-0 scale-[0.92] group-hover/link:opacity-100 group-hover/link:scale-100 transition-all duration-400 ease-out -z-10"
-                        aria-hidden="true"
-                      />
-                    )}
-
-                    {/* Label with subtle lift on hover */}
-                    <span className="relative inline-block transition-transform duration-300 group-hover/link:-translate-y-[1px]">
-                      {t(link.label.en, link.label.ar)}
+                    {/* Character-stagger hover effect: each letter cross-fades from
+                        its current position to a copy lifted in from below. */}
+                    <span className="relative inline-flex overflow-hidden leading-none">
+                      {label.split("").map((char, i) => {
+                        const delay = `${i * 22}ms`;
+                        return (
+                          <span
+                            key={i}
+                            className="relative inline-block"
+                            style={{ transitionDelay: delay }}
+                          >
+                            {/* Original letter */}
+                            <span
+                              className="inline-block transition-transform duration-400 ease-[cubic-bezier(0.77,0,0.175,1)] group-hover/link:-translate-y-full"
+                              style={{ transitionDelay: delay }}
+                            >
+                              {char === " " ? " " : char}
+                            </span>
+                            {/* Duplicate underneath that slides up on hover */}
+                            <span
+                              aria-hidden="true"
+                              className={`absolute inset-0 inline-block translate-y-full transition-transform duration-400 ease-[cubic-bezier(0.77,0,0.175,1)] group-hover/link:translate-y-0 ${
+                                active ? "text-white" : "text-brand-blue font-semibold"
+                              }`}
+                              style={{ transitionDelay: delay }}
+                            >
+                              {char === " " ? " " : char}
+                            </span>
+                          </span>
+                        );
+                      })}
                     </span>
 
-                    {/* Accent underline on hover (inactive only) */}
+                    {/* Accent diamond — fades/scales in next to the label */}
                     {!active && (
                       <span
-                        className="absolute left-1/2 -translate-x-1/2 bottom-1 h-[2px] w-0 bg-brand-blue rounded-full group-hover/link:w-4 transition-[width] duration-400 ease-out"
+                        className="inline-block w-1 h-1 rotate-45 bg-brand-blue opacity-0 scale-0 group-hover/link:opacity-100 group-hover/link:scale-100 transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] delay-[120ms]"
                         aria-hidden="true"
                       />
                     )}
@@ -133,13 +153,11 @@ export default function Header() {
 
             {/* ── Right actions ── */}
             <div className="flex items-center gap-2">
-              <button
-                onClick={toggleLocale}
-                className="hidden sm:inline-flex items-center justify-center w-10 h-10 rounded-full border border-black/[0.08] text-xs font-semibold text-ink-muted hover:text-brand-blue hover:border-brand-blue/40 hover:bg-brand-blue/5 transition-all duration-300 focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2"
-                aria-label={`Switch to ${locale === "en" ? "Arabic" : "English"}`}
-              >
-                {locale === "en" ? "عربي" : "EN"}
-              </button>
+              <LanguageToggle
+                locale={locale}
+                onToggle={toggleLocale}
+                className="hidden sm:inline-flex"
+              />
 
               <div className="hidden lg:block">
                 <Button href="/contact" variant="primary" size="sm" withArrow>
@@ -147,7 +165,6 @@ export default function Header() {
                 </Button>
               </div>
 
-              {/* Mobile toggle */}
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
                 className="lg:hidden w-10 h-10 rounded-full flex items-center justify-center border border-black/[0.08] hover:border-brand-blue/40 transition-colors focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2"
@@ -171,7 +188,6 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -215,19 +231,76 @@ export default function Header() {
                   {t("Start a project", "ابدأ مشروعك")}
                 </Button>
               </motion.div>
-              <motion.button
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.55 }}
-                onClick={toggleLocale}
-                className="mt-6 text-sm font-medium text-ink-muted underline decoration-dotted underline-offset-4"
+                className="mt-6"
               >
-                {locale === "en" ? "عربي" : "English"}
-              </motion.button>
+                <LanguageToggle locale={locale} onToggle={toggleLocale} />
+              </motion.div>
             </nav>
           </motion.div>
         )}
       </AnimatePresence>
     </>
+  );
+}
+
+/**
+ * LanguageToggle — a two-state pill with an ink indicator that slides
+ * between EN and AR. Active state is rendered white-on-ink, inactive is a
+ * muted label. A shared layoutId animates the indicator between positions.
+ */
+function LanguageToggle({
+  locale,
+  onToggle,
+  className = "",
+}: {
+  locale: "en" | "ar";
+  onToggle: () => void;
+  className?: string;
+}) {
+  return (
+    <button
+      onClick={onToggle}
+      aria-label={`Switch language to ${locale === "en" ? "Arabic" : "English"}`}
+      className={`relative inline-flex items-center p-1 rounded-full bg-black/[0.04] hover:bg-black/[0.07] transition-colors duration-300 focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2 ${className}`}
+      style={{ direction: "ltr" }}
+    >
+      {/* EN slot */}
+      <span
+        className={`relative px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wide transition-colors duration-300 ${
+          locale === "en" ? "text-white" : "text-ink-whisper"
+        }`}
+      >
+        {locale === "en" && (
+          <motion.span
+            layoutId="lang-indicator"
+            className="absolute inset-0 bg-ink rounded-full -z-10"
+            transition={{ type: "spring", stiffness: 400, damping: 32 }}
+          />
+        )}
+        <span className="relative">EN</span>
+      </span>
+
+      {/* AR slot */}
+      <span
+        className={`relative px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wide transition-colors duration-300 ${
+          locale === "ar" ? "text-white" : "text-ink-whisper"
+        }`}
+      >
+        {locale === "ar" && (
+          <motion.span
+            layoutId="lang-indicator"
+            className="absolute inset-0 bg-ink rounded-full -z-10"
+            transition={{ type: "spring", stiffness: 400, damping: 32 }}
+          />
+        )}
+        <span className="relative" style={{ fontFamily: "var(--font-mizan)" }}>
+          AR
+        </span>
+      </span>
+    </button>
   );
 }
