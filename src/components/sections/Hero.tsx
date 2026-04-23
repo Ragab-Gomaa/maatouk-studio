@@ -358,9 +358,9 @@ function BrandingAnimation() {
 
             {/* Artboard area */}
             <div className="relative ms-1 mt-1">
-              {/* Artboard */}
+              {/* Artboard — a mini brand-guidelines page */}
               <div
-                className="relative bg-white flex items-center justify-center"
+                className="relative bg-white flex flex-col overflow-hidden"
                 style={{
                   width: "92px",
                   height: "92px",
@@ -368,12 +368,61 @@ function BrandingAnimation() {
                     "0 6px 18px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,0,0,0.25)",
                 }}
               >
-                <span
-                  className="font-lyon font-bold text-brand-blue leading-none"
-                  style={{ fontSize: "56px", letterSpacing: "-0.03em" }}
-                >
-                  Aa
-                </span>
+                {/* Top: tiny specimen header */}
+                <div className="shrink-0 flex items-center justify-between px-1.5 pt-1">
+                  <span className="text-[4px] font-mono text-ink/50 tracking-[0.15em] uppercase">
+                    Typography
+                  </span>
+                  <span className="text-[4px] font-mono text-ink/35 tracking-wider">
+                    01 / 04
+                  </span>
+                </div>
+
+                {/* Aa specimen */}
+                <div className="flex-1 flex items-center justify-center">
+                  <span
+                    className="font-lyon font-bold text-ink leading-none"
+                    style={{ fontSize: "40px", letterSpacing: "-0.03em" }}
+                  >
+                    Aa
+                  </span>
+                </div>
+
+                {/* Divider */}
+                <div className="shrink-0 h-px bg-black/10 mx-1.5" />
+
+                {/* Pantone-style palette row */}
+                <div className="shrink-0 px-1.5 pt-1 pb-1">
+                  <div className="flex items-center justify-between mb-0.5">
+                    <span className="text-[4px] font-mono text-ink/50 tracking-[0.15em] uppercase">
+                      Palette
+                    </span>
+                    <span className="text-[4px] font-mono text-ink/35 tracking-wider">
+                      ISO
+                    </span>
+                  </div>
+                  <div className="flex gap-[1.5px]">
+                    {[
+                      { color: "#0029D6", code: "072" },
+                      { color: "#3CFFC5", code: "354" },
+                      { color: "#FBF9F5", code: "000" },
+                      { color: "#121214", code: "BLK" },
+                    ].map((c, i) => (
+                      <div key={i} className="flex-1 flex flex-col">
+                        <div
+                          className="w-full h-[11px] rounded-[1px]"
+                          style={{
+                            backgroundColor: c.color,
+                            boxShadow: "inset 0 0 0 0.5px rgba(0,0,0,0.1)",
+                          }}
+                        />
+                        <span className="text-[3.5px] font-mono text-ink/55 tracking-wide text-center mt-[1px] leading-none">
+                          {c.code}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
 
               {/* Marching-ants selection around the artboard */}
@@ -388,7 +437,7 @@ function BrandingAnimation() {
 
               {/* Tiny size label above */}
               <span className="absolute -top-[8px] left-0 text-[4.5px] font-mono text-white/60 tracking-wider">
-                600 × 600 px
+                Brand Guidelines · Pg 01
               </span>
             </div>
           </div>
