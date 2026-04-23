@@ -24,8 +24,8 @@ export default function WorkPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <span className="inline-flex items-center gap-2 pl-2 pr-4 py-1 bg-surface-raised rounded-full border border-black/[0.06] text-[11px] uppercase tracking-[0.2em] font-semibold text-ink-muted mb-6 shadow-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-blue" />
+            <span className="kicker-pill mb-6">
+              <span className="kicker-pill-dot" />
               {t("Archive", "الأعمال")}
             </span>
             <h1

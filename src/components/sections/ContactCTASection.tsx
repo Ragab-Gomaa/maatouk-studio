@@ -45,8 +45,8 @@ export default function ContactCTASection() {
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-10 lg:gap-16 p-10 md:p-16 lg:p-20 items-end">
             {/* Left: pill + headline */}
             <div>
-              <div className="inline-flex items-center gap-2 pl-2 pr-4 py-1 bg-white/10 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold text-white/85 mb-8">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-green" />
+              <div className="kicker-pill kicker-pill-dark mb-8">
+                <span className="kicker-pill-dot bg-brand-green" />
                 {t("Get in touch", "تواصل")}
               </div>
 

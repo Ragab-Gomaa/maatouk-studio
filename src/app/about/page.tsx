@@ -45,12 +45,12 @@ export default function AboutPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <span className="inline-flex items-center gap-2 pl-2 pr-4 py-1 bg-surface-raised rounded-full border border-black/[0.06] text-[11px] uppercase tracking-[0.2em] font-semibold text-ink-muted mb-6 shadow-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-blue" />
+            <span className="kicker-pill mb-6">
+              <span className="kicker-pill-dot" />
               {t("The studio", "الاستوديو")}
             </span>
             <h1
-              className={`font-lyon font-bold tracking-[-0.035em] text-5xl md:text-7xl lg:text-[5.5rem] text-ink max-w-4xl ${
+              className={`font-lyon font-bold tracking-[-0.035em] text-5xl md:text-7xl lg:text-[6rem] text-ink max-w-4xl ${
                 locale === "ar" ? "leading-[1.2]" : "leading-[0.92]"
               }`}
             >
@@ -74,7 +74,7 @@ export default function AboutPage() {
       <section className="py-12 md:py-16 bg-surface-low">
         <div className="max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
           <div className="flex items-center gap-3 mb-12 md:mb-16">
-            <span className="text-[11px] uppercase tracking-[0.2em] font-semibold text-ink-muted">
+            <span className="kicker">
               {t("Our values", "قيمنا")}
             </span>
             <span className="h-px flex-1 bg-black/[0.08]" />

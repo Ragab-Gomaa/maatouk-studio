@@ -25,9 +25,9 @@ export default function ClientsSection() {
       <div className="max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
         <div className="studio-card rounded-[28px] md:rounded-[36px] p-8 md:p-12 lg:p-14">
           <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-12 mb-10 md:mb-12">
-            <div className="flex items-center gap-3 shrink-0">
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-blue" />
-              <span className="text-[11px] uppercase tracking-[0.2em] font-semibold text-ink-muted">
+            <div className="flex items-center gap-2.5 shrink-0">
+              <span className="kicker-pill-dot" />
+              <span className="kicker">
                 {t("Selected clients", "عملاء مختارون")}
               </span>
             </div>

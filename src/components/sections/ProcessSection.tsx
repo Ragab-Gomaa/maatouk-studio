@@ -53,9 +53,9 @@ export default function ProcessSection() {
           className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-6 lg:gap-16 items-end mb-14 md:mb-20"
         >
           <div>
-            <span className="inline-flex items-center gap-2 pl-2 pr-4 py-1 bg-surface-raised rounded-full border border-black/[0.06] text-[11px] uppercase tracking-[0.2em] font-semibold text-ink-muted mb-6 shadow-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-blue" />
-              {t("Process", "المنهجية")}
+            <span className="kicker-pill mb-6">
+              <span className="kicker-pill-dot" />
+              {t("Process", "المنهجيّة")}
             </span>
             <h2 className={`font-lyon font-bold tracking-[-0.03em] text-4xl md:text-5xl lg:text-6xl max-w-2xl ${locale === "ar" ? "leading-[1.25]" : "leading-[1.05]"}`}>
               {t("Four stages. ", "أربع مراحل. ")}

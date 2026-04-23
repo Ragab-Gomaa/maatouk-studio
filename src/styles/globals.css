@@ -229,6 +229,77 @@
   white-space: nowrap;
 }
 
+/* ─── Utility: Kicker label ───
+   Small eyebrow text that sits above a heading or in a pill.
+   Uppercase + letter-spacing works beautifully for Latin but breaks
+   Arabic ligatures — the [dir="rtl"] override drops both and bumps
+   size for legibility. */
+.kicker {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  line-height: 1.2;
+}
+.kicker-sm {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  line-height: 1.2;
+}
+[dir="rtl"] .kicker,
+[dir="rtl"] .kicker-sm {
+  font-size: 13px;
+  letter-spacing: 0;
+  text-transform: none;
+  font-weight: 700;
+}
+
+/* ─── Utility: Kicker pill ───
+   The dot-prefixed rounded eyebrow used on every section on the site.
+   Wrap a label in <span class="kicker-pill"><span class="kicker-pill-dot"/>LABEL</span>. */
+.kicker-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 1rem 0.25rem 0.5rem;
+  background-color: var(--color-surface-raised);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 999px;
+  box-shadow: var(--shadow-sm);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  line-height: 1.2;
+}
+[dir="rtl"] .kicker-pill {
+  padding: 0.3rem 0.5rem 0.3rem 1rem;
+  font-size: 13px;
+  letter-spacing: 0;
+  text-transform: none;
+  font-weight: 700;
+}
+.kicker-pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background-color: var(--color-brand-blue);
+  flex-shrink: 0;
+}
+
+/* Dark surface variant (for sections with bg-ink) */
+.kicker-pill-dark {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.8);
+  box-shadow: none;
+}
+
 /* ─── Utility: Studio card ─── */
 .studio-card {
   background-color: var(--color-surface-raised);

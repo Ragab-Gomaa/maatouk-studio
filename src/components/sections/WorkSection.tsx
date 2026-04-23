@@ -25,8 +25,8 @@ export default function WorkSection() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">
           <div>
-            <span className="inline-flex items-center gap-2 pl-2 pr-4 py-1 bg-surface-raised rounded-full border border-black/[0.06] text-[11px] uppercase tracking-[0.2em] font-semibold text-ink-muted mb-5 shadow-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-blue" />
+            <span className="kicker-pill mb-5">
+              <span className="kicker-pill-dot" />
               {t("Selected work", "أعمال مختارة")}
             </span>
             <h2 className={`font-lyon font-bold tracking-[-0.03em] text-4xl md:text-5xl lg:text-6xl max-w-2xl ${locale === "ar" ? "leading-[1.25]" : "leading-[1.05]"}`}>
