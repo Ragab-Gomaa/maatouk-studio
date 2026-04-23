@@ -4,10 +4,10 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useTranslation } from "@/lib/LocaleContext";
 import { caseStudies, motionProjects } from "@/data/content";
-import Button from "@/components/ui/Button";
+import ContactCTASection from "@/components/sections/ContactCTASection";
 
 export default function WorkPage() {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
 
   return (
     <>
@@ -26,16 +26,22 @@ export default function WorkPage() {
           >
             <span className="inline-flex items-center gap-2 pl-2 pr-4 py-1 bg-surface-raised rounded-full border border-black/[0.06] text-[11px] uppercase tracking-[0.2em] font-semibold text-ink-muted mb-6 shadow-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-brand-blue" />
-              {t("Archive", "الأرشيف")}
+              {t("Archive", "الأعمال")}
             </span>
-            <h1 className="font-lyon font-bold tracking-[-0.035em] leading-[0.92] text-5xl md:text-7xl lg:text-[6rem] text-ink max-w-4xl">
-              {t("Selected", "أعمال")}{" "}
-              <span className="text-brand-blue italic">{t("work.", "مختارة.")}</span>
+            <h1
+              className={`font-lyon font-bold tracking-[-0.035em] text-5xl md:text-7xl lg:text-[6rem] text-ink max-w-4xl ${
+                locale === "ar" ? "leading-[1.2]" : "leading-[0.92]"
+              }`}
+            >
+              {t("Selected", "أعمالٌ")}{" "}
+              <span className="text-brand-blue italic">
+                {t("work.", "مختارة.")}
+              </span>
             </h1>
-            <p className="mt-6 text-base md:text-lg text-ink-soft max-w-xl leading-relaxed">
+            <p className="mt-6 text-base md:text-lg text-ink-soft max-w-xl leading-relaxed text-pretty">
               {t(
-                "A curated selection of branding, motion, and digital products shipped for ambitious brands.",
-                "مجموعة مختارة من مشاريع الهوية والموشن والمنتجات الرقمية لعلامات طموحة."
+                "A curated selection of identity, motion, and digital work we've shipped with brands we care about.",
+                "مختاراتٌ من مشاريعنا في الهويّة البصريّة، الموشن جرافيك، والمنتجات الرقميّة — أطلقناها مع علاماتٍ نعتزّ بها."
               )}
             </p>
           </motion.div>
@@ -46,7 +52,13 @@ export default function WorkPage() {
       <section className="py-12 md:py-16 bg-surface-low">
         <div className="max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
           <div className="flex items-center gap-3 mb-8 md:mb-12">
-            <span className="text-[11px] uppercase tracking-[0.2em] font-semibold text-ink-muted">
+            <span
+              className={`font-semibold text-ink-muted ${
+                locale === "ar"
+                  ? "text-sm"
+                  : "text-[11px] uppercase tracking-[0.2em]"
+              }`}
+            >
               {t("Case studies", "دراسات حالة")}
             </span>
             <span className="h-px flex-1 bg-black/[0.08]" />
@@ -91,10 +103,14 @@ export default function WorkPage() {
                         </span>
                         <span
                           className="h-px w-6"
-                          style={{ backgroundColor: project.palette.primary, opacity: 0.4 }}
+                          style={{
+                            backgroundColor: project.palette.primary,
+                            opacity: 0.4,
+                          }}
                         />
                         <span className="text-[11px] opacity-60 font-medium">
-                          {t(project.category.en, project.category.ar)} · {project.year}
+                          {t(project.category.en, project.category.ar)} ·{" "}
+                          {project.year}
                         </span>
                       </div>
 
@@ -105,7 +121,10 @@ export default function WorkPage() {
                         className="text-sm md:text-base leading-relaxed mb-8 flex-1"
                         style={{ color: project.palette.inkSoft }}
                       >
-                        {t(project.shortDescription.en, project.shortDescription.ar)}
+                        {t(
+                          project.shortDescription.en,
+                          project.shortDescription.ar
+                        )}
                       </p>
 
                       {project.shots?.desktopHome && (
@@ -131,31 +150,44 @@ export default function WorkPage() {
       <section className="py-12 md:py-16 bg-ink text-white">
         <div className="max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
           <div className="flex items-center gap-3 mb-8 md:mb-12">
-            <span className="text-[11px] uppercase tracking-[0.2em] font-semibold text-white/60">
+            <span
+              className={`font-semibold text-white/60 ${
+                locale === "ar"
+                  ? "text-sm"
+                  : "text-[11px] uppercase tracking-[0.2em]"
+              }`}
+            >
               {t("Motion work", "أعمال الموشن")}
             </span>
             <span className="h-px flex-1 bg-white/10" />
           </div>
 
           <h3 className="font-lyon font-bold text-2xl md:text-3xl mb-8">
-            {t("Client work", "أعمال عملاء")}
+            {t("Client work", "مشاريع العملاء")}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 mb-16">
             {motionProjects
               .filter((m) => m.kind === "client")
               .sort((a, b) => a.order - b.order)
               .map((m) => (
-                <VimeoCard key={m.slug} vimeoId={m.vimeoId} title={t(m.title.en, m.title.ar)} subtitle={t(m.description.en, m.description.ar)} badge={t("Client", "عميل")} />
+                <MotionCard
+                  key={m.slug}
+                  slug={m.slug}
+                  vimeoId={m.vimeoId}
+                  title={t(m.title.en, m.title.ar)}
+                  subtitle={t(m.description.en, m.description.ar)}
+                  badge={t("Client", "عميل")}
+                />
               ))}
           </div>
 
           <h3 className="font-lyon font-bold text-2xl md:text-3xl mb-3">
-            {t("Personal projects", "مشاريع شخصية")}
+            {t("Personal projects", "مشاريع شخصيّة")}
           </h3>
           <p className="text-white/55 text-sm mb-8 max-w-lg">
             {t(
-              "Spec and practice pieces. Not affiliated with the brands shown.",
-              "أعمال تدريبية واستكشافية. غير مرتبطة بالعلامات التجارية الظاهرة."
+              "Spec and exploration pieces. Not affiliated with the brands shown.",
+              "أعمالٌ استكشافيّة وتجريبيّة — لا علاقة لنا رسميّاً بالعلامات الظاهرة فيها."
             )}
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
@@ -163,28 +195,35 @@ export default function WorkPage() {
               .filter((m) => m.kind === "spec")
               .sort((a, b) => a.order - b.order)
               .map((m) => (
-                <VimeoCard key={m.slug} vimeoId={m.vimeoId} title={t(m.title.en, m.title.ar)} subtitle={t(m.description.en, m.description.ar)} badge={t("Personal", "شخصي")} muted />
+                <MotionCard
+                  key={m.slug}
+                  slug={m.slug}
+                  vimeoId={m.vimeoId}
+                  title={t(m.title.en, m.title.ar)}
+                  subtitle={t(m.description.en, m.description.ar)}
+                  badge={t("Personal", "شخصي")}
+                  muted
+                />
               ))}
           </div>
         </div>
       </section>
 
-      <section className="py-12 md:py-16 bg-surface text-center">
-        <Button href="/contact" variant="primary" size="lg" withArrow>
-          {t("Start a project", "ابدأ مشروعك")}
-        </Button>
-      </section>
+      {/* Closing CTA */}
+      <ContactCTASection />
     </>
   );
 }
 
-function VimeoCard({
+function MotionCard({
+  slug,
   vimeoId,
   title,
   subtitle,
   badge,
   muted = false,
 }: {
+  slug: string;
   vimeoId: string;
   title: string;
   subtitle: string;
@@ -192,10 +231,8 @@ function VimeoCard({
   muted?: boolean;
 }) {
   return (
-    <a
-      href={`https://vimeo.com/${vimeoId}`}
-      target="_blank"
-      rel="noopener noreferrer"
+    <Link
+      href={`/work/${slug}`}
       className="group block rounded-2xl overflow-hidden bg-white/[0.03] border border-white/[0.08] hover:border-white/20 transition-colors focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-green focus-visible:outline-offset-4"
     >
       <div className="relative aspect-video bg-black overflow-hidden">
@@ -209,7 +246,11 @@ function VimeoCard({
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-14 h-14 rounded-full bg-white/95 flex items-center justify-center shadow-xl transition-transform duration-500 group-hover:scale-110">
-            <svg viewBox="0 0 24 24" className="w-5 h-5 text-ink ml-0.5" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              className="w-5 h-5 text-ink ml-0.5"
+              aria-hidden="true"
+            >
               <polygon points="8,5 18,12 8,19" fill="currentColor" />
             </svg>
           </div>
@@ -218,18 +259,24 @@ function VimeoCard({
       <div className="p-5">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h4 className="font-lyon font-bold text-lg md:text-xl leading-tight">{title}</h4>
-            <p className="text-xs md:text-sm text-white/55 mt-1 line-clamp-2">{subtitle}</p>
+            <h4 className="font-lyon font-bold text-lg md:text-xl leading-tight">
+              {title}
+            </h4>
+            <p className="text-xs md:text-sm text-white/55 mt-1 line-clamp-2">
+              {subtitle}
+            </p>
           </div>
           <span
             className={`shrink-0 text-[10px] uppercase tracking-[0.15em] font-semibold px-2.5 py-1 rounded-full ${
-              muted ? "bg-white/10 text-white/60" : "bg-brand-green/20 text-brand-green"
+              muted
+                ? "bg-white/10 text-white/60"
+                : "bg-brand-green/20 text-brand-green"
             }`}
           >
             {badge}
           </span>
         </div>
       </div>
-    </a>
+    </Link>
   );
 }

@@ -919,7 +919,7 @@ export const motionProjects: MotionProject[] = [
     color: "#2B2D42",
     description: {
       en: "Ramadan ad for Forkpos POS platform.",
-      ar: "إعلان رمضان لمنصة نقاط البيع Forkpos.",
+      ar: "إعلان رمضانيّ لمنصّة فوركبوس لنقاط البيع.",
     },
   },
   {
@@ -933,7 +933,7 @@ export const motionProjects: MotionProject[] = [
     color: "#4A148C",
     description: {
       en: "Motion content for BlankosKSA with storyboard & illustration collaboration.",
-      ar: "محتوى حركي لـ BlankosKSA بالتعاون على الستوري بورد والرسوم التوضيحية.",
+      ar: "موشن جرافيك لعلامة BlankosKSA، بتعاونٍ على القصّة المصوّرة والرسوم التوضيحيّة.",
     },
   },
   {
@@ -947,7 +947,7 @@ export const motionProjects: MotionProject[] = [
     color: "#1E3A8A",
     description: {
       en: "Motion graphic video for the Class Ride app.",
-      ar: "فيديو موشن جرافيك لتطبيق Class Ride.",
+      ar: "فيديو موشن جرافيك لتطبيق كلاس رايد.",
     },
   },
   /* Personal / Spec Work */
