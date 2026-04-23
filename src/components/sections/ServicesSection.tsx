@@ -57,7 +57,7 @@ const services: Service[] = [
       { en: "Campaign ads", ar: "حملات إعلانية" },
       { en: "Explainer videos", ar: "فيديوهات تعريفية" },
       { en: "Product motion", ar: "تحريك المنتج" },
-      { en: "Social kits", ar: "محتوى السوشيال ميديا" },
+      { en: "Social kits", ar: "سوشيال ميديا" },
     ],
     accent: "dark",
     icon: (
@@ -175,7 +175,7 @@ export default function ServicesSection() {
                   visible: { opacity: 1, y: 0 },
                 }}
                 transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className={`relative rounded-[28px] p-7 md:p-8 lg:p-9 overflow-hidden transition-shadow duration-500 hover:shadow-lg ${a.card}`}
+                className={`relative h-full flex flex-col rounded-[28px] p-7 md:p-8 lg:p-9 overflow-hidden transition-shadow duration-500 hover:shadow-lg ${a.card}`}
               >
                 {/* Top row */}
                 <div className="flex items-start justify-between mb-5 md:mb-7">
@@ -201,7 +201,7 @@ export default function ServicesSection() {
                 </p>
 
                 {/* Deliverable pills */}
-                <div className="flex flex-wrap gap-1.5 mb-5">
+                <div className="flex flex-wrap gap-1.5 mb-6">
                   {s.deliverables.map((d, i) => (
                     <span
                       key={i}
@@ -212,10 +212,10 @@ export default function ServicesSection() {
                   ))}
                 </div>
 
-                {/* Bottom link */}
+                {/* Bottom link — pushed to card bottom so all 3 cards align */}
                 <Link
                   href="/services"
-                  className={`inline-flex items-center gap-1.5 text-sm font-medium ${a.link} group/link focus:outline-none focus-visible:outline-2 focus-visible:outline-current focus-visible:outline-offset-2 rounded-sm`}
+                  className={`mt-auto inline-flex items-center gap-1.5 text-sm font-medium self-start ${a.link} group/link focus:outline-none focus-visible:outline-2 focus-visible:outline-current focus-visible:outline-offset-2 rounded-sm`}
                 >
                   {t("Learn more", "اعرف المزيد")}
                   <svg
