@@ -14,9 +14,9 @@ export default function Hero() {
   const { t, locale } = useTranslation();
 
   const features: { value: string; label: { en: string; ar: string } }[] = [
-    { value: "10+", label: { en: "Clients served", ar: "عميل" } },
-    { value: "15+", label: { en: "Projects delivered", ar: "مشروع مُسلَّم" } },
-    { value: "3+", label: { en: "Years of craft", ar: "سنوات من الحرفية" } },
+    { value: "10+", label: { en: "Partners", ar: "شريك" } },
+    { value: "15+", label: { en: "Launches", ar: "إطلاق" } },
+    { value: "3+", label: { en: "Years of craft", ar: "سنوات من الحِرفة" } },
   ];
 
   return (
@@ -46,8 +46,8 @@ export default function Hero() {
               </span>
               <span className="text-[12px] text-ink-muted font-medium tracking-[-0.01em]">
                 {t(
-                  "Now accepting new projects — 2026",
-                  "نستقبل مشاريع جديدة — ٢٠٢٦"
+                  "Small studio, big details",
+                  "استوديو صغير، تفاصيل كبيرة"
                 )}
               </span>
             </motion.div>
@@ -60,15 +60,15 @@ export default function Hero() {
             >
               {locale === "ar" ? (
                 <>
-                  <span className="block">علامات تبدأ</span>
-                  <span className="block text-brand-blue">بالحركة.</span>
+                  <span className="block">نصمّم هويّات</span>
+                  <span className="block text-brand-blue">تُحرّك الثقافة.</span>
                 </>
               ) : (
                 <>
-                  <span className="block">Brands that</span>
+                  <span className="block">We design brands</span>
                   <span className="block">
-                    <span className="text-brand-blue italic">start </span>
-                    moving.
+                    that <span className="text-brand-blue italic">move </span>
+                    culture.
                   </span>
                 </>
               )}
@@ -82,14 +82,14 @@ export default function Hero() {
             >
               <span className="block">
                 {t(
-                  "A bilingual design studio for brand identities, motion, and digital products.",
-                  "استوديو تصميم ثنائي اللغة للهويات البصرية والموشن والمنتجات الرقمية."
+                  "Brand identity, motion, and digital products — under one roof.",
+                  "هويّة، موشن، ومنتجات رقميّة — تحت سقفٍ واحد."
                 )}
               </span>
               <span className="block mt-1">
                 {t(
-                  "We design the whole thing, under one roof — from first sketch to shipped product.",
-                  "نصمّم العمل بالكامل تحت سقف واحد — من أول رسمة إلى آخر تسليم."
+                  "From first idea to final delivery.",
+                  "من أوّل فكرةٍ إلى آخر تسليم."
                 )}
               </span>
             </motion.p>
@@ -104,7 +104,7 @@ export default function Hero() {
                 {t("Start a project", "ابدأ مشروعك")}
               </Button>
               <Button href="/work" variant="secondary" size="lg">
-                {t("Explore work", "استكشف أعمالنا")}
+                {t("See our work", "شاهد أعمالنا")}
               </Button>
             </motion.div>
 

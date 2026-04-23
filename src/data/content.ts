@@ -3,7 +3,7 @@ export const siteContent = {
     work: { en: "Work", ar: "أعمالنا" },
     services: { en: "Services", ar: "خدماتنا" },
     about: { en: "About", ar: "عن الاستوديو" },
-    contact: { en: "Contact", ar: "تواصل" },
+    contact: { en: "Contact", ar: "تواصل معنا" },
   },
 
   hero: {
