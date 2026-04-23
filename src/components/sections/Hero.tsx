@@ -53,7 +53,7 @@ export default function Hero() {
               className={`font-lyon font-bold tracking-[-0.035em] text-ink mb-6 ${
                 locale === "ar"
                   ? "text-[2.75rem] sm:text-[3.75rem] md:text-[5rem] lg:text-[5.75rem] xl:text-[6.5rem] leading-[1.15]"
-                  : "text-[2.5rem] sm:text-[3.25rem] md:text-[4.25rem] lg:text-[4.75rem] xl:text-[5.25rem] leading-[1.02]"
+                  : "text-[2rem] sm:text-[2.75rem] md:text-[3.25rem] lg:text-[3.5rem] xl:text-[3.75rem] leading-[1.05]"
               }`}
             >
               {locale === "ar" ? (

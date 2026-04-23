@@ -310,8 +310,10 @@ export default function ContactPage() {
           </span>
 
           <h1
-            className={`font-lyon font-bold tracking-[-0.035em] text-5xl md:text-6xl lg:text-[4.5rem] text-ink mb-6 ${
-              locale === "ar" ? "leading-[1.2]" : "leading-[0.95]"
+            className={`font-lyon font-bold tracking-[-0.035em] text-ink mb-6 ${
+              locale === "ar"
+                ? "text-5xl md:text-6xl lg:text-[4.5rem] leading-[1.2]"
+                : "text-[2rem] md:text-[2.5rem] lg:text-[2.75rem] xl:text-[3rem] leading-[1.1]"
             }`}
           >
             {t("Let's build together", "لنبنِ معاً")}
