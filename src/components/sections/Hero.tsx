@@ -230,13 +230,17 @@ function CornerLabel({
 function BrandingAnimation() {
   return (
     <div
-      className="absolute inset-0 bg-brand-blue overflow-hidden"
-      style={{ direction: "ltr" }}
+      className="absolute inset-0 overflow-hidden"
+      style={{
+        direction: "ltr",
+        background:
+          "linear-gradient(135deg, #001A8A 0%, #000B3A 55%, #0A0A14 100%)",
+      }}
     >
       {/* Photoshop panel — dark workspace */}
       <div
         className="absolute start-3 end-3 top-12 bottom-3 rounded-[6px] bg-[#1E1E1E] border border-black/40 overflow-hidden flex flex-col"
-        style={{ boxShadow: "0 14px 32px -10px rgba(0,0,0,0.45)" }}
+        style={{ boxShadow: "0 14px 32px -10px rgba(0,0,0,0.55)" }}
       >
         {/* ── Top menu bar ── */}
         <div className="shrink-0 h-[13px] flex items-center gap-1.5 px-1.5 bg-[#2B2B2B] border-b border-black/50">
@@ -272,7 +276,7 @@ function BrandingAnimation() {
           <div className="flex items-center gap-1 px-1.5 bg-[#1E1E1E] border-r border-black/50">
             <span className="text-[4.5px] text-white/40 leading-none">▣</span>
             <span className="text-[5px] font-mono text-white/85 leading-none">
-              maatouk-mark.psd
+              maatouk-type.psd
             </span>
             <span className="text-[6px] text-white/35 leading-none">×</span>
           </div>
@@ -401,13 +405,13 @@ function BrandingAnimation() {
 
             {/* Layer list */}
             <div className="flex-1 flex flex-col overflow-hidden">
-              {/* Top: Accent */}
+              {/* Top: Shadow */}
               <div className="flex items-center gap-1 px-1.5 py-1 border-b border-black/30 hover:bg-white/5">
                 <EyeIcon />
                 <div className="w-[9px] h-[9px] rounded-[1px] bg-brand-green shrink-0 border border-white/20" />
-                <span className="text-[5.5px] text-white/80 truncate">Accent</span>
+                <span className="text-[5.5px] text-white/80 truncate">Shadow</span>
               </div>
-              {/* Middle: Mark (selected) */}
+              {/* Middle: Type (selected) */}
               <div
                 className="flex items-center gap-1 px-1.5 py-1 border-b border-black/30"
                 style={{
@@ -416,9 +420,13 @@ function BrandingAnimation() {
                 }}
               >
                 <EyeIcon highlighted />
-                <div className="w-[9px] h-[9px] rounded-[1px] bg-brand-blue shrink-0 border border-white/20" />
+                <div className="w-[9px] h-[9px] rounded-[1px] bg-brand-blue shrink-0 border border-white/20 flex items-center justify-center">
+                  <span className="text-[5px] font-lyon font-bold text-white leading-none">
+                    T
+                  </span>
+                </div>
                 <span className="text-[5.5px] text-white font-medium truncate">
-                  Mark
+                  Type
                 </span>
               </div>
               {/* Bottom: Background */}
