@@ -288,7 +288,7 @@
   width: 6px;
   height: 6px;
   border-radius: 999px;
-  background-color: var(--color-brand-blue);
+  background-color: var(--color-brand-green-dim);
   flex-shrink: 0;
 }
 

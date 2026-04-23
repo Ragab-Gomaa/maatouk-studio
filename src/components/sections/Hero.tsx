@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { useTranslation } from "@/lib/LocaleContext";
 import Button from "@/components/ui/Button";
@@ -132,9 +133,36 @@ export default function Hero() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="relative flex items-center justify-center"
+            className="relative"
           >
-            <ComposedMark />
+            {/* Mobile (< sm) — clean stacked discipline cards.
+                The composed mockup-style mark squashes its UI chrome at
+                phone widths, so we swap it for a simpler, readable list. */}
+            <div className="sm:hidden flex flex-col gap-3">
+              <MobileDisciplineCard
+                title={{ en: "Branding", ar: "هويّة بصريّة" }}
+                tagline={{ en: "Systems that last", ar: "أنظمةٌ تبقى" }}
+                tone="blue"
+                href="/services"
+              />
+              <MobileDisciplineCard
+                title={{ en: "Motion Graphics", ar: "موشن جرافيك" }}
+                tagline={{ en: "Every frame counts", ar: "كلّ إطارٍ يُحسَب" }}
+                tone="ink"
+                href="/services"
+              />
+              <MobileDisciplineCard
+                title={{ en: "Digital Products", ar: "منتجات رقميّة" }}
+                tagline={{ en: "Built to work", ar: "تعمل، لا تُعرض" }}
+                tone="light"
+                href="/services"
+              />
+            </div>
+
+            {/* Tablet+ — artistic composed mark */}
+            <div className="hidden sm:flex items-center justify-center">
+              <ComposedMark />
+            </div>
           </motion.div>
         </div>
       </div>
@@ -160,7 +188,7 @@ function ComposedMark() {
         transition={{ duration: 0.7, delay: 0.3 }}
         className="absolute top-0 end-0 w-[65%] aspect-square rounded-[20px] overflow-hidden studio-card bg-brand-blue"
       >
-        <CornerLabel text={t("Branding", "الهوية البصرية")} tone="on-blue" />
+        <CornerLabel text={t("Branding", "هويّة بصريّة")} tone="on-blue" />
         <BrandingAnimation />
       </motion.div>
 
@@ -182,11 +210,69 @@ function ComposedMark() {
         transition={{ duration: 0.7, delay: 0.7 }}
         className="absolute bottom-0 end-0 w-[65%] aspect-square rounded-[20px] overflow-hidden studio-card -translate-x-[22%]"
       >
-        <CornerLabel text={t("Digital", "المنتجات الرقمية")} tone="light" />
+        <CornerLabel text={t("Digital", "منتجات رقميّة")} tone="light" />
         <DigitalAnimation />
       </motion.div>
 
     </div>
+  );
+}
+
+/* ─────────────────── Mobile discipline card ─────────────────── */
+/* Used on phone widths instead of the ComposedMark. Each discipline
+   gets its own clear, readable card. */
+
+function MobileDisciplineCard({
+  title,
+  tagline,
+  tone,
+  href,
+}: {
+  title: { en: string; ar: string };
+  tagline: { en: string; ar: string };
+  tone: "blue" | "ink" | "light";
+  href: string;
+}) {
+  const { t } = useTranslation();
+
+  const palette = {
+    blue: "bg-brand-blue text-white",
+    ink: "bg-ink text-white",
+    light: "bg-surface-raised text-ink border border-black/[0.06]",
+  }[tone];
+
+  const arrowColor = {
+    blue: "text-white/60",
+    ink: "text-white/50",
+    light: "text-brand-blue",
+  }[tone];
+
+  return (
+    <Link
+      href={href}
+      className={`group flex items-center justify-between gap-4 rounded-[20px] px-5 py-4 ${palette} transition-transform duration-300 hover:scale-[1.01] focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2`}
+    >
+      <div className="min-w-0">
+        <div className="font-lyon font-bold text-xl md:text-2xl tracking-[-0.02em] leading-tight truncate">
+          {t(title.en, title.ar)}
+        </div>
+        <div className="text-sm opacity-80 mt-0.5 truncate">
+          {t(tagline.en, tagline.ar)}
+        </div>
+      </div>
+      <svg
+        className={`w-5 h-5 shrink-0 ${arrowColor} rtl-flip transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1`}
+        viewBox="0 0 14 14"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M3 7h8M8 4l3 3-3 3" />
+      </svg>
+    </Link>
   );
 }
 
@@ -199,17 +285,24 @@ function CornerLabel({
   text: string;
   tone: "on-blue" | "dark" | "light";
 }) {
+  const { locale } = useTranslation();
+
   const palette = {
     "on-blue": "bg-white text-brand-blue",
     dark: "bg-white/10 text-white",
     light: "bg-surface-low text-ink-muted",
   }[tone];
 
+  // Arabic: drop uppercase + tracking (they break ligatures); bump
+  // weight so the shorter character count still reads at small size.
+  const typography =
+    locale === "ar"
+      ? "text-[11px] font-bold"
+      : "text-[10px] uppercase tracking-[0.2em] font-semibold";
+
   return (
     <div className="absolute top-3 start-3 z-20">
-      <span
-        className={`pill !py-1 !px-2.5 text-[10px] uppercase tracking-[0.2em] font-semibold ${palette}`}
-      >
+      <span className={`pill !py-1 !px-2.5 ${typography} ${palette}`}>
         {text}
       </span>
     </div>
