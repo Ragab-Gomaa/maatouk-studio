@@ -88,22 +88,18 @@ export default function Hero() {
               </span>
             </motion.p>
 
-            {/* ── Inline mark on mobile/tablet — sits above the CTAs so
-                the hero always closes with the buttons, not with a
-                graphic. Hidden on lg+ where the mark occupies the
-                right column. */}
+            {/* ── Tablet-only inline mark — renders between
+                description and CTA so the hero still closes with the
+                buttons. Hidden on phones (< sm) where the composed
+                pattern doesn't translate, and on lg+ where it moves
+                to the right column. */}
             <motion.div
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="lg:hidden mb-8"
+              className="hidden sm:flex lg:hidden items-center justify-center mb-8"
             >
-              <div className="sm:hidden">
-                <MiniComposedMark />
-              </div>
-              <div className="hidden sm:flex items-center justify-center">
-                <ComposedMark />
-              </div>
+              <ComposedMark />
             </motion.div>
 
             <motion.div
@@ -184,116 +180,6 @@ function ComposedMark() {
   );
 }
 
-/* ─────────────────── Mini composed mark (mobile) ───────────────────
-   A size-appropriate version of ComposedMark for phone widths. Same
-   three overlapping cards, same diagonal rhythm, but the internals
-   strip out all the tiny UI chrome (Photoshop menu, AE timeline
-   micro-text, browser window buttons) that becomes unreadable below
-   ~200px. In their place: one strong visual per discipline that
-   reads clearly at any size. */
-
-function MiniComposedMark() {
-  const { t } = useTranslation();
-
-  return (
-    <div className="relative w-full max-w-[340px] aspect-[5/6] mx-auto">
-      {/* Branding — top end */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.3 }}
-        className="absolute top-0 end-0 w-[68%] aspect-square rounded-[20px] overflow-hidden studio-card bg-brand-blue"
-      >
-        <CornerLabel text={t("Branding", "هويّة بصريّة")} tone="on-blue" />
-        <MiniBrandingVisual />
-      </motion.div>
-
-      {/* Motion — middle start */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.5 }}
-        className="absolute top-[26%] start-0 w-[68%] aspect-square rounded-[20px] overflow-hidden studio-card bg-ink"
-      >
-        <CornerLabel text={t("Motion Graphics", "موشن جرافيك")} tone="dark" />
-        <MiniMotionVisual />
-      </motion.div>
-
-      {/* Digital — bottom end, nudged visually */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.7 }}
-        className="absolute bottom-0 end-0 w-[68%] aspect-square rounded-[20px] overflow-hidden studio-card -translate-x-[22%]"
-      >
-        <CornerLabel text={t("Digital", "منتجات رقميّة")} tone="light" />
-        <MiniDigitalVisual />
-      </motion.div>
-    </div>
-  );
-}
-
-function MiniBrandingVisual() {
-  return (
-    <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 px-5">
-      <div className="font-lyon font-bold text-[5.5rem] text-white leading-none tracking-[-0.04em]">
-        Aa
-      </div>
-      <div className="flex items-center gap-2">
-        <span className="w-4 h-4 rounded-full bg-brand-green shadow-sm" />
-        <span className="w-4 h-4 rounded-full bg-white/85 shadow-sm" />
-        <span className="w-4 h-4 rounded-full bg-brand-blue-dark shadow-sm" />
-        <span className="w-4 h-4 rounded-full bg-white/30 shadow-sm" />
-      </div>
-    </div>
-  );
-}
-
-function MiniMotionVisual() {
-  return (
-    <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 px-5">
-      <motion.div
-        className="w-14 h-14 rounded-full bg-brand-green flex items-center justify-center shadow-[0_0_0_6px_rgba(60,255,197,0.12)]"
-        animate={{ scale: [1, 1.06, 1] }}
-        transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <svg viewBox="0 0 24 24" className="w-5 h-5 text-ink ms-0.5" aria-hidden="true">
-          <polygon points="8,5 18,12 8,19" fill="currentColor" />
-        </svg>
-      </motion.div>
-      <div className="flex flex-col gap-1.5 w-full max-w-[110px]">
-        <div className="h-[3px] rounded-full bg-white/25 w-full" />
-        <div className="h-[3px] rounded-full bg-brand-green/80 w-[70%]" />
-        <div className="h-[3px] rounded-full bg-white/20 w-[85%]" />
-      </div>
-    </div>
-  );
-}
-
-function MiniDigitalVisual() {
-  return (
-    <div className="absolute inset-0 flex flex-col p-4">
-      {/* Browser chrome dots */}
-      <div className="flex items-center gap-1 mb-3">
-        <span className="w-1.5 h-1.5 rounded-full bg-ink/25" />
-        <span className="w-1.5 h-1.5 rounded-full bg-ink/25" />
-        <span className="w-1.5 h-1.5 rounded-full bg-ink/25" />
-      </div>
-      {/* Mini content blocks */}
-      <div className="flex-1 flex flex-col gap-1.5">
-        <div className="h-3 rounded bg-brand-blue w-[60%]" />
-        <div className="h-1.5 rounded bg-ink/15 w-full" />
-        <div className="h-1.5 rounded bg-ink/15 w-[85%]" />
-      </div>
-      {/* Bottom accent tiles */}
-      <div className="flex gap-1.5 mt-2">
-        <div className="w-7 h-7 rounded-lg bg-brand-blue" />
-        <div className="w-7 h-7 rounded-lg bg-brand-green" />
-        <div className="w-7 h-7 rounded-lg bg-ink/10" />
-      </div>
-    </div>
-  );
-}
 
 /* ─────────────────── Corner label pill ─────────────────── */
 
