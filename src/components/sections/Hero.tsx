@@ -219,27 +219,16 @@ function CornerLabel({
 /* ─────────────────── Animations ─────────────────── */
 
 /**
- * BrandingAnimation — an artist's palette with a paintbrush held
- * diagonally over it. The paint tip cycles through 5 dollop colors
- * in sync with each dollop's pulse, and a paint drop falls from the
- * tip mid-loop. Flat-illustration style using positioned divs (no
- * SVG) for reliable rendering. Loops every 10s.
+ * BrandingAnimation — a craft seal / circular stamp. A curved
+ * wordmark rotates slowly around the perimeter, four small green
+ * diamonds mark the cardinal points, and a white center carries the
+ * Maatouk mark with a subtle breathing scale. Reads unmistakably as
+ * "brand identity" — seals and emblems are the archetypal brand
+ * artefact. Loops continuously.
  */
 function BrandingAnimation() {
-  const DURATION = 10;
-
-  // 5 dollops on the palette (positioned as % of the palette container)
-  const dollops = [
-    { left: "22%", top: "24%", color: "#0029D6" }, // brand blue
-    { left: "42%", top: "14%", color: "#3CFFC5" }, // brand green
-    { left: "62%", top: "24%", color: "#FFD23F" }, // yellow
-    { left: "32%", top: "56%", color: "#FF4A6B" }, // pink
-    { left: "56%", top: "62%", color: "#8B5CFF" }, // purple
-  ];
-
-  // Paint-tip color cycles — holds each color for 1/5 of the loop
-  const tipColorKeys = dollops.map((d) => d.color);
-  const tipColorTimes = dollops.map((_, i) => i / dollops.length);
+  // Text repeats to make the full circumference seamless at any rotation
+  const stampText = "MAATOUK STUDIO · BRAND IDENTITY · 2026 · CRAFT · ";
 
   return (
     <div
@@ -248,7 +237,7 @@ function BrandingAnimation() {
     >
       {/* Grid background */}
       <div
-        className="absolute inset-0 opacity-[0.12] pointer-events-none"
+        className="absolute inset-0 opacity-[0.1] pointer-events-none"
         style={{
           backgroundImage:
             "linear-gradient(rgba(255,255,255,0.9) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.9) 1px, transparent 1px)",
@@ -257,241 +246,105 @@ function BrandingAnimation() {
         aria-hidden="true"
       />
 
-      {/* Breathing green wash */}
+      {/* Breathing green glow behind the seal */}
       <motion.div
         className="absolute inset-0 pointer-events-none"
         animate={{
           background: [
-            "radial-gradient(circle at 50% 60%, rgba(60,255,197,0.08) 0%, transparent 55%)",
-            "radial-gradient(circle at 50% 60%, rgba(60,255,197,0.2) 0%, transparent 55%)",
-            "radial-gradient(circle at 50% 60%, rgba(60,255,197,0.08) 0%, transparent 55%)",
+            "radial-gradient(circle at 50% 55%, rgba(60,255,197,0.1) 0%, transparent 50%)",
+            "radial-gradient(circle at 50% 55%, rgba(60,255,197,0.24) 0%, transparent 55%)",
+            "radial-gradient(circle at 50% 55%, rgba(60,255,197,0.1) 0%, transparent 50%)",
           ],
         }}
-        transition={{ duration: DURATION, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
         aria-hidden="true"
       />
 
-      {/* Stage — the palette sits in the lower center */}
-      <div className="absolute inset-0 flex items-end justify-center pt-8 pb-4 px-3">
-        <div className="relative w-[82%] aspect-[5/3]">
-          {/* ── Palette oval ── */}
-          <div
-            className="absolute inset-0 rounded-[50%] bg-[#F3E4CC]"
-            style={{
-              boxShadow:
-                "0 10px 24px rgba(0,0,0,0.22), inset 0 -4px 8px rgba(180,150,100,0.25), inset 0 3px 6px rgba(255,255,255,0.5)",
-            }}
-          />
-          {/* Top highlight on palette */}
-          <div
-            className="absolute rounded-full bg-white/50 pointer-events-none"
-            style={{
-              left: "12%",
-              top: "6%",
-              width: "60%",
-              height: "8%",
-              filter: "blur(2px)",
-            }}
-          />
-          {/* Thumb hole — matches card bg, looks like a real cutout */}
-          <div
-            className="absolute rounded-[50%] bg-brand-blue"
-            style={{
-              left: "6%",
-              top: "38%",
-              width: "13%",
-              height: "22%",
-              boxShadow:
-                "inset 0 2px 3px rgba(0,0,0,0.4), 0 1px 0 rgba(255,255,255,0.3)",
-            }}
-          />
+      {/* ── Seal composition ── */}
+      <div className="absolute inset-0 flex items-center justify-center pt-6 pb-2">
+        <div className="relative aspect-square h-[82%]">
+          {/* Outer ring — thin stroke defining the stamp boundary */}
+          <div className="absolute inset-0 rounded-full border-[1.5px] border-white/75" />
+          {/* Inner ring — bounds the text track */}
+          <div className="absolute inset-[14%] rounded-full border-[1.5px] border-white/75" />
 
-          {/* ── Paint dollops ── */}
-          {dollops.map((d, i) => (
-            <div
-              key={`dollop-${i}`}
-              className="absolute"
-              style={{
-                left: d.left,
-                top: d.top,
-                width: "16%",
-                height: "22%",
-              }}
-            >
-              {/* Ripple ring — pulses when tip matches this color */}
-              <motion.div
-                className="absolute inset-0 rounded-[50%] border"
-                style={{ borderColor: d.color }}
-                animate={{
-                  opacity: [0, 0.7, 0],
-                  scale: [1, 1.8, 2.2],
-                }}
-                transition={{
-                  duration: 1.2,
-                  delay: (i / dollops.length) * DURATION,
-                  repeat: Infinity,
-                  repeatDelay: DURATION - 1.2,
-                  ease: "easeOut",
-                }}
-              />
-              {/* Dollop base */}
-              <motion.div
-                className="absolute inset-0 rounded-[50%]"
-                style={{
-                  backgroundColor: d.color,
-                  boxShadow:
-                    "0 2px 4px rgba(0,0,0,0.25), inset 1px 2px 2px rgba(255,255,255,0.35)",
-                }}
-                animate={{
-                  scale: [1, 1.18, 1],
-                }}
-                transition={{
-                  duration: 0.8,
-                  delay: (i / dollops.length) * DURATION,
-                  repeat: Infinity,
-                  repeatDelay: DURATION - 0.8,
-                  ease: "easeInOut",
-                }}
-              />
-              {/* Glossy highlight */}
-              <div
-                className="absolute rounded-full bg-white/55 pointer-events-none"
-                style={{
-                  left: "22%",
-                  top: "18%",
-                  width: "30%",
-                  height: "22%",
-                  filter: "blur(0.5px)",
-                }}
-              />
-            </div>
-          ))}
-
-          {/* ── Brush — diagonal, static position, over top-right dollop ── */}
-          <div
-            className="absolute pointer-events-none"
-            style={{
-              left: "28%",
-              top: "-60%",
-              width: "80%",
-              height: "10%",
-              transform: "rotate(35deg)",
-              transformOrigin: "left center",
+          {/* Rotating curved text — wraps around between the two rings */}
+          <motion.div
+            className="absolute inset-0"
+            animate={{ rotate: 360 }}
+            transition={{
+              duration: 24,
+              repeat: Infinity,
+              ease: "linear",
             }}
           >
-            {/* Wooden handle */}
-            <div
-              className="absolute rounded-full"
-              style={{
-                left: "0%",
-                top: "30%",
-                width: "60%",
-                height: "40%",
-                background:
-                  "linear-gradient(to bottom, #D4A574 0%, #C69264 40%, #A67544 100%)",
-                boxShadow: "0 1px 2px rgba(0,0,0,0.3)",
-              }}
-            />
-            {/* Handle tail cap */}
-            <div
-              className="absolute rounded-full"
-              style={{
-                left: "-2%",
-                top: "25%",
-                width: "6%",
-                height: "50%",
-                background: "#8F5F38",
-              }}
-            />
-            {/* Silver ferrule */}
-            <div
-              className="absolute rounded-[2px]"
-              style={{
-                left: "58%",
-                top: "18%",
-                width: "14%",
-                height: "64%",
-                background:
-                  "linear-gradient(to bottom, #E5E8ED 0%, #C4C8CE 50%, #9AA0A8 100%)",
-                boxShadow: "0 1px 2px rgba(0,0,0,0.25)",
-              }}
-            />
-            {/* Ferrule crimp lines */}
-            <div
-              className="absolute"
-              style={{
-                left: "60%",
-                top: "22%",
-                width: "10%",
-                height: "1px",
-                background: "#6B7078",
-              }}
-            />
-            <div
-              className="absolute"
-              style={{
-                left: "60%",
-                top: "75%",
-                width: "10%",
-                height: "1px",
-                background: "#6B7078",
-              }}
-            />
-            {/* Bristles — tapered */}
-            <div
-              className="absolute"
-              style={{
-                left: "72%",
-                top: "10%",
-                width: "22%",
-                height: "80%",
-                background:
-                  "linear-gradient(to right, #F0DCB6 0%, #E5CFA3 60%, #D9C08A 100%)",
-                clipPath: "polygon(0% 0%, 100% 30%, 100% 70%, 0% 100%)",
-              }}
-            />
-            {/* Paint tip — color cycles through dollop colors */}
-            <motion.div
-              className="absolute rounded-full"
-              style={{
-                left: "90%",
-                top: "18%",
-                width: "14%",
-                height: "64%",
-                filter: "drop-shadow(0 2px 3px rgba(0,0,0,0.3))",
-              }}
-              animate={{
-                backgroundColor: [...tipColorKeys, tipColorKeys[0]],
-              }}
-              transition={{
-                duration: DURATION,
-                times: [...tipColorTimes, 1],
-                repeat: Infinity,
-              }}
-            />
-          </div>
+            <svg
+              viewBox="0 0 200 200"
+              className="w-full h-full"
+              aria-hidden="true"
+            >
+              <defs>
+                <path
+                  id="stamp-text-path"
+                  d="M 100,100 m -87,0 a 87,87 0 1,1 174,0 a 87,87 0 1,1 -174,0"
+                  fill="none"
+                />
+              </defs>
+              <text
+                fill="#FFFFFF"
+                fontSize="9.5"
+                letterSpacing="3"
+                fontWeight="600"
+                fontFamily="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+              >
+                <textPath href="#stamp-text-path" startOffset="0">
+                  {stampText.repeat(2)}
+                </textPath>
+              </text>
+            </svg>
+          </motion.div>
 
-          {/* ── Paint drop — falls from brush tip periodically ── */}
+          {/* Four cardinal diamonds — static decorative markers on the outer ring */}
+          {[
+            "top-0 left-1/2 -translate-x-1/2 -translate-y-1/2",
+            "right-0 top-1/2 translate-x-1/2 -translate-y-1/2",
+            "bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2",
+            "left-0 top-1/2 -translate-x-1/2 -translate-y-1/2",
+          ].map((cls, i) => (
+            <div
+              key={i}
+              className={`absolute w-[7px] h-[7px] rotate-45 bg-brand-green ${cls}`}
+              style={{
+                boxShadow: "0 0 8px rgba(60,255,197,0.7)",
+              }}
+              aria-hidden="true"
+            />
+          ))}
+
+          {/* Inner center — white disc holding the brand mark */}
           <motion.div
-            className="absolute rounded-full"
+            className="absolute inset-[22%] rounded-full bg-white flex items-center justify-center"
             style={{
-              left: "75%",
-              top: "-18%",
-              width: "4%",
-              height: "6%",
+              boxShadow:
+                "0 12px 30px rgba(60,255,197,0.35), inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -4px 10px rgba(0,41,214,0.08)",
             }}
-            animate={{
-              backgroundColor: [...tipColorKeys, tipColorKeys[0]],
-              opacity: [0, 0, 1, 1, 0, 0],
-              y: [0, 0, 0, 14, 24, 24],
-            }}
+            animate={{ scale: [1, 1.03, 1] }}
             transition={{
-              duration: DURATION,
-              times: [0, 0.45, 0.5, 0.62, 0.7, 1],
+              duration: 3.5,
               repeat: Infinity,
-              ease: "easeIn",
+              ease: "easeInOut",
             }}
-          />
+          >
+            {/* The mark — brand-blue square with rotated diamond + green centre */}
+            <div className="relative w-[54%] h-[54%] flex items-center justify-center">
+              <div className="w-full h-full rotate-45 bg-brand-blue rounded-[6px]" />
+              <div className="absolute w-[22%] h-[22%] rotate-45 bg-brand-green" />
+            </div>
+            {/* Tiny est.-line underneath the mark */}
+            <span className="absolute bottom-[14%] left-1/2 -translate-x-1/2 text-[6px] font-mono font-bold tracking-[0.3em] text-brand-blue/80 uppercase">
+              Est · 2026
+            </span>
+          </motion.div>
         </div>
       </div>
     </div>
@@ -584,14 +437,19 @@ function MotionAnimation() {
         </div>
 
         {/* Transport + meta strip */}
-        <div className="shrink-0 flex items-center justify-between gap-2 px-2.5 py-1.5 border-b border-white/[0.06]">
-          <div className="flex items-center gap-2">
+        <div className="shrink-0 relative flex items-center px-2 py-1 border-b border-white/[0.06]">
+          {/* Left meta */}
+          <span className="text-[5.5px] font-mono text-white/45 tabular-nums">
+            1920×1080
+          </span>
+          {/* Centered transport controls — visible even when Digital card overlaps the edges */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-1.5">
             {/* Stop */}
-            <span className="w-[9px] h-[9px] bg-white/70 rounded-[1.5px]" />
+            <span className="w-[6px] h-[6px] bg-white/50 rounded-[1px]" />
             {/* Play — brand-green triangle, glowing */}
             <motion.span
               className="inline-block"
-              animate={{ opacity: [1, 0.7, 1], scale: [1, 1.08, 1] }}
+              animate={{ opacity: [1, 0.75, 1] }}
               transition={{
                 duration: 1.2,
                 repeat: Infinity,
@@ -600,23 +458,22 @@ function MotionAnimation() {
               style={{
                 width: 0,
                 height: 0,
-                borderLeft: "12px solid #3CFFC5",
-                borderTop: "7.5px solid transparent",
-                borderBottom: "7.5px solid transparent",
-                filter: "drop-shadow(0 0 6px rgba(60,255,197,0.75))",
+                borderLeft: "8px solid #3CFFC5",
+                borderTop: "5px solid transparent",
+                borderBottom: "5px solid transparent",
+                filter: "drop-shadow(0 0 5px rgba(60,255,197,0.6))",
               }}
             />
             {/* Pause */}
-            <span className="flex items-center gap-[2.5px]">
-              <span className="w-[2.5px] h-[10px] bg-white/70 rounded-[1px]" />
-              <span className="w-[2.5px] h-[10px] bg-white/70 rounded-[1px]" />
+            <span className="flex items-center gap-[1.5px]">
+              <span className="w-[1.5px] h-[6px] bg-white/50" />
+              <span className="w-[1.5px] h-[6px] bg-white/50" />
             </span>
           </div>
-          <div className="flex items-center gap-2 text-[6.5px] font-mono text-white/50 tabular-nums">
-            <span>1920×1080</span>
-            <span className="text-white/25">·</span>
-            <span>24fps</span>
-          </div>
+          {/* Right meta */}
+          <span className="ms-auto text-[5.5px] font-mono text-white/45 tabular-nums">
+            24fps
+          </span>
         </div>
 
         {/* Timeline section */}
