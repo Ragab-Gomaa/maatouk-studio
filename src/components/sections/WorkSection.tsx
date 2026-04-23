@@ -98,22 +98,6 @@ export default function WorkSection() {
                   >
                     {t(dolcebello.shortDescription.en, dolcebello.shortDescription.ar)}
                   </p>
-                  <div
-                    className="inline-flex items-center gap-2 text-sm font-medium transition-transform duration-500 group-hover:translate-x-1 rtl:group-hover:-translate-x-1"
-                    style={{ color: dolcebello.palette.primary }}
-                  >
-                    {t("Open case study", "افتح دراسة الحالة")}
-                    <svg
-                      className="w-3.5 h-3.5 rtl-flip"
-                      viewBox="0 0 14 14"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      aria-hidden="true"
-                    >
-                      <path d="M3 7h8M8 4l3 3-3 3" />
-                    </svg>
-                  </div>
                 </div>
 
                 {dolcebello.shots?.desktopHome && (
