@@ -186,14 +186,6 @@ function ComposedMark() {
         <DigitalAnimation />
       </motion.div>
 
-      {/* Floating signature diamond */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, delay: 1.0, type: "spring" }}
-        className="absolute top-[47%] start-[47%] w-2.5 h-2.5 rotate-45 bg-brand-green shadow-[0_6px_14px_-4px_rgba(60,255,197,0.7)] z-20"
-        aria-hidden="true"
-      />
     </div>
   );
 }
@@ -227,21 +219,47 @@ function CornerLabel({
 /* ─────────────────── Animations ─────────────────── */
 
 /**
- * BrandingAnimation — a brand identity card. A central mark (square +
- * rotated diamond) is framed by construction guides that fade in
- * first, then settle. The Maatouk wordmark reveals letter-by-letter
- * beneath it, and finally a color palette of 4 swatches slides in.
- * Loops every 9s on the brand-blue canvas.
+ * BrandingAnimation — an artist's palette with a paintbrush that dips
+ * into each color in sequence. Loops every 10s. Flat-illustration
+ * style, consistent with the site's clean geometric aesthetic.
  */
 function BrandingAnimation() {
-  const DURATION = 9;
-  const wordmark = "MAATOUK";
-  const palette = [
-    { color: "#0029D6", ring: "ring-white/40" },
-    { color: "#3CFFC5", ring: "ring-white/30" },
-    { color: "#FBF9F5", ring: "ring-white/30" },
-    { color: "#121214", ring: "ring-white/30" },
+  const DURATION = 10;
+
+  // 5 paint dollops on the palette (SVG coords, viewBox 140x110)
+  const dollops = [
+    { cx: 54, cy: 50, color: "#0029D6" },   // brand blue
+    { cx: 73, cy: 44, color: "#3CFFC5" },   // brand green
+    { cx: 92, cy: 50, color: "#FFD23F" },   // yellow
+    { cx: 62, cy: 70, color: "#FF4A6B" },   // pink
+    { cx: 86, cy: 74, color: "#8B5CFF" },   // purple
   ];
+
+  // Brush tip keyframes: one dip per dollop + a rest-above position
+  // Brush starts above the palette, then dips each dollop, then rests.
+  const restPos = { x: 100, y: 12 };
+  const brushKeys = [
+    restPos,
+    ...dollops.flatMap((d) => [
+      { x: d.cx, y: d.cy - 10 }, // hover over
+      { x: d.cx, y: d.cy },      // dip
+      { x: d.cx, y: d.cy - 10 }, // lift
+    ]),
+    restPos,
+  ];
+  const brushX = brushKeys.map((k) => k.x);
+  const brushY = brushKeys.map((k) => k.y);
+
+  // Paint-tip color follows whichever dollop the brush is dipping
+  const tipColors = [
+    "#FFFFFF",
+    ...dollops.flatMap((d) => [d.color, d.color, d.color]),
+    "#FFFFFF",
+  ];
+
+  // Even time distribution over the loop
+  const totalKeys = brushKeys.length;
+  const brushTimes = brushKeys.map((_, i) => i / (totalKeys - 1));
 
   return (
     <div
@@ -250,7 +268,7 @@ function BrandingAnimation() {
     >
       {/* Soft grid background */}
       <div
-        className="absolute inset-0 opacity-[0.14] pointer-events-none"
+        className="absolute inset-0 opacity-[0.12] pointer-events-none"
         style={{
           backgroundImage:
             "linear-gradient(rgba(255,255,255,0.9) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.9) 1px, transparent 1px)",
@@ -264,9 +282,9 @@ function BrandingAnimation() {
         className="absolute inset-0 pointer-events-none"
         animate={{
           background: [
-            "radial-gradient(circle at 50% 48%, rgba(60,255,197,0.08) 0%, transparent 55%)",
-            "radial-gradient(circle at 50% 48%, rgba(60,255,197,0.18) 0%, transparent 55%)",
-            "radial-gradient(circle at 50% 48%, rgba(60,255,197,0.08) 0%, transparent 55%)",
+            "radial-gradient(circle at 50% 55%, rgba(60,255,197,0.08) 0%, transparent 55%)",
+            "radial-gradient(circle at 50% 55%, rgba(60,255,197,0.2) 0%, transparent 55%)",
+            "radial-gradient(circle at 50% 55%, rgba(60,255,197,0.08) 0%, transparent 55%)",
           ],
         }}
         transition={{ duration: DURATION, repeat: Infinity, ease: "easeInOut" }}
@@ -289,159 +307,247 @@ function BrandingAnimation() {
         </span>
       </motion.div>
 
-      {/* Main composition */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center pt-9 pb-4 gap-3">
-        {/* Mark + construction guides */}
-        <div className="relative w-[92px] h-[92px] flex items-center justify-center">
-          {/* Construction ring */}
-          <motion.div
-            className="absolute w-[86px] h-[86px] rounded-full border border-dashed border-white/45"
-            animate={{
-              opacity: [0, 0.7, 0.7, 0.2, 0],
-              scale: [0.5, 1, 1, 1, 1],
-            }}
+      {/* Main illustration */}
+      <div className="absolute inset-0 flex items-center justify-center pt-7 pb-3 px-3">
+        <svg
+          viewBox="0 0 140 110"
+          className="w-full h-full"
+          preserveAspectRatio="xMidYMid meet"
+          aria-hidden="true"
+        >
+          <defs>
+            {/* Thumb-hole cutout */}
+            <mask id="palette-mask">
+              <rect x="0" y="0" width="140" height="110" fill="white" />
+              <ellipse cx="32" cy="66" rx="7.5" ry="5.5" fill="black" />
+            </mask>
+            {/* Soft drop shadow */}
+            <filter id="palette-shadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" />
+              <feOffset dx="0" dy="1.5" result="offsetblur" />
+              <feComponentTransfer>
+                <feFuncA type="linear" slope="0.35" />
+              </feComponentTransfer>
+              <feMerge>
+                <feMergeNode />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+
+          {/* ─ Palette shape (kidney-bean) ─ */}
+          <motion.g
+            filter="url(#palette-shadow)"
+            initial={false}
+            animate={{ opacity: [0, 1, 1, 0], scale: [0.9, 1, 1, 1] }}
             transition={{
               duration: DURATION,
-              times: [0, 0.08, 0.3, 0.42, 0.55],
+              times: [0, 0.06, 0.96, 1],
               repeat: Infinity,
               ease: [0.22, 1, 0.36, 1],
             }}
-          />
-          {/* Horizontal guide */}
-          <motion.div
-            className="absolute left-[-14px] right-[-14px] top-1/2 h-[1px] bg-brand-green/80 origin-center"
-            animate={{
-              opacity: [0, 0.9, 0.9, 0, 0],
-              scaleX: [0, 1, 1, 1, 1],
-            }}
-            transition={{
-              duration: DURATION,
-              times: [0, 0.06, 0.3, 0.42, 0.55],
-              repeat: Infinity,
-            }}
-          />
-          {/* Vertical guide */}
-          <motion.div
-            className="absolute top-[-14px] bottom-[-14px] left-1/2 w-[1px] bg-brand-green/80 origin-center"
-            animate={{
-              opacity: [0, 0.9, 0.9, 0, 0],
-              scaleY: [0, 1, 1, 1, 1],
-            }}
-            transition={{
-              duration: DURATION,
-              times: [0, 0.06, 0.3, 0.42, 0.55],
-              repeat: Infinity,
-            }}
-          />
-          {/* 1:1 tick label */}
-          <motion.span
-            className="absolute -top-[3px] -right-[20px] text-[5px] font-mono font-semibold text-brand-green tracking-[0.1em]"
-            animate={{ opacity: [0, 1, 1, 0] }}
-            transition={{
-              duration: DURATION,
-              times: [0, 0.12, 0.32, 0.42],
-              repeat: Infinity,
-            }}
+            style={{ transformOrigin: "70px 60px" }}
           >
-            1:1
-          </motion.span>
-          {/* 45° tick label */}
-          <motion.span
-            className="absolute -bottom-[3px] -left-[20px] text-[5px] font-mono font-semibold text-brand-green tracking-[0.1em]"
-            animate={{ opacity: [0, 1, 1, 0] }}
-            transition={{
-              duration: DURATION,
-              times: [0, 0.14, 0.32, 0.42],
-              repeat: Infinity,
-            }}
-          >
-            45°
-          </motion.span>
+            <ellipse
+              cx="70"
+              cy="62"
+              rx="52"
+              ry="28"
+              fill="#F3E4CC"
+              mask="url(#palette-mask)"
+            />
+            {/* Subtle highlight on palette */}
+            <ellipse
+              cx="70"
+              cy="55"
+              rx="42"
+              ry="4"
+              fill="#FFFFFF"
+              opacity="0.3"
+            />
+            {/* Palette edge shading */}
+            <ellipse
+              cx="70"
+              cy="62"
+              rx="52"
+              ry="28"
+              fill="none"
+              stroke="#D9C5A3"
+              strokeWidth="0.8"
+              mask="url(#palette-mask)"
+            />
+          </motion.g>
 
-          {/* The mark — white square with rotated brand-blue diamond + green center */}
-          <motion.div
-            className="relative w-[50px] h-[50px] bg-white rounded-[7px] flex items-center justify-center"
-            style={{ boxShadow: "0 6px 22px rgba(255,255,255,0.35)" }}
-            animate={{
-              scale: [0, 1.12, 1, 1, 1.04, 1, 0.96],
-              rotate: [0, 0, 0, 0, 0, 0, 0],
-            }}
-            transition={{
-              duration: DURATION,
-              times: [0, 0.12, 0.2, 0.55, 0.65, 0.88, 0.97],
-              repeat: Infinity,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-          >
-            <div className="w-[18px] h-[18px] rotate-45 bg-brand-blue" />
-            <div className="absolute w-[5px] h-[5px] rotate-45 bg-brand-green" />
-          </motion.div>
-        </div>
-
-        {/* Wordmark — letters reveal one-by-one */}
-        <div className="flex items-center gap-[2px]">
-          {wordmark.split("").map((ch, i) => (
-            <motion.span
+          {/* ─ Paint dollops — pop in sequentially ─ */}
+          {dollops.map((d, i) => (
+            <motion.g
               key={i}
-              className="inline-block text-[10px] font-lyon font-bold tracking-[0.28em] text-white uppercase"
+              initial={false}
               animate={{
                 opacity: [0, 0, 1, 1, 0],
-                y: [4, 4, 0, 0, 0],
+                scale: [0, 0, 1.1, 1, 1],
               }}
               transition={{
                 duration: DURATION,
                 times: [
                   0,
-                  0.42 + i * 0.018,
-                  0.48 + i * 0.018,
-                  0.88,
-                  0.97,
+                  0.08 + i * 0.02,
+                  0.14 + i * 0.02,
+                  0.95,
+                  1,
                 ],
                 repeat: Infinity,
                 ease: [0.22, 1, 0.36, 1],
               }}
+              style={{ transformOrigin: `${d.cx}px ${d.cy}px` }}
             >
-              {ch}
-            </motion.span>
+              {/* Dollop base — slightly irregular */}
+              <ellipse cx={d.cx} cy={d.cy} rx="6.5" ry="5" fill={d.color} />
+              {/* Glossy highlight */}
+              <ellipse
+                cx={d.cx - 1.5}
+                cy={d.cy - 1.5}
+                rx="2.2"
+                ry="1.4"
+                fill="#FFFFFF"
+                opacity="0.55"
+              />
+            </motion.g>
           ))}
-        </div>
 
-        {/* Color palette — swatches pop in from below */}
-        <motion.div
-          className="flex items-center gap-1.5"
-          animate={{ opacity: [0, 0, 1, 1, 0] }}
-          transition={{
-            duration: DURATION,
-            times: [0, 0.6, 0.68, 0.88, 0.97],
-            repeat: Infinity,
-          }}
-        >
-          {palette.map((p, i) => (
-            <motion.span
-              key={i}
-              className={`w-[16px] h-[16px] rounded-[3px] ring-1 ${p.ring}`}
-              style={{ backgroundColor: p.color }}
-              animate={{
-                scale: [0, 0, 1.2, 1, 1, 0.92],
-                y: [5, 5, 0, 0, 0, 0],
-              }}
+          {/* ─ Dollop ripple — wobble when brush dips ─ */}
+          {dollops.map((d, i) => {
+            // Each dollop's dip window in the loop
+            const tStart = 1 / (totalKeys - 1) + i * (3 / (totalKeys - 1));
+            const tDip = 2 / (totalKeys - 1) + i * (3 / (totalKeys - 1));
+            const tEnd = 3 / (totalKeys - 1) + i * (3 / (totalKeys - 1));
+            return (
+              <motion.circle
+                key={`ripple-${i}`}
+                cx={d.cx}
+                cy={d.cy}
+                r="6"
+                fill="none"
+                stroke={d.color}
+                strokeWidth="1"
+                initial={false}
+                animate={{
+                  opacity: [0, 0, 0.6, 0, 0],
+                  r: [6, 6, 11, 14, 14],
+                }}
+                transition={{
+                  duration: DURATION,
+                  times: [0, tStart, tDip, tEnd, 1],
+                  repeat: Infinity,
+                  ease: "easeOut",
+                }}
+              />
+            );
+          })}
+
+          {/* ─ Paint drip — falls under brush mid-loop ─ */}
+          <motion.g
+            initial={false}
+            animate={{
+              opacity: [0, 0, 1, 1, 0, 0],
+              y: [0, 0, 0, 8, 14, 14],
+            }}
+            transition={{
+              duration: DURATION,
+              times: [0, 0.45, 0.48, 0.58, 0.64, 1],
+              repeat: Infinity,
+              ease: "easeIn",
+            }}
+          >
+            <circle cx="73" cy="42" r="1.4" fill="#3CFFC5" />
+          </motion.g>
+
+          {/* ─ Brush — compound group that travels between dollops ─ */}
+          <motion.g
+            initial={false}
+            animate={{
+              x: brushX,
+              y: brushY,
+              opacity: [0, 1, ...Array(totalKeys - 3).fill(1), 1, 0],
+            }}
+            transition={{
+              duration: DURATION,
+              times: brushTimes,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            {/* Brush body — rotated so the tip points down-left to the palette */}
+            <g transform="rotate(-35)">
+              {/* Wooden handle */}
+              <rect
+                x="-34"
+                y="-1.8"
+                width="30"
+                height="3.6"
+                rx="1.2"
+                fill="#C69264"
+              />
+              {/* Handle dark stripe */}
+              <rect
+                x="-34"
+                y="-1.8"
+                width="30"
+                height="0.8"
+                fill="#A67544"
+              />
+              {/* Handle tail tip */}
+              <circle cx="-34" cy="0" r="1.8" fill="#C69264" />
+              {/* Silver ferrule */}
+              <rect
+                x="-4.5"
+                y="-2.8"
+                width="5"
+                height="5.6"
+                rx="0.8"
+                fill="#C4C8CE"
+              />
+              <rect
+                x="-4.5"
+                y="-2.8"
+                width="5"
+                height="1"
+                fill="#E5E8ED"
+              />
+              <rect
+                x="-4.5"
+                y="1.8"
+                width="5"
+                height="1"
+                fill="#9AA0A8"
+              />
+              {/* Bristles — tapered shape */}
+              <path
+                d="M0.5 -2.2 L8 -1 L8.5 1 L0.5 2.2 Z"
+                fill="#F0DCB6"
+              />
+              {/* Bristle strokes */}
+              <line x1="2" y1="-1.6" x2="7.5" y2="-0.6" stroke="#D9C08A" strokeWidth="0.3" />
+              <line x1="2" y1="1.6" x2="7.5" y2="0.6" stroke="#D9C08A" strokeWidth="0.3" />
+            </g>
+            {/* Paint on the tip — color swaps as brush dips different dollops */}
+            <motion.circle
+              r="2.8"
+              cy="0"
+              cx="0"
+              initial={false}
+              animate={{ fill: tipColors }}
               transition={{
                 duration: DURATION,
-                times: [
-                  0,
-                  0.62 + i * 0.022,
-                  0.68 + i * 0.022,
-                  0.74 + i * 0.022,
-                  0.88,
-                  0.97,
-                ],
+                times: brushTimes,
                 repeat: Infinity,
-                ease: [0.22, 1, 0.36, 1],
               }}
-              aria-hidden="true"
+              style={{
+                transform: "translate(4px, 3.5px)",
+              }}
             />
-          ))}
-        </motion.div>
+          </motion.g>
+        </svg>
       </div>
     </div>
   );
@@ -458,12 +564,11 @@ function BrandingAnimation() {
 function MotionAnimation() {
   const DURATION = 8;
 
-  // Layers with keyframe positions (0..1 along timeline)
+  // Layers with keyframe positions (0..1 along timeline) — 3 rows only
   const layers: { name: string; color: string; keys: number[] }[] = [
     { name: "Shape", color: "#3CFFC5", keys: [0.05, 0.3, 0.55, 0.8] },
     { name: "Scale", color: "#0029D6", keys: [0.15, 0.42, 0.7, 0.92] },
     { name: "Rotate", color: "#3CFFC5", keys: [0.08, 0.35, 0.6, 0.86] },
-    { name: "Opacity", color: "#0029D6", keys: [0.22, 0.5, 0.78] },
   ];
 
   const LABEL_COL = 30; // percent of timeline container taken by layer labels
@@ -484,78 +589,88 @@ function MotionAnimation() {
           <TimeCode duration={DURATION} />
         </div>
 
-        {/* Preview thumbnail + transport controls */}
-        <div className="shrink-0 flex items-stretch gap-1.5 p-1.5 border-b border-white/[0.06]">
-          {/* Mini preview */}
-          <div className="relative w-[36%] aspect-video rounded-[3px] bg-black overflow-hidden border border-white/[0.06]">
-            <motion.div
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4"
-              animate={{
-                rotate: [0, 90, 180, 270, 360],
-                borderRadius: ["3px", "50%", "3px", "50%", "3px"],
-                backgroundColor: [
-                  "#3CFFC5",
-                  "#ffffff",
-                  "#0029D6",
-                  "#ffffff",
-                  "#3CFFC5",
-                ],
-              }}
+        {/* Large composition preview — full width, visually prominent */}
+        <div className="shrink-0 relative w-full aspect-[16/7] bg-black overflow-hidden border-b border-white/[0.06]">
+          {/* Subtle backdrop grid */}
+          <div
+            className="absolute inset-0 opacity-[0.06] pointer-events-none"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(255,255,255,0.7) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.7) 1px, transparent 1px)",
+              backgroundSize: "12px 12px",
+            }}
+            aria-hidden="true"
+          />
+          {/* Morphing shape — the 'composition' content */}
+          <motion.div
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8"
+            animate={{
+              rotate: [0, 90, 180, 270, 360],
+              borderRadius: ["4px", "50%", "4px", "50%", "4px"],
+              backgroundColor: [
+                "#3CFFC5",
+                "#ffffff",
+                "#0029D6",
+                "#ffffff",
+                "#3CFFC5",
+              ],
+              scale: [1, 1.15, 1, 1.15, 1],
+            }}
+            transition={{
+              duration: DURATION,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            style={{ boxShadow: "0 4px 20px rgba(60,255,197,0.55)" }}
+          />
+          {/* Corner safe-area brackets */}
+          {[
+            "top-1 left-1 border-t-[1.5px] border-l-[1.5px]",
+            "top-1 right-1 border-t-[1.5px] border-r-[1.5px]",
+            "bottom-1 left-1 border-b-[1.5px] border-l-[1.5px]",
+            "bottom-1 right-1 border-b-[1.5px] border-r-[1.5px]",
+          ].map((cls, i) => (
+            <div
+              key={i}
+              className={`absolute w-2 h-2 border-white/35 ${cls}`}
+              aria-hidden="true"
+            />
+          ))}
+        </div>
+
+        {/* Transport + meta strip */}
+        <div className="shrink-0 flex items-center justify-between gap-2 px-2 py-1 border-b border-white/[0.06]">
+          <div className="flex items-center gap-1.5">
+            {/* Stop */}
+            <span className="w-[6px] h-[6px] bg-white/50 rounded-[1px]" />
+            {/* Play — brand-green triangle, glowing */}
+            <motion.span
+              className="inline-block"
+              animate={{ opacity: [1, 0.75, 1] }}
               transition={{
-                duration: DURATION,
+                duration: 1.2,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
-              style={{ boxShadow: "0 2px 10px rgba(60,255,197,0.5)" }}
+              style={{
+                width: 0,
+                height: 0,
+                borderLeft: "8px solid #3CFFC5",
+                borderTop: "5px solid transparent",
+                borderBottom: "5px solid transparent",
+                filter: "drop-shadow(0 0 5px rgba(60,255,197,0.6))",
+              }}
             />
-            {/* Corner brackets on preview */}
-            {[
-              "top-0.5 left-0.5 border-t border-l",
-              "top-0.5 right-0.5 border-t border-r",
-              "bottom-0.5 left-0.5 border-b border-l",
-              "bottom-0.5 right-0.5 border-b border-r",
-            ].map((cls, i) => (
-              <div
-                key={i}
-                className={`absolute w-1 h-1 border-white/30 ${cls}`}
-                aria-hidden="true"
-              />
-            ))}
+            {/* Pause */}
+            <span className="flex items-center gap-[1.5px]">
+              <span className="w-[1.5px] h-[6px] bg-white/50" />
+              <span className="w-[1.5px] h-[6px] bg-white/50" />
+            </span>
           </div>
-
-          {/* Transport + meta */}
-          <div className="flex-1 flex flex-col justify-between py-0.5">
-            <div className="flex items-center gap-1.5">
-              {/* Stop */}
-              <span className="w-[6px] h-[6px] bg-white/50 rounded-[1px]" />
-              {/* Play — brand-green triangle, glowing */}
-              <motion.span
-                className="inline-block"
-                animate={{ opacity: [1, 0.75, 1] }}
-                transition={{
-                  duration: 1.2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                style={{
-                  width: 0,
-                  height: 0,
-                  borderLeft: "8px solid #3CFFC5",
-                  borderTop: "5px solid transparent",
-                  borderBottom: "5px solid transparent",
-                  filter: "drop-shadow(0 0 5px rgba(60,255,197,0.6))",
-                }}
-              />
-              {/* Pause */}
-              <span className="flex items-center gap-[1.5px]">
-                <span className="w-[1.5px] h-[6px] bg-white/50" />
-                <span className="w-[1.5px] h-[6px] bg-white/50" />
-              </span>
-            </div>
-            <div className="flex items-center justify-between text-[5.5px] font-mono text-white/45 tabular-nums">
-              <span>1920×1080</span>
-              <span>24fps</span>
-            </div>
+          <div className="flex items-center gap-2 text-[5.5px] font-mono text-white/45 tabular-nums">
+            <span>1920×1080</span>
+            <span className="text-white/20">·</span>
+            <span>24fps</span>
           </div>
         </div>
 
