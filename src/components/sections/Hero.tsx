@@ -219,54 +219,174 @@ function CornerLabel({
 /* ─────────────────── Animations ─────────────────── */
 
 /**
- * BrandingAnimation — a quiet three-specimen brand kit. Centred on
- * the card: the Maatouk mark, a row of four palette swatches, and
- * a bold "Aa" type specimen. Nothing else. No labels, no animation,
- * no decoration.
+ * BrandingAnimation — a Figma-style design tool workspace. Top bar
+ * carries the file name and save state, a layers panel on the left
+ * shows the logo tree (Logo > Mark/Accent, Wordmark, Palette), and
+ * the canvas holds an artboard with the Maatouk mark inside —
+ * corner-handled as if currently selected. Mirrors the
+ * tool-aesthetic of the Motion (After Effects) and Digital
+ * (browser) cards.
  */
 function BrandingAnimation() {
-  const palette = ["#0029D6", "#3CFFC5", "#FBF9F5", "#121214"];
-
   return (
     <div
       className="absolute inset-0 bg-brand-blue overflow-hidden"
       style={{ direction: "ltr" }}
     >
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-7 pt-10 pb-4 px-4">
-        {/* ── Mark ── */}
-        <div
-          className="relative w-[50px] h-[50px] bg-white rounded-[9px] flex items-center justify-center"
-          style={{
-            boxShadow:
-              "0 10px 22px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.6)",
-          }}
-        >
-          <div className="w-[54%] h-[54%] rotate-45 bg-brand-blue rounded-[3px]" />
-          <div className="absolute w-[16%] h-[16%] rotate-45 bg-brand-green" />
+      {/* Design tool panel — mirrors the Motion & Digital card structure */}
+      <div
+        className="absolute start-3 end-3 top-12 bottom-3 rounded-[8px] bg-white border border-black/[0.08] overflow-hidden flex flex-col"
+        style={{ boxShadow: "0 14px 32px -10px rgba(0,0,0,0.2)" }}
+      >
+        {/* ── Top chrome: dots / filename / save state ── */}
+        <div className="shrink-0 flex items-center justify-between px-2 py-1 bg-surface-low border-b border-black/[0.06]">
+          <div className="flex items-center gap-[3px]">
+            <span className="w-[5px] h-[5px] rounded-full bg-[#FF5F57]" />
+            <span className="w-[5px] h-[5px] rounded-full bg-[#FEBC2E]" />
+            <span className="w-[5px] h-[5px] rounded-full bg-[#28C840]" />
+          </div>
+          <span className="text-[6px] font-mono text-ink-muted font-semibold">
+            maatouk-mark.fig
+          </span>
+          <div className="flex items-center gap-1">
+            <span className="relative flex w-1 h-1" aria-hidden="true">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-brand-green opacity-60 animate-ping" />
+              <span className="relative inline-flex rounded-full h-1 w-1 bg-brand-green" />
+            </span>
+            <span className="text-[5px] font-mono text-ink-whisper uppercase tracking-wider">
+              Saved
+            </span>
+          </div>
         </div>
 
-        {/* ── Palette ── */}
-        <div className="flex items-center gap-2">
-          {palette.map((c, i) => (
+        {/* ── Workspace: layers panel + canvas ── */}
+        <div className="flex-1 flex min-h-0">
+          {/* Layers panel */}
+          <div className="w-[36%] shrink-0 bg-[#FCFAF6] border-r border-black/[0.05] px-1.5 py-1.5 flex flex-col gap-[2px]">
+            <div className="flex items-center justify-between mb-0.5">
+              <span className="text-[5px] font-mono text-ink-whisper tracking-[0.18em] uppercase font-semibold">
+                Layers
+              </span>
+              <span className="text-[5px] font-mono text-ink-whisper">5</span>
+            </div>
+
+            {/* Group: Logo */}
+            <div className="flex items-center gap-1 px-1 py-[2px] rounded-[2px] bg-brand-blue/[0.08]">
+              <span className="text-[6px] text-brand-blue leading-none">▾</span>
+              <span className="text-[6px] font-semibold text-brand-blue">Logo</span>
+            </div>
+
+            {/* Child: Mark (selected) */}
+            <div className="flex items-center gap-1 px-1 py-[2px] ms-2.5 rounded-[2px] bg-brand-blue/[0.18]">
+              <div className="w-[6px] h-[6px] rotate-45 bg-brand-blue shrink-0" />
+              <span className="text-[5.5px] text-ink font-medium">Mark</span>
+            </div>
+
+            {/* Child: Accent */}
+            <div className="flex items-center gap-1 px-1 py-[2px] ms-2.5">
+              <div className="w-[6px] h-[6px] rotate-45 bg-brand-green shrink-0" />
+              <span className="text-[5.5px] text-ink-muted">Accent</span>
+            </div>
+
+            {/* Sibling: Wordmark */}
+            <div className="flex items-center gap-1 px-1 py-[2px] mt-1">
+              <span className="text-[6px] text-ink-whisper leading-none">▸</span>
+              <span className="text-[6px] font-lyon font-bold text-ink-muted shrink-0 leading-none">
+                T
+              </span>
+              <span className="text-[5.5px] text-ink-muted">Wordmark</span>
+            </div>
+
+            {/* Sibling: Palette */}
+            <div className="flex items-center gap-1 px-1 py-[2px]">
+              <span className="text-[6px] text-ink-whisper leading-none">▸</span>
+              <div className="flex gap-[1px] shrink-0">
+                <div className="w-[3px] h-[5px] bg-brand-blue" />
+                <div className="w-[3px] h-[5px] bg-brand-green" />
+                <div className="w-[3px] h-[5px] bg-ink" />
+              </div>
+              <span className="text-[5.5px] text-ink-muted">Palette</span>
+            </div>
+
+            {/* Sibling: Grid */}
+            <div className="flex items-center gap-1 px-1 py-[2px]">
+              <span className="text-[6px] text-ink-whisper leading-none">▸</span>
+              <div className="w-[6px] h-[6px] border border-ink-whisper shrink-0" />
+              <span className="text-[5.5px] text-ink-muted">Grid</span>
+            </div>
+          </div>
+
+          {/* Canvas */}
+          <div className="flex-1 relative flex items-center justify-center bg-[#EDE6D8] overflow-hidden">
+            {/* Dotted canvas pattern */}
             <div
-              key={i}
-              className="w-[30px] h-[30px] rounded-[6px]"
+              className="absolute inset-0 opacity-40 pointer-events-none"
               style={{
-                backgroundColor: c,
-                boxShadow:
-                  "inset 0 0 0 0.5px rgba(255,255,255,0.35), 0 2px 5px rgba(0,0,0,0.14)",
+                backgroundImage:
+                  "radial-gradient(circle, rgba(0,0,0,0.2) 0.7px, transparent 0.7px)",
+                backgroundSize: "9px 9px",
               }}
+              aria-hidden="true"
             />
-          ))}
-        </div>
 
-        {/* ── Typography ── */}
-        <span
-          className="font-lyon font-bold text-white leading-none"
-          style={{ fontSize: "50px" }}
-        >
-          Aa
-        </span>
+            {/* Ruler hash marks along top & left of the canvas */}
+            <div className="absolute top-0 left-0 right-0 h-[9px] flex items-end pointer-events-none">
+              {Array.from({ length: 14 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="flex-1 border-l border-ink/15 h-[3px]"
+                  aria-hidden="true"
+                />
+              ))}
+            </div>
+            <div className="absolute top-0 bottom-0 left-0 w-[9px] flex flex-col items-end pointer-events-none">
+              {Array.from({ length: 14 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="flex-1 border-t border-ink/15 w-[3px]"
+                  aria-hidden="true"
+                />
+              ))}
+            </div>
+
+            {/* Artboard + selection handles */}
+            <div className="relative">
+              {/* Artboard label */}
+              <span className="absolute -top-[9px] left-0 text-[5px] font-mono text-ink-whisper uppercase tracking-[0.15em] whitespace-nowrap">
+                Mark · 200×200
+              </span>
+
+              {/* Artboard surface */}
+              <div
+                className="relative bg-white rounded-[3px] border border-black/[0.1] flex items-center justify-center"
+                style={{
+                  width: "66px",
+                  height: "66px",
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+                }}
+              >
+                <div className="relative w-[60%] h-[60%] flex items-center justify-center">
+                  <div className="w-full h-full rotate-45 bg-brand-blue rounded-[3px]" />
+                  <div className="absolute w-[22%] h-[22%] rotate-45 bg-brand-green" />
+                </div>
+              </div>
+
+              {/* Selection handles at 4 corners — signals the mark is selected */}
+              {[
+                "top-0 left-0 -translate-x-1/2 -translate-y-1/2",
+                "top-0 right-0 translate-x-1/2 -translate-y-1/2",
+                "bottom-0 left-0 -translate-x-1/2 translate-y-1/2",
+                "bottom-0 right-0 translate-x-1/2 translate-y-1/2",
+              ].map((pos, i) => (
+                <div
+                  key={i}
+                  className={`absolute w-[5px] h-[5px] bg-white border border-brand-blue ${pos}`}
+                  aria-hidden="true"
+                />
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
