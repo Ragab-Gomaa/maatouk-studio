@@ -46,18 +46,18 @@ const services: Service[] = [
     title: { en: "Motion Design", ar: "موشن جرافيك" },
     tagline: {
       en: "Brands in motion.",
-      ar: "هويّةٌ نابضة.",
+      ar: "كلّ إطارٍ يُحسَب.",
     },
     description: {
       en: "Motion systems — not just videos. Logo animations, campaign ads, product motion, and social kits. Your brand feels alive wherever it lands.",
-      ar: "منظومةُ موشن كاملة — لا مجرّد مقاطع فيديو. تحريكُ الشعار، حملاتٌ إعلانية، عروضُ منتج، ومحتوى المنصّات — هويّةٌ نابضةٌ في كل نقطة.",
+      ar: "أكثر من مقاطع فيديو — تحريك الشعار، الحملات الإعلانية، عروض المنتجات، ومحتوى السوشيال ميديا. كلّ لقطةٍ تحمل صوت العلامة.",
     },
     deliverables: [
       { en: "Logo animation", ar: "تحريك الشعار" },
       { en: "Campaign ads", ar: "حملات إعلانية" },
       { en: "Explainer videos", ar: "فيديوهات تعريفية" },
       { en: "Product motion", ar: "تحريك المنتج" },
-      { en: "Social kits", ar: "محتوى المنصّات" },
+      { en: "Social kits", ar: "محتوى السوشيال ميديا" },
     ],
     accent: "dark",
     icon: (
@@ -149,7 +149,7 @@ export default function ServicesSection() {
           <p className="text-base md:text-lg text-ink-soft leading-relaxed max-w-lg lg:pb-3">
             {t(
               "Every project lives at the intersection of brand, motion, and digital. We work as one team across all three — no handoffs, no seams.",
-              "الهويّة، الموشن، والرقمي — في فريقٍ واحد. نُمسك المشروع من الفكرة إلى الإطلاق، بلا فواصل."
+              "الهويّة، الموشن، والمنتجات الرقميّة — في فريقٍ واحد. نُمسك المشروع من الفكرة إلى الإطلاق، بلا فواصل."
             )}
           </p>
         </motion.div>
@@ -178,7 +178,7 @@ export default function ServicesSection() {
                 className={`relative rounded-[28px] p-7 md:p-8 lg:p-9 overflow-hidden transition-shadow duration-500 hover:shadow-lg ${a.card}`}
               >
                 {/* Top row */}
-                <div className="flex items-start justify-between mb-10 md:mb-14">
+                <div className="flex items-start justify-between mb-5 md:mb-7">
                   <div
                     className={`w-12 h-12 rounded-2xl flex items-center justify-center ${a.iconBg}`}
                   >
@@ -193,15 +193,15 @@ export default function ServicesSection() {
                 <h3 className="font-lyon font-bold text-2xl md:text-3xl lg:text-[2rem] tracking-[-0.02em] leading-none mb-2.5">
                   {t(s.title.en, s.title.ar)}
                 </h3>
-                <p className="font-lyon italic text-lg md:text-xl opacity-80 mb-5">
+                <p className="font-lyon italic text-lg md:text-xl opacity-80 mb-4">
                   {t(s.tagline.en, s.tagline.ar)}
                 </p>
-                <p className="text-sm md:text-[15px] leading-relaxed opacity-80 mb-7">
+                <p className="text-sm md:text-[15px] leading-relaxed opacity-80 mb-5">
                   {t(s.description.en, s.description.ar)}
                 </p>
 
                 {/* Deliverable pills */}
-                <div className="flex flex-wrap gap-1.5 mb-8">
+                <div className="flex flex-wrap gap-1.5 mb-5">
                   {s.deliverables.map((d, i) => (
                     <span
                       key={i}
