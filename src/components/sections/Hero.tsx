@@ -378,14 +378,16 @@ function BrandingAnimation() {
                   </span>
                 </div>
 
-                {/* Aa specimen */}
-                <div className="flex-1 flex items-center justify-center">
-                  <span
-                    className="font-lyon font-bold text-ink leading-none"
-                    style={{ fontSize: "40px", letterSpacing: "-0.03em" }}
-                  >
-                    Aa
-                  </span>
+                {/* Typography specimen — headline + body copy bars */}
+                <div className="flex-1 flex flex-col justify-center px-1.5 gap-[5px]">
+                  {/* Display headline */}
+                  <div className="h-[5px] w-[88%] bg-ink rounded-[1px]" />
+                  {/* Body copy lines */}
+                  <div className="flex flex-col gap-[2px] mt-[1px]">
+                    <div className="h-[2px] w-full bg-ink/25 rounded-[1px]" />
+                    <div className="h-[2px] w-[92%] bg-ink/25 rounded-[1px]" />
+                    <div className="h-[2px] w-[70%] bg-ink/25 rounded-[1px]" />
+                  </div>
                 </div>
 
                 {/* Divider */}
