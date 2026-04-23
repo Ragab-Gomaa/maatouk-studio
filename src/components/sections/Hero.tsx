@@ -173,7 +173,7 @@ function ComposedMark() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.7 }}
-        className="absolute bottom-0 end-0 w-[65%] aspect-square rounded-[20px] overflow-hidden studio-card -translate-x-[22%]"
+        className="absolute bottom-0 end-0 w-[65%] aspect-square rounded-[20px] overflow-hidden studio-card rtl:-translate-x-[22%] ltr:translate-x-[22%]"
       >
         <CornerLabel text={t("Digital", "منتجات رقميّة")} tone="light" />
         <DigitalAnimation />
