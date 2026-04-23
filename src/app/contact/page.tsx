@@ -1,12 +1,11 @@
 "use client";
 
-import { useState, FormEvent } from "react";
-import { motion } from "framer-motion";
+import { useState, useRef, useEffect, FormEvent } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "@/lib/LocaleContext";
 import Button from "@/components/ui/Button";
 
 const WHATSAPP_URL = "https://wa.me/201064889808";
-const WHATSAPP_DISPLAY = "+20 106 488 9808";
 
 const services = [
   { en: "Branding", ar: "هويّة بصريّة" },
@@ -35,6 +34,184 @@ function WhatsAppIcon({ className = "w-4 h-4" }: { className?: string }) {
     >
       <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.2-.32a8.188 8.188 0 0 1-1.26-4.38c.01-4.54 3.7-8.24 8.25-8.24M8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1 2.56.14.17 1.76 2.67 4.25 3.73.59.27 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.27-.25-.14-1.47-.74-1.69-.82-.23-.08-.4-.12-.56.12-.17.25-.64.81-.78.97-.15.17-.29.19-.53.07-.26-.13-1.06-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.12-.24-.01-.39.11-.5.11-.11.27-.29.37-.44.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43-.14 0-.3-.01-.47-.01" />
     </svg>
+  );
+}
+
+type DropdownProps = {
+  placeholder: string;
+  options: string[];
+  value: string;
+  onChange: (v: string) => void;
+  ltrValues?: boolean;
+};
+
+function Dropdown({
+  placeholder,
+  options,
+  value,
+  onChange,
+  ltrValues = false,
+}: DropdownProps) {
+  const [open, setOpen] = useState(false);
+  const [highlight, setHighlight] = useState<number>(-1);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const btnRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: MouseEvent) => {
+      if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        btnRef.current?.focus();
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setHighlight((h) => (h + 1) % options.length);
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setHighlight((h) => (h - 1 + options.length) % options.length);
+      } else if (e.key === "Enter" && highlight >= 0) {
+        e.preventDefault();
+        onChange(options[highlight]);
+        setOpen(false);
+        btnRef.current?.focus();
+      }
+    };
+    window.addEventListener("mousedown", onDown);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("mousedown", onDown);
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open, highlight, options, onChange]);
+
+  return (
+    <div ref={rootRef} className="relative">
+      <button
+        ref={btnRef}
+        type="button"
+        onClick={() => {
+          setOpen((o) => !o);
+          setHighlight(options.indexOf(value));
+        }}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        className={`group w-full px-5 py-4 rounded-2xl text-[15px] border transition-all focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2 flex items-center justify-between gap-3 ${
+          open
+            ? "border-brand-blue bg-surface-raised"
+            : "border-black/[0.08] bg-surface-low hover:bg-surface-raised hover:border-black/15"
+        }`}
+      >
+        <span
+          dir={ltrValues && value ? "ltr" : undefined}
+          className={`truncate text-start ${value ? "text-ink font-medium" : "text-ink-whisper"}`}
+        >
+          {value || placeholder}
+        </span>
+        <span className="flex items-center gap-2 shrink-0">
+          {value && (
+            <span
+              role="button"
+              tabIndex={-1}
+              onClick={(e) => {
+                e.stopPropagation();
+                onChange("");
+                setOpen(false);
+              }}
+              className="w-5 h-5 rounded-full flex items-center justify-center text-ink-whisper hover:text-ink hover:bg-black/[0.06] transition-colors cursor-pointer"
+              aria-label="Clear"
+            >
+              <svg viewBox="0 0 10 10" className="w-2.5 h-2.5" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round">
+                <path d="M2 2l6 6M8 2l-6 6" />
+              </svg>
+            </span>
+          )}
+          <svg
+            className={`w-3.5 h-3.5 text-ink-muted transition-transform duration-300 ${
+              open ? "rotate-180" : ""
+            }`}
+            viewBox="0 0 12 12"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M3 4.5l3 3 3-3" />
+          </svg>
+        </span>
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.ul
+            role="listbox"
+            initial={{ opacity: 0, y: -6, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -6, scale: 0.98 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute z-30 top-full start-0 end-0 mt-2 rounded-2xl bg-surface border border-black/[0.08] shadow-[0_20px_50px_-20px_rgba(0,0,0,0.25)] overflow-hidden p-1.5"
+          >
+            {options.map((opt, i) => {
+              const selected = opt === value;
+              const active = i === highlight;
+              return (
+                <motion.li
+                  key={opt}
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2, delay: i * 0.03 }}
+                >
+                  <button
+                    type="button"
+                    role="option"
+                    aria-selected={selected}
+                    onMouseEnter={() => setHighlight(i)}
+                    onClick={() => {
+                      onChange(opt);
+                      setOpen(false);
+                      btnRef.current?.focus();
+                    }}
+                    dir={ltrValues ? "ltr" : undefined}
+                    className={`w-full px-4 py-3 rounded-xl text-[14px] text-start flex items-center gap-3 transition-colors ${
+                      selected
+                        ? "bg-brand-blue/10 text-brand-blue font-medium"
+                        : active
+                          ? "bg-black/[0.04] text-ink"
+                          : "text-ink hover:bg-black/[0.03]"
+                    }`}
+                  >
+                    <span
+                      className={`w-1.5 h-1.5 rounded-full shrink-0 transition-colors ${
+                        selected ? "bg-brand-blue" : "bg-ink-whisper"
+                      }`}
+                    />
+                    <span className="flex-1 truncate">{opt}</span>
+                    {selected && (
+                      <svg
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="w-3.5 h-3.5 shrink-0 text-brand-blue"
+                      >
+                        <path d="M3 7l3 3 5-7" />
+                      </svg>
+                    )}
+                  </button>
+                </motion.li>
+              );
+            })}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
 
@@ -155,20 +332,10 @@ export default function ContactPage() {
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-3 px-5 py-3.5 rounded-full bg-brand-green/15 hover:bg-brand-green/25 border border-brand-green/25 text-ink transition-colors"
+                className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-ink/[0.04] border border-ink/10 text-ink text-[15px] font-medium tracking-[-0.01em] hover:bg-ink/[0.08] hover:border-ink/20 transition-all duration-300"
               >
-                <span className="w-8 h-8 rounded-full bg-brand-green/80 text-ink flex items-center justify-center">
-                  <WhatsAppIcon className="w-4 h-4" />
-                </span>
-                <span className="font-medium">
-                  {t("Chat on WhatsApp", "تواصل عبر واتساب")}
-                </span>
-                <span
-                  dir="ltr"
-                  className="text-sm text-ink-soft hidden sm:inline"
-                >
-                  {WHATSAPP_DISPLAY}
-                </span>
+                <WhatsAppIcon className="w-4 h-4 text-brand-green" />
+                <span>{t("Chat on WhatsApp", "تواصل عبر واتساب")}</span>
               </a>
             </div>
 
@@ -291,59 +458,32 @@ export default function ContactPage() {
                 )}
               </div>
 
-              <fieldset>
-                <legend className={labelBase}>
-                  {t("What's the project?", "ما نوع المشروع؟")}
-                </legend>
-                <div className="flex flex-wrap gap-2">
-                  {services.map((s, i) => {
-                    const val = t(s.en, s.ar);
-                    const sel = service === val;
-                    return (
-                      <button
-                        key={i}
-                        type="button"
-                        onClick={() => setService(sel ? "" : val)}
-                        aria-pressed={sel}
-                        className={`pill text-[13px] font-medium transition-colors ${
-                          sel
-                            ? "bg-brand-blue text-white"
-                            : "bg-surface-low text-ink-muted hover:bg-surface-raised"
-                        }`}
-                      >
-                        {val}
-                      </button>
-                    );
-                  })}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <div className={labelBase}>
+                    {t("Project type", "نوع المشروع")}
+                  </div>
+                  <Dropdown
+                    placeholder={t("Select type", "اختر النوع")}
+                    options={services.map((s) => t(s.en, s.ar))}
+                    value={service}
+                    onChange={setService}
+                  />
                 </div>
-              </fieldset>
 
-              <fieldset>
-                <legend className={labelBase}>
-                  {t("Budget range", "الميزانيّة التقريبيّة")}
-                </legend>
-                <div className="flex flex-wrap gap-2">
-                  {budgets.map((b) => {
-                    const sel = budget === b;
-                    return (
-                      <button
-                        key={b}
-                        type="button"
-                        onClick={() => setBudget(sel ? "" : b)}
-                        aria-pressed={sel}
-                        dir="ltr"
-                        className={`pill text-[13px] font-medium transition-colors ${
-                          sel
-                            ? "bg-brand-blue text-white"
-                            : "bg-surface-low text-ink-muted hover:bg-surface-raised"
-                        }`}
-                      >
-                        {b}
-                      </button>
-                    );
-                  })}
+                <div>
+                  <div className={labelBase}>
+                    {t("Budget", "الميزانيّة التقريبيّة")}
+                  </div>
+                  <Dropdown
+                    placeholder={t("Select range", "اختر النطاق")}
+                    options={budgets}
+                    value={budget}
+                    onChange={setBudget}
+                    ltrValues
+                  />
                 </div>
-              </fieldset>
+              </div>
 
               <div>
                 <label htmlFor="message" className={labelBase}>
