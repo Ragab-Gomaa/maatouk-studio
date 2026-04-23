@@ -38,6 +38,7 @@ function WhatsAppIcon({ className = "w-4 h-4" }: { className?: string }) {
 }
 
 type DropdownProps = {
+  label: string;
   placeholder: string;
   options: string[];
   value: string;
@@ -46,6 +47,7 @@ type DropdownProps = {
 };
 
 function Dropdown({
+  label,
   placeholder,
   options,
   value,
@@ -100,50 +102,55 @@ function Dropdown({
         }}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className={`group w-full px-5 py-4 rounded-2xl text-[15px] border transition-all focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2 flex items-center justify-between gap-3 ${
+        className={`group w-full text-start px-5 pt-2.5 pb-3 rounded-2xl border transition-all focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2 ${
           open
             ? "border-brand-blue bg-surface-raised"
             : "border-black/[0.08] bg-surface-low hover:bg-surface-raised hover:border-black/15"
         }`}
       >
-        <span
-          dir={ltrValues && value ? "ltr" : undefined}
-          className={`truncate text-start ${value ? "text-ink font-medium" : "text-ink-whisper"}`}
-        >
-          {value || placeholder}
-        </span>
-        <span className="flex items-center gap-2 shrink-0">
-          {value && (
-            <span
-              role="button"
-              tabIndex={-1}
-              onClick={(e) => {
-                e.stopPropagation();
-                onChange("");
-                setOpen(false);
-              }}
-              className="w-5 h-5 rounded-full flex items-center justify-center text-ink-whisper hover:text-ink hover:bg-black/[0.06] transition-colors cursor-pointer"
-              aria-label="Clear"
-            >
-              <svg viewBox="0 0 10 10" className="w-2.5 h-2.5" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round">
-                <path d="M2 2l6 6M8 2l-6 6" />
-              </svg>
-            </span>
-          )}
-          <svg
-            className={`w-3.5 h-3.5 text-ink-muted transition-transform duration-300 ${
-              open ? "rotate-180" : ""
-            }`}
-            viewBox="0 0 12 12"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.75"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+        <div className="text-[10px] uppercase tracking-[0.2em] font-semibold text-ink-muted mb-0.5">
+          {label}
+        </div>
+        <div className="flex items-center justify-between gap-3">
+          <span
+            dir={ltrValues && value ? "ltr" : undefined}
+            className={`truncate text-[15px] ${value ? "text-ink font-medium" : "text-ink-whisper"}`}
           >
-            <path d="M3 4.5l3 3 3-3" />
-          </svg>
-        </span>
+            {value || placeholder}
+          </span>
+          <span className="flex items-center gap-2 shrink-0">
+            {value && (
+              <span
+                role="button"
+                tabIndex={-1}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onChange("");
+                  setOpen(false);
+                }}
+                className="w-5 h-5 rounded-full flex items-center justify-center text-ink-whisper hover:text-ink hover:bg-black/[0.06] transition-colors cursor-pointer"
+                aria-label="Clear"
+              >
+                <svg viewBox="0 0 10 10" className="w-2.5 h-2.5" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round">
+                  <path d="M2 2l6 6M8 2l-6 6" />
+                </svg>
+              </span>
+            )}
+            <svg
+              className={`w-3.5 h-3.5 text-ink-muted transition-transform duration-300 ${
+                open ? "rotate-180" : ""
+              }`}
+              viewBox="0 0 12 12"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.75"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M3 4.5l3 3 3-3" />
+            </svg>
+          </span>
+        </div>
       </button>
 
       <AnimatePresence>
@@ -272,13 +279,14 @@ export default function ContactPage() {
     }
   }
 
-  const inputBase =
-    "w-full px-5 py-4 bg-surface-low border rounded-2xl text-[15px] text-ink placeholder:text-ink-whisper outline-none transition-colors focus:border-brand-blue focus:bg-surface-raised";
-  const inputOk = "border-black/[0.08]";
-  const inputErr = "border-red-400";
-
-  const labelBase =
-    "block text-[11px] uppercase tracking-[0.2em] font-semibold text-ink-muted mb-2.5";
+  const fieldBase =
+    "group w-full rounded-2xl border bg-surface-low transition-all focus-within:bg-surface-raised focus-within:border-brand-blue hover:border-black/15";
+  const fieldOk = "border-black/[0.08]";
+  const fieldErr = "border-red-400";
+  const innerLabel =
+    "block px-5 pt-2.5 text-[10px] uppercase tracking-[0.2em] font-semibold text-ink-muted";
+  const innerInput =
+    "w-full px-5 pb-3 pt-0.5 bg-transparent text-[15px] text-ink placeholder:text-ink-whisper outline-none";
 
   return (
     <main className="pt-28 md:pt-32 pb-14 bg-surface relative overflow-hidden">
@@ -316,7 +324,7 @@ export default function ContactPage() {
             </span>
           </h1>
 
-          <p className="text-base md:text-lg text-ink-soft leading-relaxed max-w-md mb-10">
+          <p className="text-base md:text-lg text-ink-soft leading-relaxed max-w-xl text-pretty mb-10">
             {t(
               "Tell us about the idea and the outcome you want. We'll come back with a clear plan within 24 hours.",
               "حدّثنا عن الفكرة والنتيجة التي تريدها. نعود إليك بخطّةٍ واضحة خلال ٢٤ ساعة."
@@ -332,7 +340,7 @@ export default function ContactPage() {
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-ink/[0.04] border border-ink/10 text-ink text-[15px] font-medium tracking-[-0.01em] hover:bg-ink/[0.08] hover:border-ink/20 transition-all duration-300"
+                className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-ink text-white text-[15px] font-medium tracking-[-0.01em] shadow-sm hover:bg-black hover:shadow-[0_12px_30px_-10px_rgba(0,0,0,0.5)] transition-all duration-300"
               >
                 <WhatsAppIcon className="w-4 h-4 text-brand-green" />
                 <span>{t("Chat on WhatsApp", "تواصل عبر واتساب")}</span>
@@ -397,7 +405,7 @@ export default function ContactPage() {
             <form
               onSubmit={handleSubmit}
               noValidate
-              className="studio-card rounded-[28px] p-8 md:p-10 space-y-6"
+              className="studio-card rounded-[28px] p-6 md:p-8 space-y-4"
             >
               {/* Honeypot */}
               <div
@@ -420,8 +428,8 @@ export default function ContactPage() {
                 />
               </div>
 
-              <div>
-                <label htmlFor="name" className={labelBase}>
+              <div className={`${fieldBase} ${errors.name ? fieldErr : fieldOk}`}>
+                <label htmlFor="name" className={innerLabel}>
                   {t("Your name", "اسمك")} *
                 </label>
                 <input
@@ -431,16 +439,16 @@ export default function ContactPage() {
                   autoComplete="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className={`${inputBase} ${errors.name ? inputErr : inputOk}`}
+                  className={innerInput}
                   placeholder={t("John Doe", "محمد أحمد")}
                 />
-                {errors.name && (
-                  <p className="text-sm text-red-500 mt-2">{errors.name}</p>
-                )}
               </div>
+              {errors.name && (
+                <p className="text-sm text-red-500 -mt-2">{errors.name}</p>
+              )}
 
-              <div>
-                <label htmlFor="email" className={labelBase}>
+              <div className={`${fieldBase} ${errors.email ? fieldErr : fieldOk}`}>
+                <label htmlFor="email" className={innerLabel}>
                   {t("Email", "البريد الإلكتروني")} *
                 </label>
                 <input
@@ -450,61 +458,52 @@ export default function ContactPage() {
                   autoComplete="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className={`${inputBase} ${errors.email ? inputErr : inputOk}`}
+                  className={innerInput}
                   placeholder="name@company.com"
                 />
-                {errors.email && (
-                  <p className="text-sm text-red-500 mt-2">{errors.email}</p>
-                )}
               </div>
+              {errors.email && (
+                <p className="text-sm text-red-500 -mt-2">{errors.email}</p>
+              )}
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <div className={labelBase}>
-                    {t("Project type", "نوع المشروع")}
-                  </div>
-                  <Dropdown
-                    placeholder={t("Select type", "اختر النوع")}
-                    options={services.map((s) => t(s.en, s.ar))}
-                    value={service}
-                    onChange={setService}
-                  />
-                </div>
-
-                <div>
-                  <div className={labelBase}>
-                    {t("Budget", "الميزانيّة التقريبيّة")}
-                  </div>
-                  <Dropdown
-                    placeholder={t("Select range", "اختر النطاق")}
-                    options={budgets}
-                    value={budget}
-                    onChange={setBudget}
-                    ltrValues
-                  />
-                </div>
+                <Dropdown
+                  label={t("Project type", "نوع المشروع")}
+                  placeholder={t("Select type", "اختر النوع")}
+                  options={services.map((s) => t(s.en, s.ar))}
+                  value={service}
+                  onChange={setService}
+                />
+                <Dropdown
+                  label={t("Budget", "الميزانيّة")}
+                  placeholder={t("Select range", "اختر النطاق")}
+                  options={budgets}
+                  value={budget}
+                  onChange={setBudget}
+                  ltrValues
+                />
               </div>
 
-              <div>
-                <label htmlFor="message" className={labelBase}>
+              <div className={`${fieldBase} ${errors.message ? fieldErr : fieldOk}`}>
+                <label htmlFor="message" className={innerLabel}>
                   {t("Tell us about it", "حدّثنا عن مشروعك")} *
                 </label>
                 <textarea
                   id="message"
-                  rows={5}
+                  rows={4}
                   required
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className={`${inputBase} resize-none ${errors.message ? inputErr : inputOk}`}
+                  className={`${innerInput} resize-none`}
                   placeholder={t(
                     "The idea, the timing, any context that helps...",
                     "الفكرة، التوقيت، وأيّ سياقٍ يُفيدنا..."
                   )}
                 />
-                {errors.message && (
-                  <p className="text-sm text-red-500 mt-2">{errors.message}</p>
-                )}
               </div>
+              {errors.message && (
+                <p className="text-sm text-red-500 -mt-2">{errors.message}</p>
+              )}
 
               {status === "error" && (
                 <div className="px-4 py-3 rounded-xl bg-red-50 border border-red-200 text-sm text-red-700">
