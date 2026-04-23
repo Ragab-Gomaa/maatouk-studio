@@ -41,7 +41,7 @@ export default function WorkSection() {
             href="/work"
             className="inline-flex items-center gap-1.5 text-sm font-medium text-brand-blue hover:text-brand-blue-dark transition-colors self-start md:self-end focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2 rounded-sm"
           >
-            {t("View archive", "الأرشيف الكامل")}
+            {t("All work", "كل أعمالنا")}
             <svg
               className="w-3.5 h-3.5 rtl-flip"
               viewBox="0 0 14 14"
@@ -196,43 +196,53 @@ export default function WorkSection() {
                 visible: { opacity: 1, y: 0 },
               }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="relative block overflow-hidden rounded-[24px] md:rounded-[28px] h-full bg-ink text-white"
             >
-              <div className="p-7 md:p-9 lg:p-10 h-full flex flex-col">
-                <div className="flex items-center gap-3 mb-6">
-                  <span className="text-[10px] uppercase tracking-[0.25em] font-semibold text-brand-green">
-                    № 03
-                  </span>
-                  <span className="h-px w-6 bg-brand-green/40" />
-                  <span className="text-[11px] opacity-60 font-medium">
-                    {t("Motion Design", "موشن جرافيك")} · {sandah.year}
-                  </span>
-                </div>
-                <h3 className="font-lyon font-bold tracking-[-0.03em] leading-[0.95] text-4xl md:text-5xl mb-4">
-                  {t(sandah.title.en, sandah.title.ar)}
-                </h3>
-                <p className="text-sm md:text-base text-white/70 leading-relaxed mb-8">
-                  {t(sandah.description.en, sandah.description.ar)}
-                </p>
+              <a
+                href={`https://vimeo.com/${sandah.vimeoId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={t(
+                  `Watch ${sandah.title.en} on Vimeo`,
+                  `شاهد ${sandah.title.ar} على Vimeo`
+                )}
+                className="group relative block overflow-hidden rounded-[24px] md:rounded-[28px] h-full bg-ink text-white focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-green focus-visible:outline-offset-4"
+              >
+                <div className="p-7 md:p-9 lg:p-10 h-full flex flex-col">
+                  <div className="flex items-center gap-3 mb-6">
+                    <span className="text-[10px] uppercase tracking-[0.25em] font-semibold text-brand-green">
+                      № 03
+                    </span>
+                    <span className="h-px w-6 bg-brand-green/40" />
+                    <span className="text-[11px] opacity-60 font-medium">
+                      {t("Motion Design", "موشن جرافيك")} · {sandah.year}
+                    </span>
+                  </div>
+                  <h3 className="font-lyon font-bold tracking-[-0.03em] leading-[0.95] text-4xl md:text-5xl mb-4">
+                    {t(sandah.title.en, sandah.title.ar)}
+                  </h3>
+                  <p className="text-sm md:text-base text-white/70 leading-relaxed mb-8">
+                    {t(sandah.description.en, sandah.description.ar)}
+                  </p>
 
-                <div className="mt-auto relative aspect-video rounded-2xl overflow-hidden bg-black">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={`https://vumbnail.com/${sandah.vimeoId}.jpg`}
-                    alt={sandah.title.en}
-                    className="absolute inset-0 w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-14 h-14 rounded-full bg-white/95 flex items-center justify-center shadow-xl">
-                      <svg viewBox="0 0 24 24" className="w-5 h-5 text-ink ml-0.5" aria-hidden="true">
-                        <polygon points="8,5 18,12 8,19" fill="currentColor" />
-                      </svg>
+                  <div className="mt-auto mb-4 md:mb-6 relative aspect-video rounded-2xl overflow-hidden bg-black transition-transform duration-700 group-hover:scale-[1.02]">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`https://vumbnail.com/${sandah.vimeoId}.jpg`}
+                      alt={sandah.title.en}
+                      className="absolute inset-0 w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-14 h-14 rounded-full bg-white/95 flex items-center justify-center shadow-xl transition-transform duration-500 group-hover:scale-110">
+                        <svg viewBox="0 0 24 24" className="w-5 h-5 text-ink ml-0.5" aria-hidden="true">
+                          <polygon points="8,5 18,12 8,19" fill="currentColor" />
+                        </svg>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </a>
             </motion.article>
           </div>
         </motion.div>
@@ -246,7 +256,13 @@ export default function WorkSection() {
 function LaptopMockup({ src, alt }: { src: string; alt: string }) {
   return (
     <figure className="relative w-full">
-      <div className="relative rounded-[10px] md:rounded-[14px] p-[5px] md:p-1.5 bg-[#1a1a1a] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.4)]">
+      <div
+        className="relative rounded-[10px] md:rounded-[14px] p-[5px] md:p-1.5 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.35)]"
+        style={{
+          background:
+            "linear-gradient(180deg, #DADBDD 0%, #CECFD2 50%, #BCBDC0 100%)",
+        }}
+      >
         <div className="relative rounded-[4px] md:rounded-[6px] overflow-hidden bg-black aspect-[16/10]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -257,8 +273,19 @@ function LaptopMockup({ src, alt }: { src: string; alt: string }) {
           />
         </div>
       </div>
-      <div className="h-1.5 md:h-2 mx-[-3%] rounded-b bg-[#2a2a2a]" aria-hidden="true" />
-      <div className="h-1 mx-[-4%] rounded-b bg-[#151515]" aria-hidden="true" />
+      <div
+        className="h-1.5 md:h-2 mx-[-3%] rounded-b"
+        style={{
+          background:
+            "linear-gradient(180deg, #C5C6C9 0%, #AEAFB2 100%)",
+        }}
+        aria-hidden="true"
+      />
+      <div
+        className="h-1 mx-[-4%] rounded-b"
+        style={{ backgroundColor: "#8A8B8E" }}
+        aria-hidden="true"
+      />
     </figure>
   );
 }
@@ -266,7 +293,13 @@ function LaptopMockup({ src, alt }: { src: string; alt: string }) {
 function PhoneMockup({ src, alt }: { src: string; alt: string }) {
   return (
     <figure className="relative w-full">
-      <div className="relative bg-[#0b0b0d] rounded-[22px] p-[5px] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.35)] aspect-[9/19]">
+      <div
+        className="relative rounded-[22px] p-[5px] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.3)] aspect-[9/19]"
+        style={{
+          background:
+            "linear-gradient(135deg, #A29D94 0%, #948F85 55%, #807B73 100%)",
+        }}
+      >
         <div className="relative h-full w-full bg-black rounded-[18px] overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
