@@ -47,7 +47,7 @@ export default function ContactCTASection() {
             <div>
               <div className="inline-flex items-center gap-2 pl-2 pr-4 py-1 bg-white/10 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold text-white/85 mb-8">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-green" />
-                {t("Let's talk", "لنتحدث")}
+                {t("Get in touch", "تواصل")}
               </div>
 
               <h2
@@ -55,10 +55,10 @@ export default function ContactCTASection() {
                   locale === "ar" ? "leading-[1.2]" : "leading-[0.95]"
                 }`}
               >
-                {t("Your idea deserves", "فكرتك تستحقّ")}
+                {t("Let's build together", "لنبنِ معاً")}
                 <br />
                 <span className="text-brand-green italic">
-                  {t("a team that cares.", "فريقاً يهتمّ مثلك.")}
+                  {t("something unforgettable.", "شيئاً لا يُنسى.")}
                 </span>
               </h2>
             </div>
