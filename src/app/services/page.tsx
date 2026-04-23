@@ -20,12 +20,12 @@ const services: Service[] = [
     title: { en: "Branding", ar: "الهويّة البصريّة" },
     tagline: { en: "Identities that endure.", ar: "هويّةٌ تَبقى." },
     description: {
-      en: "We build brand systems from the ground up — positioning, naming, logo, typography, color, and guidelines. Coherent identities that work at every scale, in every medium.",
-      ar: "نبني أنظمة هويّةٍ كاملة من الصفر — تموضع، تسمية، شعار، نظام خطوط، ألوان، ودليل استخدام. هويّاتٌ متماسكة تعمل على كلّ حجم، وفي كلّ وسيط.",
+      en: "Coherent brands that look like themselves on every surface — from a business card to a billboard. We start with strategy and market, and finish with a guidelines doc any team can actually use.",
+      ar: "هويّاتٌ متّسقة تبدو نفسها على كل واجهة — من كرت التعريف إلى الموقع الإلكتروني. نبدأ من السوق والاستراتيجيّة، ونسلّم دليل استخدامٍ يعمل به أي فريق بسهولة.",
     },
     capabilities: [
       { en: "Brand strategy & positioning", ar: "استراتيجيّة العلامة وتموضعها" },
-      { en: "Naming & verbal identity", ar: "التسمية والصوت اللفظي" },
+      { en: "Naming & verbal identity", ar: "التسمية ونبرة العلامة" },
       { en: "Logo & visual identity", ar: "الشعار والهويّة البصريّة" },
       { en: "Typography systems", ar: "نظام الخطوط" },
       { en: "Color systems", ar: "نظام الألوان" },
@@ -34,10 +34,10 @@ const services: Service[] = [
     ],
     typicalDeliverables: [
       { en: "Strategy document", ar: "وثيقة الاستراتيجيّة" },
-      { en: "Logo suite + lockups", ar: "مجموعة الشعار وتراكيبه" },
-      { en: "Typography pairings", ar: "اقتران الخطوط" },
-      { en: "Color palette + rules", ar: "لوحة الألوان وقواعدها" },
-      { en: "100+ page guidelines", ar: "دليلٌ من +١٠٠ صفحة" },
+      { en: "Logo suite & variants", ar: "الشعار بنسخه المتعدّدة" },
+      { en: "Typography pairings", ar: "أزواج الخطوط" },
+      { en: "Color palette & rules", ar: "لوحة الألوان وقواعدها" },
+      { en: "100+ page guidelines", ar: "دليلٌ يتجاوز ١٠٠ صفحة" },
     ],
     timeline: { en: "4–8 weeks", ar: "٤–٨ أسابيع" },
   },
@@ -46,22 +46,22 @@ const services: Service[] = [
     title: { en: "Motion Graphics", ar: "الموشن جرافيك" },
     tagline: { en: "Every frame counts.", ar: "كلّ إطارٍ يُحسَب." },
     description: {
-      en: "From logo animation to full campaign films. We design motion systems — how your brand moves on screens, in feeds, and inside products. Every frame serves the story.",
-      ar: "من تحريك الشعار إلى أفلام الحملات الكاملة. نصمّم منظومة موشن — كيف تتحرّك علامتك على الشاشات، في المنصّات، وداخل المنتجات. كلّ إطارٍ يخدم القصّة.",
+      en: "Motion that moves your brand — from logo animation to campaign films to social reels. Every cut is built to hold attention and tell your story in seconds, not minutes.",
+      ar: "موشن جرافيك يُحرّك علامتك بذكاء — من تحريك الشعار، إلى الحملات الإعلانيّة، إلى محتوى السوشيال. كلّ مقطعٍ مصنوع ليشدّ العين، ويحكي قصّتك في ثوانٍ — لا في دقائق.",
     },
     capabilities: [
       { en: "Logo animation", ar: "تحريك الشعار" },
-      { en: "Brand motion systems", ar: "منظومة الموشن للعلامة" },
+      { en: "Brand motion system", ar: "دليل موشن العلامة" },
       { en: "Campaign ads & promos", ar: "إعلانات الحملات" },
       { en: "Explainer videos", ar: "فيديوهات تعريفيّة" },
-      { en: "Product motion", ar: "حركة المنتج الرقمي" },
+      { en: "Product UI motion", ar: "تحريك واجهات المنتج" },
       { en: "Social content systems", ar: "محتوى السوشيال ميديا" },
-      { en: "Title sequences", ar: "تتر المقدّمات" },
+      { en: "Title sequences", ar: "شارات المقدّمات" },
     ],
     typicalDeliverables: [
       { en: "Motion guidelines", ar: "دليل الموشن" },
-      { en: "Hero animations", ar: "تحريكات رئيسيّة" },
-      { en: "Social media kit", ar: "حزمة محتوى السوشيال" },
+      { en: "Hero motion reels", ar: "مقاطع موشن رئيسيّة" },
+      { en: "Social media kit", ar: "حزمة السوشيال ميديا" },
       { en: "Source files", ar: "ملفات المصدر" },
       { en: "Export variants", ar: "صيغ تصدير متعدّدة" },
     ],
@@ -72,8 +72,8 @@ const services: Service[] = [
     title: { en: "Digital Products", ar: "المنتجات الرقميّة" },
     tagline: { en: "Built to work, not just to look.", ar: "تعمل، لا تُعرض فقط." },
     description: {
-      en: "Websites, apps, and digital products — designed and built in-house. From marketing sites to full platforms, we handle strategy, UX, interface design, and engineering under one roof.",
-      ar: "مواقع، تطبيقات، ومنتجات رقميّة — تُصمَّم وتُطوَّر داخل الاستوديو. من المواقع التسويقيّة إلى المنصّات الكاملة، نتولّى الاستراتيجيّة، وتجربة المستخدم، والتصميم، والتطوير — تحت سقفٍ واحد.",
+      en: "We design and build digital products that actually work — not just look sharp. From a simple marketing site to a full platform, we carry the project from first sketch to launch, all under one roof.",
+      ar: "نصمّم ونطوّر منتجاتٍ رقميّة تعمل فعلاً — لا مجرّد تصميماتٍ أنيقة. من موقعٍ تسويقي بسيط إلى منصّةٍ كاملة، نُمسك المشروع من الفكرة إلى الإطلاق، داخل فريقٍ واحد.",
     },
     capabilities: [
       { en: "Product strategy & UX", ar: "استراتيجيّة المنتج وتجربة المستخدم" },
@@ -86,10 +86,10 @@ const services: Service[] = [
     ],
     typicalDeliverables: [
       { en: "Design system", ar: "نظام تصميم" },
-      { en: "Prototype & flows", ar: "نموذج أوّلي وتدفّقات" },
+      { en: "Prototype & user flows", ar: "نموذج أوّلي ومسارات المستخدم" },
       { en: "Shipped product", ar: "منتجٌ جاهزٌ للإطلاق" },
-      { en: "Admin dashboard", ar: "لوحة تحكّم" },
-      { en: "Documentation", ar: "توثيقٌ تقنيّ" },
+      { en: "Admin dashboard", ar: "لوحة تحكّم للإدارة" },
+      { en: "Technical documentation", ar: "توثيقٌ تقنيّ كامل" },
     ],
     timeline: { en: "6–16 weeks", ar: "٦–١٦ أسبوعاً" },
   },
@@ -172,7 +172,13 @@ export default function ServicesPage() {
                       {t(service.description.en, service.description.ar)}
                     </p>
 
-                    <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-semibold text-ink-muted">
+                    <div
+                      className={`flex items-center gap-2 font-semibold text-ink-muted ${
+                        locale === "ar"
+                          ? "text-xs"
+                          : "text-[10px] uppercase tracking-[0.2em]"
+                      }`}
+                    >
                       <span className="w-1.5 h-1.5 rounded-full bg-brand-green" />
                       {t("Typical timeline:", "المدّة المعتادة:")}
                       <span className="text-brand-blue font-bold">
@@ -185,7 +191,13 @@ export default function ServicesPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-10">
                     {/* Capabilities */}
                     <div>
-                      <h3 className="text-[10px] uppercase tracking-[0.25em] font-bold text-ink-muted mb-5">
+                      <h3
+                        className={`font-bold text-ink-muted mb-5 ${
+                          locale === "ar"
+                            ? "text-sm"
+                            : "text-[10px] uppercase tracking-[0.25em]"
+                        }`}
+                      >
                         {t("Capabilities", "ما نتقنه")}
                       </h3>
                       <ul className="space-y-3">
@@ -203,7 +215,13 @@ export default function ServicesPage() {
 
                     {/* Deliverables */}
                     <div>
-                      <h3 className="text-[10px] uppercase tracking-[0.25em] font-bold text-ink-muted mb-5">
+                      <h3
+                        className={`font-bold text-ink-muted mb-5 ${
+                          locale === "ar"
+                            ? "text-sm"
+                            : "text-[10px] uppercase tracking-[0.25em]"
+                        }`}
+                      >
                         {t("Typical deliverables", "ما نسلّمه عادةً")}
                       </h3>
                       <ul className="space-y-3">
