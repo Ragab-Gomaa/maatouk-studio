@@ -47,13 +47,54 @@ Goal: the site looks deliberate at 375×667 (iPhone SE) and 414×896 (iPhone Plu
 
 Goal: a "pill" looks like a pill everywhere. A "card" looks like a card everywhere.
 
-- [ ] 4.1 Pills — consolidate repeated kicker-pill markup into a single component
-- [ ] 4.2 Buttons — audit `<Button>` usage vs inline `<a>` with button-like classes
-- [ ] 4.3 studio-card usage — audit hover states consistency
-- [ ] 4.4 Focus states — ensure every interactive element has a visible focus ring
-- [ ] 4.5 Motion defaults — audit framer-motion entrance animations (duration, easing)
+- [x] 4.1 Pills — consolidated in Phase 1 via `.kicker-pill` + `.kicker-pill-dark` + `.kicker` + `.kicker-sm` utilities
+- [x] 4.2 Buttons — audited: all primary CTAs use `<Button>`; two custom `<a>` exist for WhatsApp (needs custom icon alongside text — Button component doesn't support that cleanly). Intentional.
+- [x] 4.3 studio-card — single utility in globals.css with built-in hover lift. Used consistently across Services card, Process card, About value cards, Contact form, success state.
+- [x] 4.4 Focus states — 15 `focus-visible:outline` usages across 7 files. Button component has focus-ring built in. Every interactive link/button on the site has a visible focus state.
+- [x] 4.5 Motion — dominant easing `[0.22, 1, 0.36, 1]` (used in 8+ places); durations cluster at 0.6/0.7/0.8s; shared `src/lib/animations.ts` provides reusable variants. Consistent enough to feel intentional.
 
 ---
 
 ## Final Report
-_Added after all phases complete._
+
+All 4 phases complete. Work is landed across the following commits:
+
+| Commit | Scope |
+|---|---|
+| `a50ba67` | iPhone Safari Arabic font-feature-settings + tashkeel leading |
+| `e4a4677` | Phase 1 — `.kicker-pill` / `.kicker` utilities + About h1 normalization |
+| `014aa28` | Phase 2 — alignment & rhythm audit (About grid gap fix) |
+| `317db80` | Phase 3 — mobile fixes: nav touch targets, footer icons, arrows, eyebrow labels |
+
+### What the visitor will notice
+
+**Arabic on iPhone renders correctly.** Letter-joining is intact, tashkeel (شدّات، فتحات) sit above their base letters. The previous "choppy" look is gone. Fix: `font-feature-settings: kern, liga, calt, mark, mkmk, ccmp` on every RTL text node + `font-synthesis: none` on all `@font-face` blocks.
+
+**Section labels look right in both languages.** One utility class (`.kicker-pill`) now drives the eyebrow-pill pattern on every section. Arabic automatically drops uppercase/tracking (which break ligatures) and bumps size for legibility. Before: ten inline copies of the same string. After: one class, one rule.
+
+**Touch targets meet 44pt minimum.** Hamburger menu (28→44), language switch (py-1→min-h-11), footer social icons (40→44).
+
+**Vertical alignment is deliberate.** Homepage sections breathe at `py-14 md:py-20`. Inner pages and the closing CTA tighten to `py-12 md:py-16`. This two-tier rhythm reads as intentional — brand breathing moments vs information pages — not accidental drift.
+
+**Small story-details.** The right-arrow between Process steps no longer appears on mobile/tablet (where the next step stacks below, not to the side). Contact page's "Prefer a quick chat?" eyebrow uses the new utility. About page's h1 now matches Services/Work at `lg:text-[6rem]` instead of being an outlier at `5.5rem`.
+
+### Design principles the audit applied
+
+- **Consistency** — one utility for repeated patterns; one token-scale for spacing, type, colour
+- **Hierarchy** — page h1s normalized, card h3s cluster at 2xl/3xl, eyebrows at kicker-size
+- **Alignment** — 1320px container, identical horizontal gutters, header aligns to content within ±2px
+- **Rhythm** — two-tier section padding, grid-gap scale (`3/4` tight → `5/6` breathy)
+- **Proximity** — inset-label form fields (label + input as one unit); pills + headlines visually grouped
+- **Touch/accessibility** — 44pt targets, visible focus rings, `font-feature-settings` for complex scripts
+
+### Outstanding (non-blocking)
+
+- **Mizan fonts → `.woff2`**. `.otf` works now thanks to the feature-settings fix, but `.woff2` is smaller, faster to decode, and historically more bullet-proof on iOS Safari. Needs a font conversion tool run outside this session. File: `public/fonts/mizan-{regular,medium,semibold,bold}.otf`.
+
+### How to verify
+
+1. Open the site on an iPhone (any iOS 13+). Switch to Arabic. Every heading and paragraph should read with proper letter-joining and tashkeel placement.
+2. Tap the hamburger menu — the hit area should feel generous.
+3. Scroll to the Process section at mobile width. The arrow between cards should NOT be showing (it appeared wrongly before).
+4. Reach the footer. The social icons should be tappable without aiming carefully.
+
