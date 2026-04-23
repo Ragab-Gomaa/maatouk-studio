@@ -119,7 +119,7 @@ const accentClasses = {
 };
 
 export default function ServicesSection() {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
 
   return (
     <section className="py-14 md:py-20 bg-surface relative">
@@ -137,7 +137,7 @@ export default function ServicesSection() {
               <span className="w-1.5 h-1.5 rounded-full bg-brand-blue" />
               {t("What we make", "ما نصنعه")}
             </span>
-            <h2 className="font-lyon font-bold tracking-[-0.03em] text-4xl md:text-5xl lg:text-6xl leading-[0.95] max-w-2xl">
+            <h2 className={`font-lyon font-bold tracking-[-0.03em] text-4xl md:text-5xl lg:text-6xl max-w-2xl ${locale === "ar" ? "leading-[1.3]" : "leading-[0.95]"}`}>
               {t("Three disciplines,", "ثلاث تخصصات،")}
               <br />
               <span className="text-brand-blue italic">

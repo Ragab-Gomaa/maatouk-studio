@@ -38,7 +38,7 @@ const testimonials: Testimonial[] = [
 ];
 
 export default function TestimonialsSection() {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
 
@@ -75,7 +75,7 @@ export default function TestimonialsSection() {
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-blue" />
                 {t("Voices", "أصوات")}
               </span>
-              <h2 className="font-lyon font-bold tracking-[-0.03em] text-3xl md:text-4xl lg:text-5xl leading-[0.95] max-w-sm">
+              <h2 className={`font-lyon font-bold tracking-[-0.03em] text-3xl md:text-4xl lg:text-5xl max-w-sm ${locale === "ar" ? "leading-[1.3]" : "leading-[0.95]"}`}>
                 {t("What clients", "ماذا يقول")}
                 <br />
                 <span className="text-brand-blue italic">{t("say.", "العملاء.")}</span>

@@ -9,7 +9,7 @@ import Button from "@/components/ui/Button";
  * centered, with a question headline and two actions.
  */
 export default function ContactCTASection() {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
 
   return (
     <section className="py-12 md:py-16 bg-surface">
@@ -38,7 +38,7 @@ export default function ContactCTASection() {
                 {t("Let's talk", "لنتحدث")}
               </div>
 
-              <h2 className="font-lyon font-bold tracking-[-0.035em] leading-[0.92] text-5xl md:text-7xl lg:text-[6rem]">
+              <h2 className={`font-lyon font-bold tracking-[-0.035em] text-5xl md:text-7xl lg:text-[6rem] ${locale === "ar" ? "leading-[1.2]" : "leading-[0.92]"}`}>
                 {t("Got a brief", "عندك ملف")}
                 <br />
                 <span className="text-brand-green italic">
