@@ -371,10 +371,10 @@ function BrandingAnimation() {
               >
                 {/* Top: tiny specimen header */}
                 <div className="shrink-0 flex items-center justify-between px-1.5 pt-1">
-                  <span className="text-[4px] font-mono text-ink/50 tracking-[0.15em] uppercase">
+                  <span className="text-[4px] font-mono text-ink/50">
                     Typography
                   </span>
-                  <span className="text-[4px] font-mono text-ink/35 tracking-wider">
+                  <span className="text-[4px] font-mono text-ink/35">
                     01 / 04
                   </span>
                 </div>
@@ -397,11 +397,11 @@ function BrandingAnimation() {
                 {/* Pantone-style palette row */}
                 <div className="shrink-0 px-1.5 pt-1 pb-1">
                   <div className="flex items-center justify-between mb-0.5">
-                    <span className="text-[4px] font-mono text-ink/50 tracking-[0.15em] uppercase">
+                    <span className="text-[4px] font-mono text-ink/50">
                       Palette
                     </span>
-                    <span className="text-[4px] font-mono text-ink/35 tracking-wider">
-                      ISO
+                    <span className="text-[4px] font-mono text-ink/35">
+                      Iso
                     </span>
                   </div>
                   <div className="flex gap-[1.5px]">
@@ -449,7 +449,7 @@ function BrandingAnimation() {
           <div className="w-[66px] shrink-0 bg-[#2B2B2B] border-l border-black/50 flex flex-col min-h-0">
             {/* Panel header */}
             <div className="shrink-0 flex items-center justify-between px-1.5 py-1 bg-[#353535] border-b border-black/50">
-              <span className="text-[5px] font-semibold text-white/85 tracking-[0.12em] uppercase">
+              <span className="text-[5px] font-semibold text-white/85">
                 Layers
               </span>
               <span className="text-[5px] text-white/40">3</span>
@@ -597,7 +597,7 @@ function MotionAnimation() {
         style={{ direction: "ltr" }}
       >
         {/* Top strip — composition name + live timecode */}
-        <div className="relative shrink-0 flex items-center justify-between px-2 py-1 text-[6px] font-mono uppercase tracking-[0.15em] text-white/55 bg-white/[0.04] border-b border-white/[0.06]">
+        <div className="relative shrink-0 flex items-center justify-between px-2 py-1 text-[6px] font-mono text-white/55 bg-white/[0.04] border-b border-white/[0.06]">
           <span className="flex items-center gap-1">
             <span className="w-1 h-1 rounded-full bg-brand-green animate-pulse" />
             <span className="font-semibold">Comp 01 · 2026</span>
