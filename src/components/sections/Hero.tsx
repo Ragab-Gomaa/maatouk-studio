@@ -14,7 +14,7 @@ export default function Hero() {
   const { t, locale } = useTranslation();
 
   return (
-    <section className="relative overflow-hidden bg-surface pt-28 md:pt-32 lg:pt-36 pb-12 md:pb-16">
+    <section className="relative overflow-hidden bg-surface pt-28 md:pt-32 lg:pt-36 pb-14 md:pb-20 lg:pb-24 lg:min-h-screen lg:flex lg:items-center">
       <div
         className="absolute top-[-200px] right-[-150px] w-[500px] h-[500px] rounded-full bg-brand-blue/[0.08] blur-3xl pointer-events-none"
         aria-hidden="true"
@@ -24,7 +24,7 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
+      <div className="relative z-10 w-full max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
         <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] gap-12 lg:gap-16 xl:gap-20 items-center">
           {/* ── Left: text ── */}
           <div>
