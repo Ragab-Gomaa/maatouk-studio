@@ -20,16 +20,16 @@ const services: Service[] = [
     title: { en: "Branding", ar: "هوية بصرية" },
     tagline: {
       en: "Identities that travel.",
-      ar: "هويات تسافر بعيداً.",
+      ar: "هويّةٌ تَبقى.",
     },
     description: {
-      en: "Strategic visual identity systems — logo, typography, color, and guidelines. Built to hold together across every touchpoint, in Arabic and English.",
-      ar: "أنظمة هوية استراتيجية — شعار، طباعة، ألوان، دليل استخدام. مصممة لتظل متماسكة عبر كل نقطة لمس، بالعربية والإنجليزية.",
+      en: "Strategic visual identity systems — logo, typography, color, and guidelines. Built to hold together across every touchpoint.",
+      ar: "نظامُ هوية متكامل — شعار، خطوط، ألوان، ودليل العلامة. متماسكةٌ في كل سياق، عبر كل وسيط.",
     },
     deliverables: [
       { en: "Brand strategy", ar: "استراتيجية العلامة" },
       { en: "Visual identity", ar: "هوية بصرية" },
-      { en: "Typography", ar: "أنظمة طباعية" },
+      { en: "Typography", ar: "أنظمة الخطوط" },
       { en: "Guidelines", ar: "دليل العلامة" },
       { en: "Naming", ar: "التسمية" },
     ],
@@ -43,21 +43,21 @@ const services: Service[] = [
   },
   {
     number: "02",
-    title: { en: "Motion Design", ar: "تصميم الحركة" },
+    title: { en: "Motion Design", ar: "موشن جرافيك" },
     tagline: {
       en: "Brands in motion.",
-      ar: "علامات تتحرّك.",
+      ar: "هويّةٌ نابضة.",
     },
     description: {
       en: "Motion systems — not just videos. Logo animations, campaign ads, product motion, and social kits. Your brand feels alive wherever it lands.",
-      ar: "أنظمة حركة — ليست مجرد فيديوهات. تحريك الشعار، إعلانات الحملات، حركة المنتج، وأدوات السوشيال. هويتك نابضة في كل مكان.",
+      ar: "منظومةُ موشن كاملة — لا مجرّد مقاطع فيديو. تحريكُ الشعار، حملاتٌ إعلانية، عروضُ منتج، ومحتوى المنصّات — هويّةٌ نابضةٌ في كل نقطة.",
     },
     deliverables: [
       { en: "Logo animation", ar: "تحريك الشعار" },
-      { en: "Campaign ads", ar: "إعلانات الحملات" },
-      { en: "Explainer videos", ar: "فيديوهات الشرح" },
-      { en: "Product motion", ar: "حركة المنتج" },
-      { en: "Social kits", ar: "أدوات السوشيال" },
+      { en: "Campaign ads", ar: "حملات إعلانية" },
+      { en: "Explainer videos", ar: "فيديوهات تعريفية" },
+      { en: "Product motion", ar: "تحريك المنتج" },
+      { en: "Social kits", ar: "محتوى المنصّات" },
     ],
     accent: "dark",
     icon: (
@@ -76,14 +76,14 @@ const services: Service[] = [
     },
     description: {
       en: "Websites, apps, and digital products. We design and build in-house — so the brand you approved in the deck is the one that actually ships.",
-      ar: "مواقع وتطبيقات ومنتجات رقمية. نصمّم ونبرمج داخل الاستوديو — فالهوية التي وافقت عليها هي نفسها التي تنطلق.",
+      ar: "مواقع، تطبيقات، ومنتجات رقميّة — تصميماً وتطويراً تحت سقفٍ واحد. ما تعتمده في العرض، هو ما يصل للمستخدم بلا تنازل.",
     },
     deliverables: [
       { en: "Websites", ar: "مواقع إلكترونية" },
       { en: "Mobile apps", ar: "تطبيقات الجوال" },
       { en: "Web apps", ar: "تطبيقات ويب" },
       { en: "E-commerce", ar: "تجارة إلكترونية" },
-      { en: "Full bilingual RTL", ar: "ثنائي اللغة كامل" },
+      { en: "Dashboards", ar: "لوحات تحكّم" },
     ],
     accent: "green",
     icon: (
@@ -149,7 +149,7 @@ export default function ServicesSection() {
           <p className="text-base md:text-lg text-ink-soft leading-relaxed max-w-lg lg:pb-3">
             {t(
               "Every project lives at the intersection of brand, motion, and digital. We work as one team across all three — no handoffs, no seams.",
-              "كل مشروع يعيش عند تقاطع الهوية والحركة والرقمي. نعمل كفريق واحد في التخصصات الثلاثة — بلا تسليم، بلا فواصل."
+              "الهويّة، الموشن، والرقمي — في فريقٍ واحد. نُمسك المشروع من الفكرة إلى الإطلاق، بلا فواصل."
             )}
           </p>
         </motion.div>

@@ -46,7 +46,7 @@ const principles: Principle[] = [
     title: { en: "Full-stack delivery", ar: "تسليم شامل" },
     body: {
       en: "Strategy, identity, motion, and product — all in-house, one team. The brand you saw in the deck is the one that ships, without compromise.",
-      ar: "الاستراتيجية، الهوية، الحركة، والمنتج — كلها داخل الاستوديو، فريق واحد. الهوية التي وافقت عليها هي نفسها التي تنطلق، بلا تنازل.",
+      ar: "الاستراتيجية، الهوية، الموشن، والمنتج — كلها داخل الاستوديو، فريق واحد. الهوية التي وافقت عليها هي نفسها التي تنطلق، بلا تنازل.",
     },
   },
   {

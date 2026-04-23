@@ -13,7 +13,7 @@ export const siteContent = {
     },
     sub: {
       en: "Maatouk Studio is a creative studio specializing in branding, motion design, and digital experiences for visionary brands.",
-      ar: "ستوديو معتوق هو استوديو إبداعي متخصص في بناء الهويات البصرية، تصميم الحركة، والتجارب الرقمية للعلامات الطموحة.",
+      ar: "ستوديو معتوق هو استوديو إبداعي متخصص في بناء الهويات البصرية، الموشن جرافيك، والتجارب الرقمية للعلامات الطموحة.",
     },
     cta: {
       en: "Start a project",
@@ -78,7 +78,7 @@ export const siteContent = {
     },
     sub: {
       en: "A curated selection of projects across branding, motion, and digital.",
-      ar: "مجموعة مختارة من المشاريع في الهوية البصرية والحركة والرقمية.",
+      ar: "مجموعة مختارة من المشاريع في الهوية البصرية والموشن جرافيك والرقمية.",
     },
     viewProject: {
       en: "View project",

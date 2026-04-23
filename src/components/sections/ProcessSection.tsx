@@ -25,7 +25,7 @@ const steps = [
     title: { en: "Design", ar: "تصميم" },
     body: {
       en: "Ideas take form. Identity, motion, and product come together in sync — always designed, always built.",
-      ar: "الأفكار تتجسّد. الهوية والحركة والمنتج تتناغم — مُصممة دائماً، ومُصنّعة دائماً.",
+      ar: "الأفكار تتجسّد. الهوية والموشن والمنتج تتناغم — مُصممة دائماً، ومُصنّعة دائماً.",
     },
   },
   {

@@ -35,7 +35,7 @@ export default function WorkPage() {
             <p className="mt-6 text-base md:text-lg text-ink-soft max-w-xl leading-relaxed">
               {t(
                 "A curated selection of branding, motion, and digital products shipped for ambitious brands.",
-                "مجموعة مختارة من مشاريع الهوية والحركة والمنتجات الرقمية لعلامات طموحة."
+                "مجموعة مختارة من مشاريع الهوية والموشن والمنتجات الرقمية لعلامات طموحة."
               )}
             </p>
           </motion.div>

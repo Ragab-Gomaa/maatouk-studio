@@ -43,25 +43,25 @@ const services: Service[] = [
   },
   {
     number: "02",
-    title: { en: "Motion Design", ar: "تصميم الحركة" },
-    tagline: { en: "Brands in motion.", ar: "علامات تتحرّك." },
+    title: { en: "Motion Design", ar: "موشن جرافيك" },
+    tagline: { en: "Brands in motion.", ar: "هويّةٌ نابضة." },
     description: {
       en: "From logo animations to full campaign films. We design motion systems — how your brand behaves on screens, in feeds, and inside products. Every frame serves the story.",
-      ar: "من تحريك الشعارات إلى أفلام الحملات الكاملة. نصمّم أنظمة حركة — كيف تتصرّف علامتك على الشاشات، في الـ feeds، وداخل المنتجات. كل إطار يخدم القصة.",
+      ar: "من تحريك الشعارات إلى أفلام الحملات الكاملة. نصمّم منظومة موشن — كيف تتصرّف علامتك على الشاشات، في المنصّات، وداخل المنتجات. كل إطار يخدم القصة.",
     },
     capabilities: [
       { en: "Logo animation", ar: "تحريك الشعار" },
-      { en: "Brand motion systems", ar: "أنظمة الحركة للعلامة" },
-      { en: "Campaign ads & promos", ar: "إعلانات الحملات" },
-      { en: "Explainer videos", ar: "فيديوهات الشرح" },
-      { en: "Product motion", ar: "حركة المنتج" },
-      { en: "Social content systems", ar: "أنظمة محتوى السوشيال" },
-      { en: "Title sequences", ar: "مقدمات العناوين" },
+      { en: "Brand motion systems", ar: "منظومة الموشن للعلامة" },
+      { en: "Campaign ads & promos", ar: "حملات إعلانية" },
+      { en: "Explainer videos", ar: "فيديوهات تعريفية" },
+      { en: "Product motion", ar: "تحريك المنتج" },
+      { en: "Social content systems", ar: "منظومة محتوى المنصّات" },
+      { en: "Title sequences", ar: "مقدّمات العناوين" },
     ],
     typicalDeliverables: [
-      { en: "Motion guidelines", ar: "دليل الحركة" },
-      { en: "Hero animation(s)", ar: "حركات رئيسية" },
-      { en: "Social media kit", ar: "حزمة سوشيال" },
+      { en: "Motion guidelines", ar: "دليل الموشن" },
+      { en: "Hero animation(s)", ar: "تحريكات رئيسية" },
+      { en: "Social media kit", ar: "حزمة محتوى للمنصّات" },
       { en: "Source files", ar: "ملفات المصدر" },
       { en: "Export variants", ar: "صيغ تصدير متعددة" },
     ],
@@ -73,7 +73,7 @@ const services: Service[] = [
     tagline: { en: "Shipped, not just shown.", ar: "تُطلَق، لا تُعرَض فقط." },
     description: {
       en: "Websites, apps, and digital products — designed and built in-house. From marketing sites to full platforms, we handle strategy, UX, interface design, and engineering under one roof.",
-      ar: "مواقع وتطبيقات ومنتجات رقمية — تُصمّم وتُبرمَج داخل الاستوديو. من المواقع التسويقية إلى المنصات الكاملة، نتولى الاستراتيجية والـ UX والتصميم والبرمجة تحت سقف واحد.",
+      ar: "مواقع وتطبيقات ومنتجات رقميّة — تُصمَّم وتُطوَّر داخل الاستوديو. من المواقع التسويقية إلى المنصّات الكاملة، نتولّى الاستراتيجية والـ UX والتصميم والتطوير تحت سقفٍ واحد.",
     },
     capabilities: [
       { en: "Product strategy & UX", ar: "استراتيجية المنتج وتجربة المستخدم" },
@@ -126,7 +126,7 @@ export default function ServicesPage() {
             <p className="mt-6 text-base md:text-lg text-ink-soft max-w-2xl leading-relaxed">
               {t(
                 "Every project lives at the intersection of brand, motion, and digital. Here's how we work across all three.",
-                "كل مشروع يعيش عند تقاطع الهوية والحركة والرقمي. إليك كيف نعمل عبر الثلاثة."
+                "كل مشروع يعيش عند تقاطع الهوية والموشن والرقمي. إليك كيف نعمل عبر الثلاثة."
               )}
             </p>
           </motion.div>
