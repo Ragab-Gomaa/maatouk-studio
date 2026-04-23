@@ -27,11 +27,11 @@ const facts: Fact[] = [
     },
   },
   {
-    value: "3",
-    label: { en: "Disciplines", ar: "تخصّصات" },
+    value: "10+",
+    label: { en: "Clients", ar: "عميل" },
     note: {
-      en: "Brand, motion, digital — one team handling all three.",
-      ar: "هويّة، موشن، ومنتج رقمي — فريقٌ واحد يُنجِز الثلاثة.",
+      en: "In retail, hospitality, and tech.",
+      ar: "في التجزئة، الضيافة، والتقنية.",
     },
   },
   {
