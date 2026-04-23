@@ -14,8 +14,8 @@ export default function Hero() {
   const { t, locale } = useTranslation();
 
   const features: { value: string; label: { en: string; ar: string } }[] = [
-    { value: "10+", label: { en: "Partners", ar: "شريك" } },
-    { value: "15+", label: { en: "Launches", ar: "إطلاق" } },
+    { value: "10+", label: { en: "Clients", ar: "عميل" } },
+    { value: "15+", label: { en: "Projects", ar: "مشروع" } },
     { value: "3+", label: { en: "Years of craft", ar: "سنوات من الحِرفة" } },
   ];
 

@@ -12,10 +12,10 @@ type Fact = {
 const facts: Fact[] = [
   {
     value: "15+",
-    label: { en: "Launches", ar: "إطلاق" },
+    label: { en: "Projects", ar: "مشروع" },
     note: {
-      en: "Across retail, hospitality, and tech.",
-      ar: "في التجزئة، الضيافة، والتقنية.",
+      en: "Identities, motion, websites, and apps.",
+      ar: "هويّات، موشن جرافيك، مواقع، وتطبيقات.",
     },
   },
   {
@@ -27,11 +27,11 @@ const facts: Fact[] = [
     },
   },
   {
-    value: "4",
+    value: "3",
     label: { en: "Disciplines", ar: "تخصّصات" },
     note: {
-      en: "Strategy, brand, motion, digital — one roof.",
-      ar: "استراتيجية، هويّة، موشن، ومنتج رقمي — سقفٌ واحد.",
+      en: "Brand, motion, digital — one team handling all three.",
+      ar: "هويّة، موشن، ومنتج رقمي — فريقٌ واحد يُنجِز الثلاثة.",
     },
   },
   {
