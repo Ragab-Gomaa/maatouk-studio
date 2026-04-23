@@ -2,34 +2,34 @@
 
 import { motion } from "framer-motion";
 import { useTranslation } from "@/lib/LocaleContext";
-import Button from "@/components/ui/Button";
+import ContactCTASection from "@/components/sections/ContactCTASection";
 
 const values = [
   {
     title: { en: "Intentional design", ar: "تصميم مقصود" },
     body: {
-      en: "Every pixel, frame, and line of code serves a purpose. We don't decorate — we solve.",
-      ar: "كل بكسل، إطار، وسطر كود يخدم هدفاً. لا نزيّن — بل نحلّ.",
+      en: "Every pixel, every frame, every line of code serves a clear purpose. We don't decorate — we solve.",
+      ar: "كلّ بكسل، كلّ إطار، وكلّ سطرِ كودٍ يخدم هدفاً واضحاً. نحن لا نُزَيِّن — نحلّ.",
     },
   },
   {
     title: { en: "Strategic thinking", ar: "تفكير استراتيجي" },
     body: {
-      en: "Beautiful design that doesn't perform is just decoration. We start with why before touching how.",
-      ar: "التصميم الجميل الذي لا يؤدي وظيفته هو مجرد زخرفة. نبدأ بالسبب قبل الأسلوب.",
+      en: "Form without purpose is just decoration. We begin with the question why before we decide on the how.",
+      ar: "الشكلُ بلا هدفٍ مجرّد زينة. نبدأ دائماً بسؤال: لماذا؟ قبل أن نقرّر كيف.",
     },
   },
   {
-    title: { en: "Relentless craft", ar: "حرفية لا تهاون فيها" },
+    title: { en: "Relentless craft", ar: "حِرفةٌ لا تهاون فيها" },
     body: {
-      en: "We obsess over details others overlook. The difference between good and great lives in the margins.",
-      ar: "نهتم بالتفاصيل التي يتجاهلها الآخرون. الفرق بين الجيد والعظيم يكمن في الهوامش.",
+      en: "The details others skip over are the ones we linger on. The difference between good and great lives in the margins.",
+      ar: "التفاصيل التي يتجاوزها الآخرون هي التي نتوقّف عندها. الفرق بين الجيد والعظيم يسكن في الهوامش.",
     },
   },
 ];
 
 export default function AboutPage() {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
 
   return (
     <>
@@ -49,17 +49,21 @@ export default function AboutPage() {
               <span className="w-1.5 h-1.5 rounded-full bg-brand-blue" />
               {t("The studio", "الاستوديو")}
             </span>
-            <h1 className="font-lyon font-bold tracking-[-0.035em] leading-[0.92] text-5xl md:text-7xl lg:text-[5.5rem] text-ink max-w-4xl">
-              {t("A studio built on", "استوديو مبني على")}
+            <h1
+              className={`font-lyon font-bold tracking-[-0.035em] text-5xl md:text-7xl lg:text-[5.5rem] text-ink max-w-4xl ${
+                locale === "ar" ? "leading-[1.2]" : "leading-[0.92]"
+              }`}
+            >
+              {t("A studio built on", "استوديو مبنيٌّ على")}
               <br />
               <span className="text-brand-blue italic">
-                {t("craft and conviction.", "الحرفية والقناعة.")}
+                {t("craft and conviction.", "الحِرفة والقناعة.")}
               </span>
             </h1>
-            <p className="mt-8 text-lg md:text-xl text-ink-soft max-w-3xl leading-relaxed">
+            <p className="mt-8 text-lg md:text-xl text-ink-soft max-w-3xl leading-relaxed text-pretty">
               {t(
-                "Maatouk Studio is a bilingual design studio working across branding, motion, and digital products. We build brands that hold together — from the first logo sketch to the last line of code. We design in Arabic and English at the same time, because our clients live in both, and because a brand that only works in one language isn't finished yet.",
-                "ماتوك استوديو تصميم ثنائي اللغة يعمل في الهوية البصرية والموشن والمنتجات الرقمية. نبني علامات متماسكة — من أول رسمة للشعار إلى آخر سطر كود. نصمّم بالعربية والإنكليزية في الوقت نفسه، لأنّ عملاءنا يعيشون في اللغتين، ولأنّ الهوية التي تعمل بلغة واحدة فقط لم تكتمل بعد."
+                "Maatouk Studio works across identity, motion, and digital products. We build brands that hold together — from the first sketch to the last line of code. We take on a limited number of projects each year, and give each one our full focus.",
+                "ستوديو معتوق يعمل في الهويّة البصريّة، الموشن، والمنتجات الرقميّة. نبني علاماتٍ متماسكة — من أوّل رسمةٍ إلى آخر سطرِ كود. نأخذ عدداً محدوداً من المشاريع سنويّاً، ونمنح كلّ مشروعٍ كامل تركيزنا."
               )}
             </p>
           </motion.div>
@@ -125,8 +129,12 @@ export default function AboutPage() {
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-blue" />
                 {t("Our approach", "منهجنا")}
               </span>
-              <h2 className="font-lyon font-bold tracking-[-0.03em] text-4xl md:text-5xl leading-[0.95] mb-8">
-                {t("Strategy and craft,", "استراتيجية وحرفية،")}
+              <h2
+                className={`font-lyon font-bold tracking-[-0.03em] text-4xl md:text-5xl mb-8 ${
+                  locale === "ar" ? "leading-[1.25]" : "leading-[0.95]"
+                }`}
+              >
+                {t("Strategy and craft,", "الاستراتيجيّة والحِرفة،")}
                 <br />
                 <span className="text-brand-blue italic">
                   {t("inseparable.", "لا تنفصلان.")}
@@ -135,14 +143,14 @@ export default function AboutPage() {
               <div className="space-y-5 text-base md:text-lg text-ink-soft leading-relaxed max-w-lg">
                 <p>
                   {t(
-                    "We believe the best creative work happens when strategy and craft are inseparable. Every project starts with deep understanding — of the business, the audience, and the market.",
-                    "نؤمن بأن أفضل عمل إبداعي يحدث عندما تكون الاستراتيجية والحرفية لا ينفصلان. كل مشروع يبدأ بفهم عميق — للعمل والجمهور والسوق."
+                    "The best creative work happens when strategy and craft arrive together — not one after the other. Every project starts with a deep read of the business, the audience, and the market.",
+                    "العمل الإبداعي الجيّد يولد حين تتكامل الاستراتيجيّة والحِرفة — لا حين تتفرّقان. نبدأ كلّ مشروعٍ بقراءةٍ عميقة: العمل، الجمهور، والسوق."
                   )}
                 </p>
                 <p>
                   {t(
-                    "We don't chase trends. We build systems that endure. Our work is designed to scale, evolve, and hold its integrity across every touchpoint.",
-                    "لا نلاحق الاتجاهات. نبني أنظمة تدوم. عملنا مصمم ليتوسع ويتطور ويحافظ على سلامته عبر كل نقطة اتصال."
+                    "We don't chase trends. We build systems that last — systems that grow with the brand and keep their integrity across every touchpoint.",
+                    "لا نلاحق الموضة. نبني أنظمةً تدوم — تنمو مع العلامة، وتحافظ على انسجامها في كلّ نقطة تواصل."
                   )}
                 </p>
               </div>
@@ -166,13 +174,17 @@ export default function AboutPage() {
                 >
                   &ldquo;
                 </span>
-                <blockquote className="relative font-lyon font-bold text-2xl md:text-3xl lg:text-[2.25rem] leading-[1.2] tracking-[-0.02em] -mt-20">
+                <blockquote
+                  className={`relative font-lyon font-bold text-2xl md:text-3xl lg:text-[2.25rem] tracking-[-0.02em] -mt-20 ${
+                    locale === "ar" ? "leading-[1.4]" : "leading-[1.2]"
+                  }`}
+                >
                   {t(
                     "Good design is good business. Great design is ",
-                    "التصميم الجيد هو عمل جيد. التصميم العظيم هو "
+                    "التصميم الجيّد عملٌ ناجح. التصميم العظيم "
                   )}
                   <span className="text-brand-green italic">
-                    {t("unfair advantage.", "ميزة غير عادلة.")}
+                    {t("unfair advantage.", "تفوّقٌ لا يُضاهى.")}
                   </span>
                 </blockquote>
                 <div className="relative mt-10 text-[10px] uppercase tracking-[0.25em] font-semibold text-white/60">
@@ -184,12 +196,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-12 md:py-16 bg-surface-low text-center">
-        <Button href="/contact" variant="primary" size="lg" withArrow>
-          {t("Start a project", "ابدأ مشروعك")}
-        </Button>
-      </section>
+      {/* Closing CTA */}
+      <ContactCTASection />
     </>
   );
 }
