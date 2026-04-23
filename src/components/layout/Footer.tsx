@@ -185,7 +185,7 @@ export default function Footer() {
               </p>
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-green" />
-                <span>{t("Crafted with intention", "صُنع بعناية")}</span>
+                <span>{t("Made in Cairo", "صُنع في القاهرة")}</span>
               </div>
             </div>
           </div>

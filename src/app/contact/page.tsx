@@ -108,9 +108,7 @@ function Dropdown({
             : "border-black/[0.08] bg-surface-low hover:bg-surface-raised hover:border-black/15"
         }`}
       >
-        <div className="text-[10px] uppercase tracking-[0.2em] font-semibold text-ink-muted mb-0.5">
-          {label}
-        </div>
+        <div className="kicker-sm mb-0.5">{label}</div>
         <div className="flex items-center justify-between gap-3">
           <span
             dir={ltrValues && value ? "ltr" : undefined}
@@ -283,8 +281,7 @@ export default function ContactPage() {
     "group w-full rounded-2xl border bg-surface-low transition-all focus-within:bg-surface-raised focus-within:border-brand-blue hover:border-black/15";
   const fieldOk = "border-black/[0.08]";
   const fieldErr = "border-red-400";
-  const innerLabel =
-    "block px-5 pt-2.5 text-[10px] uppercase tracking-[0.2em] font-semibold text-ink-muted";
+  const innerLabel = "block px-5 pt-2.5 kicker-sm";
   const innerInput =
     "w-full px-5 pb-3 pt-0.5 bg-transparent text-[15px] text-ink placeholder:text-ink-whisper outline-none";
 
