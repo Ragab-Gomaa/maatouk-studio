@@ -14,12 +14,6 @@ import Button from "@/components/ui/Button";
 export default function Hero() {
   const { t, locale } = useTranslation();
 
-  const features: { value: string; label: { en: string; ar: string } }[] = [
-    { value: "10+", label: { en: "Clients", ar: "عميل" } },
-    { value: "15+", label: { en: "Projects", ar: "مشروع" } },
-    { value: "3+", label: { en: "Years of craft", ar: "سنوات من الحِرفة" } },
-  ];
-
   return (
     <section className="relative overflow-hidden bg-surface pt-28 md:pt-32 lg:pt-36 pb-12 md:pb-16">
       <div
@@ -109,23 +103,6 @@ export default function Hero() {
               </Button>
             </motion.div>
 
-            <motion.dl
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.35 }}
-              className="flex flex-wrap items-baseline gap-5 md:gap-8 pt-4 md:pt-5 border-t border-black/[0.08]"
-            >
-              {features.map((f, i) => (
-                <div key={i} className="flex items-baseline gap-2.5">
-                  <dd className="font-lyon text-base md:text-lg font-bold text-brand-blue">
-                    {f.value}
-                  </dd>
-                  <dt className="text-[11px] uppercase tracking-[0.15em] font-medium text-ink-whisper">
-                    {t(f.label.en, f.label.ar)}
-                  </dt>
-                </div>
-              ))}
-            </motion.dl>
           </div>
 
           {/* ── Right: Composed Disciplines Mark ── */}
