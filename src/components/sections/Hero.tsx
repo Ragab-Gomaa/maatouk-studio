@@ -20,7 +20,7 @@ export default function Hero() {
         aria-hidden="true"
       />
       <div
-        className="ambient-breathe--offset absolute bottom-[-100px] left-[-100px] w-[400px] h-[400px] rounded-full bg-brand-green/[0.08] blur-3xl pointer-events-none"
+        className="absolute bottom-[-100px] left-[-100px] w-[400px] h-[400px] rounded-full bg-brand-green/[0.08] blur-3xl pointer-events-none"
         aria-hidden="true"
       />
 

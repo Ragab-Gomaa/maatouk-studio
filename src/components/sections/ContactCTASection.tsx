@@ -34,11 +34,11 @@ export default function ContactCTASection() {
         >
           {/* Ambient glows */}
           <div
-            className="ambient-breathe absolute top-[-120px] right-[-100px] w-[460px] h-[460px] rounded-full bg-brand-green/30 blur-3xl pointer-events-none"
+            className="ambient-breathe absolute top-[-120px] right-[-100px] w-[460px] h-[460px] rounded-full bg-brand-green/20 blur-3xl pointer-events-none"
             aria-hidden="true"
           />
           <div
-            className="ambient-breathe--offset absolute bottom-[-120px] left-[-80px] w-[400px] h-[400px] rounded-full bg-white/10 blur-3xl pointer-events-none"
+            className="absolute bottom-[-120px] left-[-80px] w-[400px] h-[400px] rounded-full bg-white/10 blur-3xl pointer-events-none"
             aria-hidden="true"
           />
 
@@ -46,7 +46,7 @@ export default function ContactCTASection() {
             {/* Left: pill + headline */}
             <div>
               <div className="kicker-pill kicker-pill-dark mb-8">
-                <span className="kicker-pill-dot bg-brand-green" />
+                <span className="kicker-pill-dot" />
                 {t("Get in touch", "تواصل")}
               </div>
 

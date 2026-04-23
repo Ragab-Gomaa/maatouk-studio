@@ -308,20 +308,35 @@
   text-transform: none;
   font-weight: 700;
 }
+/* Accent colour roles site-wide:
+   • brand-blue  → numbering, typographic emphasis on light surfaces,
+                    primary CTA. Used for card "01/02" numbers,
+                    italic keyword in light headlines, FactsSection
+                    labels.
+   • brand-green → live signals (pulsing availability dots), italic
+                    keyword on dark surfaces (Why, ContactCTA),
+                    accent CTA, discipline identity for WhatsApp.
+   Changing these means auditing every call site — don't drift. */
+
 .kicker-pill-dot {
   width: 6px;
   height: 6px;
   border-radius: 999px;
-  background-color: var(--color-brand-green-dim);
+  background-color: var(--color-brand-blue);
   flex-shrink: 0;
 }
 
-/* Dark surface variant (for sections with bg-ink) */
+/* Dark surface variant (for sections with bg-ink / bg-brand-blue).
+   Also swaps the default blue dot to green so the contrast against
+   the dark fill reads cleanly. */
 .kicker-pill-dark {
   background-color: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.12);
   color: rgba(255, 255, 255, 0.8);
   box-shadow: none;
+}
+.kicker-pill-dark .kicker-pill-dot {
+  background-color: var(--color-brand-green-dim);
 }
 
 /* ─── Utility: Studio card ─── */

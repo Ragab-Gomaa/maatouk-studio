@@ -122,7 +122,7 @@ export default function WhySection() {
         >
           <div>
             <span className="kicker-pill kicker-pill-dark mb-6">
-              <span className="kicker-pill-dot bg-brand-green" />
+              <span className="kicker-pill-dot" />
               {t("Principles", "مبادئنا")}
             </span>
             <h2 className={`font-lyon font-bold tracking-[-0.03em] text-4xl md:text-5xl lg:text-6xl max-w-2xl ${locale === "ar" ? "leading-[1.25]" : "leading-[1.05]"}`}>
@@ -170,7 +170,7 @@ export default function WhySection() {
                 </span>
               </div>
 
-              <h3 className="font-lyon font-bold text-2xl md:text-[1.65rem] tracking-[-0.02em] mb-3 leading-tight">
+              <h3 className="font-lyon font-bold text-2xl md:text-[1.75rem] tracking-[-0.02em] mb-3 leading-tight">
                 {t(p.title.en, p.title.ar)}
               </h3>
               <p className="text-sm md:text-[15px] text-white/65 leading-relaxed">
