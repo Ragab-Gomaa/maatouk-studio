@@ -378,15 +378,15 @@ function BrandingAnimation() {
                   </span>
                 </div>
 
-                {/* Typography specimen — headline + body copy bars */}
-                <div className="flex-1 flex flex-col justify-center px-1.5 gap-[5px]">
-                  {/* Display headline */}
-                  <div className="h-[5px] w-[88%] bg-ink rounded-[1px]" />
-                  {/* Body copy lines */}
+                {/* Typography specimen — hand-drawn wavy headline + body lines */}
+                <div className="flex-1 flex flex-col justify-center px-1.5 gap-[3px]">
+                  {/* Display headline — bold wavy stroke */}
+                  <WavyLine width={70} strokeWidth={1.8} color="#121214" />
+                  {/* Body copy lines — thinner wavy strokes with varied widths */}
                   <div className="flex flex-col gap-[2px] mt-[1px]">
-                    <div className="h-[2px] w-full bg-ink/25 rounded-[1px]" />
-                    <div className="h-[2px] w-[92%] bg-ink/25 rounded-[1px]" />
-                    <div className="h-[2px] w-[70%] bg-ink/25 rounded-[1px]" />
+                    <WavyLine width={80} strokeWidth={0.9} color="#121214" opacity={0.35} />
+                    <WavyLine width={74} strokeWidth={0.9} color="#121214" opacity={0.35} />
+                    <WavyLine width={56} strokeWidth={0.9} color="#121214" opacity={0.35} />
                   </div>
                 </div>
 
@@ -493,6 +493,62 @@ function BrandingAnimation() {
         </div>
       </div>
     </div>
+  );
+}
+
+/**
+ * WavyLine — a hand-drawn-feeling squiggle, used inside the Branding
+ * artboard to stand in for text. The viewBox matches the target
+ * width in pixels so strokes render at a consistent weight without
+ * distortion.
+ */
+function WavyLine({
+  width,
+  strokeWidth,
+  color,
+  opacity = 1,
+}: {
+  width: number;
+  strokeWidth: number;
+  color: string;
+  opacity?: number;
+}) {
+  const midY = strokeWidth + 1.2;
+  const height = midY * 2;
+  const wavelength = 9;
+  const amplitude = 1.4;
+  const segments = Math.max(3, Math.round(width / wavelength));
+  const step = width / segments;
+
+  let d = `M 0 ${midY}`;
+  for (let i = 1; i <= segments; i++) {
+    const x = i * step;
+    if (i === 1) {
+      const cx = step / 2;
+      const cy = midY - amplitude;
+      d += ` Q ${cx} ${cy}, ${x} ${midY}`;
+    } else {
+      d += ` T ${x} ${midY}`;
+    }
+  }
+
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      aria-hidden="true"
+      style={{ opacity }}
+    >
+      <path
+        d={d}
+        stroke={color}
+        strokeWidth={strokeWidth}
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
 
