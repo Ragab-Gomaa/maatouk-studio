@@ -48,25 +48,25 @@ const WhatsAppIcon = () => (
 const socials: Social[] = [
   {
     name: "Instagram",
-    href: "#",
+    href: "https://www.instagram.com/ragabgomaaa/",
     label: { en: "Instagram", ar: "انستغرام" },
     icon: <InstagramIcon />,
   },
   {
     name: "Behance",
-    href: "#",
+    href: "https://www.behance.net/ragabgomaa",
     label: { en: "Behance", ar: "بيهانس" },
     icon: <BehanceIcon />,
   },
   {
     name: "Vimeo",
-    href: "#",
+    href: "https://vimeo.com/ragabgomaa",
     label: { en: "Vimeo", ar: "فيميو" },
     icon: <VimeoIcon />,
   },
   {
     name: "LinkedIn",
-    href: "#",
+    href: "https://www.linkedin.com/in/ragabgomaa/",
     label: { en: "LinkedIn", ar: "لينكدإن" },
     icon: <LinkedInIcon />,
   },
