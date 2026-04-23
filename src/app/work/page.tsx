@@ -26,15 +26,15 @@ export default function WorkPage() {
           >
             <span className="kicker-pill mb-6">
               <span className="kicker-pill-dot" />
-              {t("Archive", "الأعمال")}
+              {t("Work", "الأعمال")}
             </span>
             <h1
               className={`font-lyon font-bold tracking-[-0.035em] text-5xl md:text-7xl lg:text-[6rem] text-ink max-w-4xl ${
-                locale === "ar" ? "leading-[1.2]" : "leading-[0.92]"
+                locale === "ar" ? "leading-[1.2]" : "leading-[0.95]"
               }`}
             >
               {t("Selected", "أعمالٌ")}{" "}
-              <span className="text-brand-blue italic">
+              <span className="text-brand-blue">
                 {t("work.", "مختارة.")}
               </span>
             </h1>

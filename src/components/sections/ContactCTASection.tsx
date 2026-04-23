@@ -57,7 +57,7 @@ export default function ContactCTASection() {
               >
                 {t("Let's build together", "لنبنِ معاً")}
                 <br />
-                <span className="text-brand-green italic">
+                <span className="text-brand-green">
                   {t("something unforgettable.", "شيئاً لا يُنسى.")}
                 </span>
               </h2>

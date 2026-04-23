@@ -319,7 +319,7 @@ export default function ContactPage() {
           >
             {t("Let's build together", "لنبنِ معاً")}
             <br />
-            <span className="text-brand-blue italic">
+            <span className="text-brand-blue">
               {t("something unforgettable.", "شيئاً لا يُنسى.")}
             </span>
           </h1>

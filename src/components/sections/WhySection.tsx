@@ -47,7 +47,7 @@ const principles: Principle[] = [
     ),
     title: { en: "Quality before speed", ar: "الجودة قبل السرعة" },
     body: {
-      en: "We promise better, not faster. Work that lasts needs time to breathe, to be reviewed, iterated, refined. We don't cut the road short.",
+      en: "We promise better, not faster. Work that lasts needs time to breathe — to be reviewed, iterated, refined. We don't take shortcuts.",
       ar: "نعدك بالأفضل، لا بالأسرع. العمل الذي يبقى يحتاج وقتاً ليُراجَع، ويُكرَّر، ويُنقَّح. لا نختصر الطريق.",
     },
   },
@@ -69,7 +69,7 @@ const principles: Principle[] = [
     ),
     title: { en: "Full-stack delivery", ar: "تسليم شامل" },
     body: {
-      en: "From the first strategy to the last line of code — one team, one roof. What you saw in the deck is what reaches the user, with no compromise between stages.",
+      en: "From the first strategy to the last line of code — one team, one roof. What we commit to in strategy is what reaches the user, with no compromise between stages.",
       ar: "من أوّل استراتيجية إلى آخر سطر كود — فريقٌ واحد تحت سقفٍ واحد. ما تراه في العرض، هو ما يصل للمستخدم — بلا تنازل بين المراحل.",
     },
   },
@@ -127,7 +127,7 @@ export default function WhySection() {
             </span>
             <h2 className={`font-lyon font-bold tracking-[-0.03em] text-4xl md:text-5xl lg:text-6xl max-w-2xl ${locale === "ar" ? "leading-[1.25]" : "leading-[1.05]"}`}>
               {t("Why ", "لماذا ")}
-              <span className="text-brand-green italic">
+              <span className="text-brand-green">
                 {t("Maatouk?", "معتوق؟")}
               </span>
             </h2>

@@ -19,7 +19,7 @@ const services: Service[] = [
     number: "01",
     title: { en: "Branding", ar: "هوية بصرية" },
     tagline: {
-      en: "Identities that travel.",
+      en: "Identities that last.",
       ar: "هويّةٌ تَبقى.",
     },
     description: {
@@ -43,9 +43,9 @@ const services: Service[] = [
   },
   {
     number: "02",
-    title: { en: "Motion Design", ar: "موشن جرافيك" },
+    title: { en: "Motion Graphics", ar: "موشن جرافيك" },
     tagline: {
-      en: "Brands in motion.",
+      en: "Every frame counts.",
       ar: "كلّ إطارٍ يُحسَب.",
     },
     description: {
@@ -139,7 +139,7 @@ export default function ServicesSection() {
             </span>
             <h2 className={`font-lyon font-bold tracking-[-0.03em] text-3xl md:text-4xl lg:text-5xl max-w-3xl ${locale === "ar" ? "leading-[1.3]" : "leading-[1.1]"}`}>
               {t("Three disciplines, ", "ثلاث تخصّصات، ")}
-              <span className="text-brand-blue italic">
+              <span className="text-brand-blue">
                 {t("one studio.", "استوديو واحد.")}
               </span>
             </h2>
@@ -192,7 +192,7 @@ export default function ServicesSection() {
                 <h3 className="font-lyon font-bold text-2xl md:text-3xl lg:text-[2rem] tracking-[-0.02em] leading-none mb-2.5">
                   {t(s.title.en, s.title.ar)}
                 </h3>
-                <p className="font-lyon italic text-lg md:text-xl opacity-80 mb-4">
+                <p className="font-lyon text-lg md:text-xl opacity-80 mb-4">
                   {t(s.tagline.en, s.tagline.ar)}
                 </p>
                 <p className="text-sm md:text-[15px] leading-relaxed opacity-80 mb-5">

@@ -309,13 +309,15 @@
   font-weight: 700;
 }
 /* Accent colour roles site-wide:
-   • brand-blue  → numbering, typographic emphasis on light surfaces,
+   • brand-blue  → numbering, keyword emphasis on light surfaces,
                     primary CTA. Used for card "01/02" numbers,
-                    italic keyword in light headlines, FactsSection
-                    labels.
-   • brand-green → live signals (pulsing availability dots), italic
-                    keyword on dark surfaces (Why, ContactCTA),
+                    the highlighted second-line phrase of headlines
+                    on light sections, FactsSection labels.
+   • brand-green → live signals (pulsing availability dots), keyword
+                    emphasis on dark surfaces (Why, ContactCTA),
                     accent CTA, discipline identity for WhatsApp.
+   Note: italic has been removed from the design language. Emphasis
+   uses color (never slant) so Arabic and English read the same way.
    Changing these means auditing every call site — don't drift. */
 
 .kicker-pill-dot {

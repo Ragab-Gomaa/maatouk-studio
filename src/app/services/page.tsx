@@ -118,12 +118,12 @@ export default function ServicesPage() {
             </span>
             <h1
               className={`font-lyon font-bold tracking-[-0.035em] text-5xl md:text-7xl lg:text-[6rem] text-ink max-w-4xl ${
-                locale === "ar" ? "leading-[1.2]" : "leading-[0.92]"
+                locale === "ar" ? "leading-[1.2]" : "leading-[0.95]"
               }`}
             >
               {t("Three disciplines.", "ثلاث تخصّصات.")}
               <br />
-              <span className="text-brand-blue italic">
+              <span className="text-brand-blue">
                 {t("One vision.", "رؤيةٌ واحدة.")}
               </span>
             </h1>
@@ -165,7 +165,7 @@ export default function ServicesPage() {
                     >
                       {t(service.title.en, service.title.ar)}
                     </h2>
-                    <p className="font-lyon italic text-xl md:text-2xl text-ink-muted mb-6 max-w-xs">
+                    <p className="font-lyon text-xl md:text-2xl text-ink-muted mb-6 max-w-xs">
                       {t(service.tagline.en, service.tagline.ar)}
                     </p>
                     <p className="text-base md:text-lg text-ink-soft leading-relaxed max-w-md mb-8 text-pretty">

@@ -50,7 +50,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className={`font-lyon font-bold tracking-[-0.035em] text-[2.75rem] sm:text-[3.75rem] md:text-[5rem] lg:text-[5.75rem] xl:text-[6.5rem] text-ink mb-6 ${locale === "ar" ? "leading-[1.15]" : "leading-[0.92]"}`}
+              className={`font-lyon font-bold tracking-[-0.035em] text-[2.75rem] sm:text-[3.75rem] md:text-[5rem] lg:text-[5.75rem] xl:text-[6.5rem] text-ink mb-6 ${locale === "ar" ? "leading-[1.15]" : "leading-[0.95]"}`}
             >
               {locale === "ar" ? (
                 <>
@@ -60,9 +60,8 @@ export default function Hero() {
               ) : (
                 <>
                   <span className="block">We design brands</span>
-                  <span className="block">
-                    that <span className="text-brand-blue italic">move </span>
-                    culture.
+                  <span className="block text-brand-blue">
+                    that move culture.
                   </span>
                 </>
               )}
@@ -76,13 +75,13 @@ export default function Hero() {
             >
               <span className="block">
                 {t(
-                  "Brand identity, motion, and digital products — under one roof.",
+                  "Brand, motion, and digital — under one roof.",
                   "هويّة، موشن، ومنتجات رقميّة — تحت سقفٍ واحد."
                 )}
               </span>
               <span className="block mt-1">
                 {t(
-                  "From first idea to final delivery.",
+                  "From the first idea to the final delivery.",
                   "من أوّل فكرةٍ إلى آخر تسليم."
                 )}
               </span>

@@ -192,7 +192,7 @@ export default function WorkSection() {
                     </span>
                     <span className="h-px w-6 bg-brand-green/40" />
                     <span className="text-[11px] opacity-60 font-medium">
-                      {t("Motion Design", "موشن جرافيك")} · {sandah.year}
+                      {t("Motion Graphics", "موشن جرافيك")} · {sandah.year}
                     </span>
                   </div>
                   <h3 className="font-lyon font-bold tracking-[-0.03em] leading-[0.95] text-4xl md:text-5xl mb-4">

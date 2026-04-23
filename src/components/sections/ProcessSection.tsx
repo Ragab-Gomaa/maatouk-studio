@@ -8,7 +8,7 @@ const steps = [
     num: "01",
     title: { en: "Discover", ar: "اكتشاف" },
     body: {
-      en: "We listen first. Research, audit, positioning — we understand the business, the market, and the audience before we draw anything.",
+      en: "We listen first. Research, audit, positioning — we understand the business, the market, and the audience before we design anything.",
       ar: "نُنصت أولاً. بحثٌ، تدقيقٌ، وتموضع — نفهم العمل والسوق والجمهور قبل أن نرسم شيئاً.",
     },
   },
@@ -16,7 +16,7 @@ const steps = [
     num: "02",
     title: { en: "Define", ar: "تعريف" },
     body: {
-      en: "Understanding turns into direction. A clear strategy, a defined voice, a visual decision — we agree on everything before we move.",
+      en: "Understanding turns into direction. A clear strategy, a defined voice, a visual decision — we agree on everything before we build.",
       ar: "نُحوّل الفهم إلى اتجاه. استراتيجيةٌ واضحة، صوتٌ محدّد، وقرارٌ بصري — نتّفق على كل شيء قبل أن نتقدّم.",
     },
   },
@@ -24,7 +24,7 @@ const steps = [
     num: "03",
     title: { en: "Design", ar: "تصميم" },
     body: {
-      en: "Ideas take shape. Identity, motion, and product move together in one track — no gap between stages.",
+      en: "Ideas take shape. Identity, motion, and product progress together in sync — no handoffs between stages.",
       ar: "تأخذ الأفكار شكلها. الهوية، الموشن، والمنتج تتناغم في مسارٍ واحد — بلا فجوة بين المراحل.",
     },
   },
@@ -32,7 +32,7 @@ const steps = [
     num: "04",
     title: { en: "Deliver", ar: "تسليم" },
     body: {
-      en: "We ship what works. Ready files, shipped code, documented systems — performance lasts past launch, without us hovering.",
+      en: "We ship what works. Ready files, shipped code, documented systems — performance holds past launch, without needing our oversight.",
       ar: "نُسلّم ما يعمل. ملفاتٌ جاهزة، كودٌ منشور، أنظمةٌ موثّقة — يستمرّ الأداء بعد الإطلاق بلا إشرافٍ منّا.",
     },
   },
@@ -59,7 +59,7 @@ export default function ProcessSection() {
             </span>
             <h2 className={`font-lyon font-bold tracking-[-0.03em] text-4xl md:text-5xl lg:text-6xl max-w-2xl ${locale === "ar" ? "leading-[1.25]" : "leading-[1.05]"}`}>
               {t("Four stages. ", "أربع مراحل. ")}
-              <span className="text-brand-blue italic">
+              <span className="text-brand-blue">
                 {t("One outcome.", "نتيجةٌ واحدة.")}
               </span>
             </h2>

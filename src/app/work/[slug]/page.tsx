@@ -60,7 +60,7 @@ export default function ProjectPage() {
               </span>
               <span className="h-px w-8 bg-brand-green/40" />
               <span className="text-[11px] opacity-70 font-medium">
-                {t("Motion Design", "موشن جرافيك")} · {motionProject.year}
+                {t("Motion Graphics", "موشن جرافيك")} · {motionProject.year}
               </span>
             </div>
 

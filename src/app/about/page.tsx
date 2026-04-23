@@ -15,7 +15,7 @@ const values = [
   {
     title: { en: "Strategic thinking", ar: "تفكير استراتيجي" },
     body: {
-      en: "Form without purpose is just decoration. We begin with the question why before we decide on the how.",
+      en: "Form without purpose is just decoration. We start with why — before we decide how.",
       ar: "الشكلُ بلا هدفٍ مجرّد زينة. نبدأ دائماً بسؤال: لماذا؟ قبل أن نقرّر كيف.",
     },
   },
@@ -51,12 +51,12 @@ export default function AboutPage() {
             </span>
             <h1
               className={`font-lyon font-bold tracking-[-0.035em] text-5xl md:text-7xl lg:text-[6rem] text-ink max-w-4xl ${
-                locale === "ar" ? "leading-[1.2]" : "leading-[0.92]"
+                locale === "ar" ? "leading-[1.2]" : "leading-[0.95]"
               }`}
             >
               {t("A studio built on", "استوديو مبنيٌّ على")}
               <br />
-              <span className="text-brand-blue italic">
+              <span className="text-brand-blue">
                 {t("craft and conviction.", "الحِرفة والقناعة.")}
               </span>
             </h1>
@@ -136,7 +136,7 @@ export default function AboutPage() {
               >
                 {t("Strategy and craft,", "الاستراتيجيّة والحِرفة،")}
                 <br />
-                <span className="text-brand-blue italic">
+                <span className="text-brand-blue">
                   {t("inseparable.", "لا تنفصلان.")}
                 </span>
               </h2>
@@ -183,7 +183,7 @@ export default function AboutPage() {
                     "Good design is good business. Great design is ",
                     "التصميم الجيّد عملٌ ناجح. التصميم العظيم "
                   )}
-                  <span className="text-brand-green italic">
+                  <span className="text-brand-green">
                     {t("unfair advantage.", "تفوّقٌ لا يُضاهى.")}
                   </span>
                 </blockquote>
