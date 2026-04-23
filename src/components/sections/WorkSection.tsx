@@ -29,7 +29,11 @@ export default function WorkSection() {
               <span className="kicker-pill-dot" />
               {t("Selected work", "أعمال مختارة")}
             </span>
-            <h2 className={`font-lyon font-bold tracking-[-0.03em] text-4xl md:text-5xl lg:text-6xl max-w-2xl ${locale === "ar" ? "leading-[1.25]" : "leading-[1.05]"}`}>
+            <h2 className={`font-lyon font-bold tracking-[-0.03em] max-w-2xl ${
+              locale === "ar"
+                ? "text-4xl md:text-5xl lg:text-6xl leading-[1.25]"
+                : "text-[1.875rem] md:text-[2.25rem] lg:text-[2.5rem] xl:text-[2.75rem] leading-[1.05]"
+            }`}>
               {t("Recent launches.", "آخر ما أطلقناه.")}
             </h2>
           </div>

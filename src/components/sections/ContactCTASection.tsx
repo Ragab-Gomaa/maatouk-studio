@@ -53,8 +53,8 @@ export default function ContactCTASection() {
               <h2
                 className={`font-lyon font-bold tracking-[-0.035em] ${
                   locale === "ar"
-                    ? "text-4xl md:text-6xl lg:text-[5rem] leading-[1.2]"
-                    : "text-[2rem] md:text-[2.5rem] lg:text-[2.75rem] xl:text-[3rem] leading-[1.1]"
+                    ? "text-4xl md:text-5xl lg:text-[4.5rem] leading-[1.2]"
+                    : "text-[2.25rem] md:text-[2.75rem] lg:text-[3.25rem] xl:text-[3.5rem] leading-[1.1]"
                 }`}
               >
                 {t("Let's build together", "لنبنِ معاً")}

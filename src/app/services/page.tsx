@@ -120,7 +120,7 @@ export default function ServicesPage() {
               className={`font-lyon font-bold tracking-[-0.035em] text-ink max-w-4xl ${
                 locale === "ar"
                   ? "text-5xl md:text-7xl lg:text-[6rem] leading-[1.2]"
-                  : "text-[2.25rem] md:text-[3rem] lg:text-[4rem] xl:text-[4.5rem] leading-[1.05]"
+                  : "text-[2rem] md:text-[2.75rem] lg:text-[3.25rem] xl:text-[3.5rem] leading-[1.05]"
               }`}
             >
               {t("Three disciplines.", "ثلاث تخصّصات.")}

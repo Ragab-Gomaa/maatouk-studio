@@ -137,7 +137,11 @@ export default function ServicesSection() {
               <span className="kicker-pill-dot" />
               {t("What we make", "ما نصنعه")}
             </span>
-            <h2 className={`font-lyon font-bold tracking-[-0.03em] text-3xl md:text-4xl lg:text-5xl max-w-3xl ${locale === "ar" ? "leading-[1.3]" : "leading-[1.1]"}`}>
+            <h2 className={`font-lyon font-bold tracking-[-0.03em] max-w-3xl ${
+              locale === "ar"
+                ? "text-3xl md:text-5xl lg:text-[3.75rem] leading-[1.3]"
+                : "text-[1.875rem] md:text-[2.25rem] lg:text-[2.5rem] xl:text-[2.75rem] leading-[1.1]"
+            }`}>
               {t("Three disciplines, ", "ثلاث تخصّصات، ")}
               <span className="text-brand-blue">
                 {t("one studio.", "استوديو واحد.")}
