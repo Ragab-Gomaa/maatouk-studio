@@ -30,8 +30,8 @@ const facts: Fact[] = [
     value: "10+",
     label: { en: "Clients", ar: "عميل" },
     note: {
-      en: "In retail, hospitality, and tech.",
-      ar: "في التجزئة، الضيافة، والتقنية.",
+      en: "Brands that trusted us from day one.",
+      ar: "علاماتٌ وثقت بنا منذ البداية.",
     },
   },
   {
