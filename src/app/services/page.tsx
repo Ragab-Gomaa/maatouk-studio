@@ -51,7 +51,7 @@ const services: Service[] = [
     },
     capabilities: [
       { en: "Logo animation", ar: "تحريك الشعار" },
-      { en: "Brand motion system", ar: "دليل موشن العلامة" },
+      { en: "Consistent motion style", ar: "أسلوب موشن موحّد للعلامة" },
       { en: "Campaign ads & promos", ar: "إعلانات الحملات" },
       { en: "Explainer videos", ar: "فيديوهات تعريفيّة" },
       { en: "Product UI motion", ar: "تحريك واجهات المنتج" },
@@ -188,50 +188,77 @@ export default function ServicesPage() {
                   </div>
 
                   {/* Right */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-10">
-                    {/* Capabilities */}
+                  <div className="grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-8 md:gap-10">
+                    {/* Capabilities — pill cloud */}
                     <div>
-                      <h3
-                        className={`font-bold text-ink-muted mb-5 ${
-                          locale === "ar"
-                            ? "text-sm"
-                            : "text-[10px] uppercase tracking-[0.25em]"
-                        }`}
-                      >
-                        {t("Capabilities", "ما نتقنه")}
-                      </h3>
-                      <ul className="space-y-3">
+                      <div className="flex items-center justify-between mb-5">
+                        <h3
+                          className={`font-bold text-ink-muted ${
+                            locale === "ar"
+                              ? "text-sm"
+                              : "text-[10px] uppercase tracking-[0.25em]"
+                          }`}
+                        >
+                          {t("Capabilities", "ما نتقنه")}
+                        </h3>
+                        <span className="text-[10px] font-semibold tabular-nums text-ink-whisper">
+                          {String(service.capabilities.length).padStart(2, "0")}
+                        </span>
+                      </div>
+                      <ul className="flex flex-wrap gap-2">
                         {service.capabilities.map((c, i) => (
-                          <li
-                            key={i}
-                            className="flex items-start gap-3 text-sm md:text-[15px] text-ink-muted"
-                          >
-                            <span className="w-1 h-1 rounded-full bg-brand-blue mt-2 shrink-0" />
-                            {t(c.en, c.ar)}
+                          <li key={i}>
+                            <span className="inline-flex items-center gap-1.5 pl-2 pr-3.5 py-1.5 rounded-full bg-brand-blue/[0.07] border border-brand-blue/15 text-[13px] font-medium text-ink transition-colors hover:bg-brand-blue/[0.12]">
+                              <span className="w-1.5 h-1.5 rounded-full bg-brand-blue" />
+                              {t(c.en, c.ar)}
+                            </span>
                           </li>
                         ))}
                       </ul>
                     </div>
 
-                    {/* Deliverables */}
+                    {/* Deliverables — numbered checklist */}
                     <div>
-                      <h3
-                        className={`font-bold text-ink-muted mb-5 ${
-                          locale === "ar"
-                            ? "text-sm"
-                            : "text-[10px] uppercase tracking-[0.25em]"
-                        }`}
-                      >
-                        {t("Typical deliverables", "ما نسلّمه عادةً")}
-                      </h3>
-                      <ul className="space-y-3">
+                      <div className="flex items-center justify-between mb-5">
+                        <h3
+                          className={`font-bold text-ink-muted ${
+                            locale === "ar"
+                              ? "text-sm"
+                              : "text-[10px] uppercase tracking-[0.25em]"
+                          }`}
+                        >
+                          {t("Typical deliverables", "ما نسلّمه عادةً")}
+                        </h3>
+                        <span className="text-[10px] font-semibold tabular-nums text-ink-whisper">
+                          {String(
+                            service.typicalDeliverables.length
+                          ).padStart(2, "0")}
+                        </span>
+                      </div>
+                      <ul className="divide-y divide-black/[0.06] border-y border-black/[0.06]">
                         {service.typicalDeliverables.map((d, i) => (
                           <li
                             key={i}
-                            className="flex items-start gap-3 text-sm md:text-[15px] text-ink-muted"
+                            className="flex items-center gap-3 py-3"
                           >
-                            <span className="w-1 h-1 rotate-45 bg-brand-green mt-2 shrink-0" />
-                            {t(d.en, d.ar)}
+                            <span className="font-lyon font-bold text-brand-blue text-[13px] tabular-nums w-6 shrink-0">
+                              {String(i + 1).padStart(2, "0")}
+                            </span>
+                            <span className="flex-1 text-sm text-ink leading-snug">
+                              {t(d.en, d.ar)}
+                            </span>
+                            <svg
+                              className="w-3.5 h-3.5 text-brand-green shrink-0"
+                              viewBox="0 0 16 16"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              aria-hidden="true"
+                            >
+                              <path d="M3 8l3 3 7-7" />
+                            </svg>
                           </li>
                         ))}
                       </ul>
