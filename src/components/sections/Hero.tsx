@@ -356,20 +356,20 @@ function BrandingAnimation() {
             <div className="relative ms-1 mt-1">
               {/* Artboard */}
               <div
-                className="relative bg-white"
+                className="relative bg-white flex items-center justify-center"
                 style={{
-                  width: "62px",
-                  height: "62px",
+                  width: "92px",
+                  height: "92px",
                   boxShadow:
                     "0 6px 18px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,0,0,0.25)",
                 }}
               >
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="relative w-[58%] h-[58%] flex items-center justify-center">
-                    <div className="w-full h-full rotate-45 bg-brand-blue rounded-[2px]" />
-                    <div className="absolute w-[22%] h-[22%] rotate-45 bg-brand-green" />
-                  </div>
-                </div>
+                <span
+                  className="font-lyon font-bold text-brand-blue leading-none"
+                  style={{ fontSize: "56px", letterSpacing: "-0.03em" }}
+                >
+                  Aa
+                </span>
               </div>
 
               {/* Marching-ants selection around the artboard */}
@@ -384,7 +384,7 @@ function BrandingAnimation() {
 
               {/* Tiny size label above */}
               <span className="absolute -top-[8px] left-0 text-[4.5px] font-mono text-white/60 tracking-wider">
-                200 × 200 px
+                600 × 600 px
               </span>
             </div>
           </div>
