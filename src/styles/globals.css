@@ -197,6 +197,30 @@
   }
 }
 
+/* ─── Ambient breathing glow ─── */
+/* A slow, subtle pulse applied to the ambient color splashes across
+   the site. Telegraphs "motion graphics" as a studio discipline
+   without being distracting. */
+@keyframes ambient-breathe {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: var(--breathe-base, 1);
+  }
+  50% {
+    transform: translate3d(0, -8px, 0) scale(1.06);
+    opacity: var(--breathe-peak, 1);
+  }
+}
+.ambient-breathe {
+  animation: ambient-breathe 14s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+.ambient-breathe--offset {
+  animation: ambient-breathe 18s ease-in-out infinite;
+  animation-delay: -6s;
+  will-change: transform, opacity;
+}
+
 /* ─── Reduced Motion ─── */
 @media (prefers-reduced-motion: reduce) {
   * {

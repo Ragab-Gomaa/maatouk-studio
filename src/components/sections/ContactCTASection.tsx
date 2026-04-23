@@ -34,11 +34,11 @@ export default function ContactCTASection() {
         >
           {/* Ambient glows */}
           <div
-            className="absolute top-[-120px] right-[-100px] w-[460px] h-[460px] rounded-full bg-brand-green/30 blur-3xl pointer-events-none"
+            className="ambient-breathe absolute top-[-120px] right-[-100px] w-[460px] h-[460px] rounded-full bg-brand-green/30 blur-3xl pointer-events-none"
             aria-hidden="true"
           />
           <div
-            className="absolute bottom-[-120px] left-[-80px] w-[400px] h-[400px] rounded-full bg-white/10 blur-3xl pointer-events-none"
+            className="ambient-breathe--offset absolute bottom-[-120px] left-[-80px] w-[400px] h-[400px] rounded-full bg-white/10 blur-3xl pointer-events-none"
             aria-hidden="true"
           />
 

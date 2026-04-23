@@ -2,16 +2,19 @@
 
 import { motion } from "framer-motion";
 import { useTranslation } from "@/lib/LocaleContext";
+import AnimatedNumber from "@/components/ui/AnimatedNumber";
 
 type Fact = {
-  value: string;
+  target: number;
+  suffix: string;
   label: { en: string; ar: string };
   note: { en: string; ar: string };
 };
 
 const facts: Fact[] = [
   {
-    value: "15+",
+    target: 15,
+    suffix: "+",
     label: { en: "Projects", ar: "مشروع" },
     note: {
       en: "Identities, motion, websites, and apps.",
@@ -19,7 +22,8 @@ const facts: Fact[] = [
     },
   },
   {
-    value: "3+",
+    target: 3,
+    suffix: "+",
     label: { en: "Years of craft", ar: "سنوات من الحِرفة" },
     note: {
       en: "Quiet work, consistent standards.",
@@ -27,7 +31,8 @@ const facts: Fact[] = [
     },
   },
   {
-    value: "10+",
+    target: 10,
+    suffix: "+",
     label: { en: "Clients", ar: "عميل" },
     note: {
       en: "Brands that trusted us from day one.",
@@ -35,7 +40,8 @@ const facts: Fact[] = [
     },
   },
   {
-    value: "24h",
+    target: 24,
+    suffix: "h",
     label: { en: "First reply", ar: "أوّل ردّ" },
     note: {
       en: "We respond to every brief within a day.",
@@ -109,8 +115,12 @@ export default function FactsSection() {
               >
                 {t(f.label.en, f.label.ar)}
               </div>
-              <div className="font-lyon font-bold text-5xl md:text-6xl lg:text-7xl text-ink tracking-[-0.03em] leading-none mb-5">
-                {f.value}
+              <div className="font-lyon font-bold text-5xl md:text-6xl lg:text-7xl text-ink tracking-[-0.03em] leading-none mb-5 tabular-nums">
+                <AnimatedNumber
+                  value={f.target}
+                  suffix={f.suffix}
+                  duration={1.6 + i * 0.1}
+                />
               </div>
               <div className="text-xs md:text-sm text-ink-soft leading-relaxed">
                 {t(f.note.en, f.note.ar)}

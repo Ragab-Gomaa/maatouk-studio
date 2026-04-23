@@ -86,15 +86,15 @@ export default function Footer() {
     <footer className="relative bg-ink text-white overflow-hidden">
       {/* Colour splashes */}
       <div
-        className="absolute top-[-160px] right-[8%] w-[600px] h-[600px] rounded-full bg-brand-blue/[0.22] blur-3xl pointer-events-none"
+        className="ambient-breathe absolute top-[-160px] right-[8%] w-[600px] h-[600px] rounded-full bg-brand-blue/[0.22] blur-3xl pointer-events-none"
         aria-hidden="true"
       />
       <div
-        className="absolute bottom-[-200px] left-[6%] w-[520px] h-[520px] rounded-full bg-brand-green/[0.14] blur-3xl pointer-events-none"
+        className="ambient-breathe--offset absolute bottom-[-200px] left-[6%] w-[520px] h-[520px] rounded-full bg-brand-green/[0.14] blur-3xl pointer-events-none"
         aria-hidden="true"
       />
       <div
-        className="absolute top-[30%] left-[42%] w-[360px] h-[360px] rounded-full bg-brand-blue/[0.08] blur-3xl pointer-events-none"
+        className="ambient-breathe absolute top-[30%] left-[42%] w-[360px] h-[360px] rounded-full bg-brand-blue/[0.08] blur-3xl pointer-events-none"
         aria-hidden="true"
       />
 
