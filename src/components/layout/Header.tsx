@@ -123,7 +123,7 @@ export default function Header() {
 
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
-                className="lg:hidden flex items-center justify-center w-7 h-7 rounded-sm focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2"
+                className="lg:hidden flex items-center justify-center w-11 h-11 -mr-2 rtl:-mr-0 rtl:-ml-2 rounded-full focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-2"
                 aria-label={menuOpen ? t("Close menu", "إغلاق") : t("Open menu", "فتح القائمة")}
                 aria-expanded={menuOpen}
                 aria-controls="mobile-menu"
@@ -212,7 +212,7 @@ function LanguageSwitch({
   return (
     <button
       onClick={onToggle}
-      className="group inline-flex items-center gap-1.5 text-[13px] font-semibold tracking-wide text-ink-whisper hover:text-ink transition-colors duration-300 focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-4 rounded-sm py-1"
+      className="group inline-flex items-center gap-1.5 text-[13px] font-semibold tracking-wide text-ink-whisper hover:text-ink transition-colors duration-300 focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-blue focus-visible:outline-offset-4 rounded-full px-2 py-2.5 min-h-11"
       aria-label={`Switch language to ${locale === "en" ? "Arabic" : "English"}`}
       style={{ direction: "ltr" }}
     >

@@ -100,7 +100,7 @@ export default function ProcessSection() {
                 <span className="h-px flex-1 bg-black/[0.08]" />
                 {i < steps.length - 1 && (
                   <svg
-                    className="w-3.5 h-3.5 text-ink-whisper rtl-flip"
+                    className="hidden lg:block w-3.5 h-3.5 text-ink-whisper rtl-flip"
                     viewBox="0 0 14 14"
                     fill="none"
                     stroke="currentColor"

@@ -28,20 +28,20 @@ Goal: every page shares identical scaffolding; vertical rhythm between sections 
 Goal: the site looks deliberate at 375×667 (iPhone SE) and 414×896 (iPhone Plus/Pro Max). No overflow, no broken hit targets, no choppy Arabic.
 
 - [x] 3.0 iPhone Safari Arabic font-feature-settings + tashkeel line-height (commit `a50ba67`)
-- [ ] 3.1 Hero section mobile — typography scaling, buttons, discipline cards stack
-- [ ] 3.2 ServicesSection cards — stacking on mobile, internal padding, tag wrap
-- [ ] 3.3 WorkSection cards — laptop/phone mockups behavior on narrow screens
-- [ ] 3.4 ProcessSection + WhySection — grid column behavior, card padding
-- [ ] 3.5 FactsSection — 2×2 grid on mobile, number sizing
-- [ ] 3.6 ClientsSection — logo grid on mobile
-- [ ] 3.7 ContactCTA card — headline wrapping on narrow widths
-- [ ] 3.8 Footer — availability pill + social icons on narrow widths
-- [ ] 3.9 Contact form — inset labels on mobile, dropdown panel width
-- [ ] 3.10 Inner pages (Work, Services, About) — hero sizes, card grids
-- [ ] 3.11 Header/navigation — mobile menu behavior, touch targets
-- [ ] 3.12 Horizontal overflow sweep — no page scrolls sideways on mobile
-- [ ] 3.13 Touch target audit — every interactive element ≥ 44×44pt
-- [ ] 3.14 Safe-area insets — iOS notch/home-indicator padding on fixed elements
+- [x] 3.1 Hero section — headline `text-[2.75rem]` at mobile fits; ComposedMark's `-translate-x-[22%]` stays within its `max-w-[300px]` container at 375px; no overflow
+- [x] 3.2 ServicesSection — cards stack `grid-cols-1 md:grid-cols-3`; padding `p-7 md:p-8` scales; tag pills wrap via `flex-wrap gap-1.5`
+- [x] 3.3 WorkSection — primary card stacks full width, secondary grid `md:grid-cols-2` stacks on mobile; phone-on-laptop mockup at `w-[28%] min-w-[100px]` respects min-width on small cards
+- [x] 3.4 ProcessSection — arrow between numbered steps was pointing right on ALL breakpoints, including mobile (1-col) where the next step is below. Hid the arrow on mobile/tablet (`hidden lg:block`). WhySection grid stacks correctly
+- [x] 3.5 FactsSection — `grid-cols-2 lg:grid-cols-4` gives 2×2 on mobile, numbers `text-5xl` at 48px fit; eyebrow label now locale-safe (Arabic loses tracking/uppercase)
+- [x] 3.6 ClientsSection — `grid-cols-2 md:grid-cols-4`; logo sizing branch already handles aspect-ratio differences
+- [x] 3.7 ContactCTA — headline `text-4xl md:text-6xl lg:text-[5rem]` scales correctly; CTAs wrap via `flex-wrap gap-3`
+- [x] 3.8 Footer — availability pill `self-start` on mobile (no squish with brand block); social icon buttons bumped `w-10 h-10 → w-11 h-11` for 44pt touch target
+- [x] 3.9 Contact form — inset-label fields work fine on 375px; dropdown panel uses `start-0 end-0` (full card width), doesn't overflow; "Prefer a quick chat?" label now uses `.kicker`
+- [x] 3.10 Inner pages — all heroes use consistent `pt-28 md:pt-32 pb-10 md:pb-14`; card grids stack correctly
+- [x] 3.11 Header/nav — hamburger button `w-7 h-7 (28pt)` → `w-11 h-11 (44pt)` with negative margin to keep visual position. LanguageSwitch bumped from `py-1` to `min-h-11` + proper padding
+- [x] 3.12 Horizontal overflow — every section with negative-positioned glows has `overflow-hidden` on its `<section>` container. Verified across Hero, Why, ContactCTA, Footer, About, Services, Work, Contact
+- [x] 3.13 Touch targets — Button component already passes (sm `py-2+text-13`, md `py-2.5+text-14`, lg `py-3.5+text-15` — the lg is 44pt min). Fixed outliers: hamburger, language switch, social icons
+- [x] 3.14 Safe-area insets — viewport-fit is default (not `cover`), so iOS reserves the notch area naturally. Header `fixed top-0` renders below the notch in standard mode. No safe-area padding needed for current behaviour
 
 ## Phase 4 — Component Consistency
 

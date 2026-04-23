@@ -163,7 +163,7 @@ export default function Footer() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={t(s.label.en, s.label.ar)}
-                      className="group w-10 h-10 rounded-full border border-white/12 bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/25 flex items-center justify-center text-white/70 hover:text-brand-green transition-all duration-300 focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-green focus-visible:outline-offset-2"
+                      className="group w-11 h-11 rounded-full border border-white/12 bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/25 flex items-center justify-center text-white/70 hover:text-brand-green transition-all duration-300 focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-green focus-visible:outline-offset-2"
                     >
                       {s.icon}
                     </a>

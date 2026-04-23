@@ -333,7 +333,7 @@ export default function ContactPage() {
 
           <div className="space-y-6">
             <div>
-              <div className="text-[11px] uppercase tracking-[0.2em] font-semibold text-ink-muted mb-3">
+              <div className="kicker mb-3">
                 {t("Prefer a quick chat?", "تُفضّل محادثة سريعة؟")}
               </div>
               <a
