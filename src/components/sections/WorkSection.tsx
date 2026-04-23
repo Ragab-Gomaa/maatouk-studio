@@ -79,7 +79,7 @@ export default function WorkSection() {
                 <div style={{ color: dolcebello.palette.ink }}>
                   <div className="flex items-center gap-3 mb-6">
                     <span
-                      className="text-[10px] uppercase tracking-[0.25em] font-semibold"
+                      className="text-[11px] font-semibold"
                       style={{ color: dolcebello.palette.primary }}
                     >
                       № 01
@@ -138,7 +138,7 @@ export default function WorkSection() {
                 <div className="p-7 md:p-9 lg:p-10 h-full flex flex-col" style={{ color: meezan.palette.ink }}>
                   <div className="flex items-center gap-3 mb-6">
                     <span
-                      className="text-[10px] uppercase tracking-[0.25em] font-semibold"
+                      className="text-[11px] font-semibold"
                       style={{ color: meezan.palette.primary }}
                     >
                       № 02
@@ -187,7 +187,7 @@ export default function WorkSection() {
               >
                 <div className="p-7 md:p-9 lg:p-10 h-full flex flex-col">
                   <div className="flex items-center gap-3 mb-6">
-                    <span className="text-[10px] uppercase tracking-[0.25em] font-semibold text-brand-green">
+                    <span className="text-[11px] font-semibold text-brand-green">
                       № 03
                     </span>
                     <span className="h-px w-6 bg-brand-green/40" />

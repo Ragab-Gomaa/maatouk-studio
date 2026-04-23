@@ -39,7 +39,7 @@ export default function ProjectPage() {
           <div className="max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
             <Link
               href="/work"
-              className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] font-semibold mb-10 text-white/70 hover:text-white transition-colors"
+              className="inline-flex items-center gap-2 text-[12px] font-semibold mb-10 text-white/70 hover:text-white transition-colors"
             >
               <svg
                 className="w-3.5 h-3.5 rotate-180 rtl-flip"
@@ -55,7 +55,7 @@ export default function ProjectPage() {
             </Link>
 
             <div className="flex items-center gap-3 mb-6">
-              <span className="text-[10px] uppercase tracking-[0.25em] font-semibold text-brand-green">
+              <span className="text-[11px] font-semibold text-brand-green">
                 № {String(motionProject.order).padStart(2, "0")}
               </span>
               <span className="h-px w-8 bg-brand-green/40" />
@@ -67,7 +67,7 @@ export default function ProjectPage() {
             <h1 className="font-lyon font-bold tracking-[-0.03em] leading-[0.92] text-5xl md:text-7xl lg:text-[7rem] mb-4">
               {t(motionProject.title.en, motionProject.title.ar)}
             </h1>
-            <p className="text-sm md:text-base uppercase tracking-[0.2em] text-white/60 mb-8">
+            <p className="text-sm md:text-base text-white/60 mb-8">
               {t(motionProject.client.en, motionProject.client.ar)}
             </p>
             <p className="text-lg md:text-xl max-w-2xl leading-relaxed text-white/75 mb-12">
@@ -120,7 +120,7 @@ export default function ProjectPage() {
         <div className="max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
           <Link
             href="/work"
-            className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] font-semibold mb-10"
+            className="inline-flex items-center gap-2 text-[12px] font-semibold mb-10"
             style={{ color: project.palette.inkSoft }}
           >
             <svg
@@ -138,7 +138,7 @@ export default function ProjectPage() {
 
           <div className="flex items-center gap-3 mb-6">
             <span
-              className="text-[10px] uppercase tracking-[0.25em] font-semibold"
+              className="text-[11px] font-semibold"
               style={{ color: project.palette.primary }}
             >
               № {String(project.order).padStart(2, "0")}

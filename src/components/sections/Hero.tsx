@@ -50,7 +50,11 @@ export default function Hero() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className={`font-lyon font-bold tracking-[-0.035em] text-[2.75rem] sm:text-[3.75rem] md:text-[5rem] lg:text-[5.75rem] xl:text-[6.5rem] text-ink mb-6 ${locale === "ar" ? "leading-[1.15]" : "leading-[0.95]"}`}
+              className={`font-lyon font-bold tracking-[-0.035em] text-ink mb-6 ${
+                locale === "ar"
+                  ? "text-[2.75rem] sm:text-[3.75rem] md:text-[5rem] lg:text-[5.75rem] xl:text-[6.5rem] leading-[1.15]"
+                  : "text-[2.5rem] sm:text-[3.25rem] md:text-[4.25rem] lg:text-[4.75rem] xl:text-[5.25rem] leading-[1.02]"
+              }`}
             >
               {locale === "ar" ? (
                 <>
@@ -197,12 +201,12 @@ function CornerLabel({
     light: "bg-surface-low text-ink-muted",
   }[tone];
 
-  // Arabic: drop uppercase + tracking (they break ligatures); bump
-  // weight so the shorter character count still reads at small size.
+  // Sentence case in both locales. Weight + size carry the label
+  // feel; uppercase on "MOTION GRAPHICS" / "BRANDING" read as shouty.
   const typography =
     locale === "ar"
-      ? "text-[11px] font-bold"
-      : "text-[10px] uppercase tracking-[0.2em] font-semibold";
+      ? "text-[12px] font-bold"
+      : "text-[11px] font-semibold tracking-[-0.01em]";
 
   return (
     <div className="absolute top-3 start-3 z-20">

@@ -172,13 +172,7 @@ export default function ServicesPage() {
                       {t(service.description.en, service.description.ar)}
                     </p>
 
-                    <div
-                      className={`flex items-center gap-2 font-semibold text-ink-muted ${
-                        locale === "ar"
-                          ? "text-xs"
-                          : "text-[10px] uppercase tracking-[0.2em]"
-                      }`}
-                    >
+                    <div className="flex items-center gap-2 kicker-sm">
                       <span className="w-1.5 h-1.5 rounded-full bg-brand-green" />
                       {t("Typical timeline:", "المدّة المعتادة:")}
                       <span className="text-brand-blue font-bold">
@@ -192,13 +186,7 @@ export default function ServicesPage() {
                     {/* Capabilities — pill cloud */}
                     <div>
                       <div className="flex items-center justify-between mb-5">
-                        <h3
-                          className={`font-bold text-ink-muted ${
-                            locale === "ar"
-                              ? "text-sm"
-                              : "text-[10px] uppercase tracking-[0.25em]"
-                          }`}
-                        >
+                        <h3 className="kicker-sm">
                           {t("Capabilities", "ما نتقنه")}
                         </h3>
                         <span className="text-[10px] font-semibold tabular-nums text-ink-whisper">
@@ -220,13 +208,7 @@ export default function ServicesPage() {
                     {/* Deliverables — numbered checklist */}
                     <div>
                       <div className="flex items-center justify-between mb-5">
-                        <h3
-                          className={`font-bold text-ink-muted ${
-                            locale === "ar"
-                              ? "text-sm"
-                              : "text-[10px] uppercase tracking-[0.25em]"
-                          }`}
-                        >
+                        <h3 className="kicker-sm">
                           {t("Typical deliverables", "ما نسلّمه عادةً")}
                         </h3>
                         <span className="text-[10px] font-semibold tabular-nums text-ink-whisper">

@@ -52,13 +52,7 @@ export default function WorkPage() {
       <section className="py-12 md:py-16 bg-surface-low">
         <div className="max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
           <div className="flex items-center gap-3 mb-8 md:mb-12">
-            <span
-              className={`font-semibold text-ink-muted ${
-                locale === "ar"
-                  ? "text-sm"
-                  : "text-[11px] uppercase tracking-[0.2em]"
-              }`}
-            >
+            <span className="kicker">
               {t("Case studies", "دراسات حالة")}
             </span>
             <span className="h-px flex-1 bg-black/[0.08]" />
@@ -96,7 +90,7 @@ export default function WorkPage() {
                     >
                       <div className="flex items-center gap-3 mb-6">
                         <span
-                          className="text-[10px] uppercase tracking-[0.25em] font-semibold"
+                          className="text-[11px] font-semibold"
                           style={{ color: project.palette.primary }}
                         >
                           № {String(project.order).padStart(2, "0")}
@@ -150,13 +144,7 @@ export default function WorkPage() {
       <section className="py-12 md:py-16 bg-ink text-white">
         <div className="max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
           <div className="flex items-center gap-3 mb-8 md:mb-12">
-            <span
-              className={`font-semibold text-white/60 ${
-                locale === "ar"
-                  ? "text-sm"
-                  : "text-[11px] uppercase tracking-[0.2em]"
-              }`}
-            >
+            <span className="text-[12px] font-semibold text-white/60">
               {t("Motion work", "أعمال الموشن")}
             </span>
             <span className="h-px flex-1 bg-white/10" />
@@ -267,7 +255,7 @@ function MotionCard({
             </p>
           </div>
           <span
-            className={`shrink-0 text-[10px] uppercase tracking-[0.15em] font-semibold px-2.5 py-1 rounded-full ${
+            className={`shrink-0 text-[11px] font-semibold px-2.5 py-1 rounded-full ${
               muted
                 ? "bg-white/10 text-white/60"
                 : "bg-brand-green/20 text-brand-green"

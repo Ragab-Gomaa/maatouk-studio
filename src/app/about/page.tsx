@@ -125,8 +125,8 @@ export default function AboutPage() {
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.7 }}
             >
-              <span className="inline-flex items-center gap-2 pl-2 pr-4 py-1 bg-surface-raised rounded-full border border-black/[0.06] text-[11px] uppercase tracking-[0.2em] font-semibold text-ink-muted mb-6 shadow-sm">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-blue" />
+              <span className="kicker-pill mb-6">
+                <span className="kicker-pill-dot" />
                 {t("Our approach", "منهجنا")}
               </span>
               <h2
@@ -187,7 +187,7 @@ export default function AboutPage() {
                     {t("unfair advantage.", "تفوّقٌ لا يُضاهى.")}
                   </span>
                 </blockquote>
-                <div className="relative mt-10 text-[10px] uppercase tracking-[0.25em] font-semibold text-white/60">
+                <div className="relative mt-10 text-[12px] font-semibold text-white/60">
                   {t("Studio philosophy", "فلسفة الاستوديو")}
                 </div>
               </div>

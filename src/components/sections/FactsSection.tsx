@@ -106,13 +106,7 @@ export default function FactsSection() {
               transition={{ duration: 0.6 }}
               className="bg-surface p-7 md:p-9 lg:p-10"
             >
-              <div
-                className={`font-semibold text-brand-blue mb-5 ${
-                  locale === "ar"
-                    ? "text-xs"
-                    : "text-[10px] uppercase tracking-[0.25em]"
-                }`}
-              >
+              <div className="kicker-sm text-brand-blue mb-5">
                 {t(f.label.en, f.label.ar)}
               </div>
               <div className="font-lyon font-bold text-5xl md:text-6xl lg:text-7xl text-ink tracking-[-0.03em] leading-none mb-5 tabular-nums">

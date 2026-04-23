@@ -123,7 +123,7 @@ export default function Footer() {
                 </p>
               </div>
 
-              <div className="inline-flex items-center gap-2.5 pl-2.5 pr-4 py-2 rounded-full border border-white/15 bg-white/[0.04] text-[11px] uppercase tracking-[0.2em] font-semibold text-white/80 self-start shrink-0">
+              <div className="inline-flex items-center gap-2.5 pl-2.5 pr-4 py-2 rounded-full border border-white/15 bg-white/[0.04] text-[12px] font-semibold text-white/80 self-start shrink-0">
                 <span className="relative flex items-center justify-center w-2 h-2">
                   <span className="absolute inline-flex h-full w-full rounded-full bg-brand-green opacity-60 animate-ping" />
                   <span className="relative inline-flex w-2 h-2 rounded-full bg-brand-green" />

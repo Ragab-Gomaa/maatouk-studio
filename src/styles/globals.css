@@ -258,19 +258,20 @@
    Uppercase + letter-spacing works beautifully for Latin but breaks
    Arabic ligatures — the [dir="rtl"] override drops both and bumps
    size for legibility. */
+/* Eyebrow label — small, quiet, sentence-case. No uppercase (long
+   phrases like "Selected work" or "By the numbers" read worse in
+   caps). Hierarchy comes from size + colour + weight, not from case. */
 .kicker {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  letter-spacing: -0.005em;
   color: var(--color-ink-muted);
   line-height: 1.2;
 }
 .kicker-sm {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  letter-spacing: -0.005em;
   color: var(--color-ink-muted);
   line-height: 1.2;
 }
@@ -278,7 +279,6 @@
 [dir="rtl"] .kicker-sm {
   font-size: 13px;
   letter-spacing: 0;
-  text-transform: none;
   font-weight: 700;
 }
 
@@ -289,15 +289,14 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.25rem 1rem 0.25rem 0.5rem;
+  padding: 0.3rem 1rem 0.3rem 0.5rem;
   background-color: var(--color-surface-raised);
   border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: 999px;
   box-shadow: var(--shadow-sm);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  letter-spacing: -0.005em;
   color: var(--color-ink-muted);
   line-height: 1.2;
 }
@@ -305,7 +304,6 @@
   padding: 0.3rem 0.5rem 0.3rem 1rem;
   font-size: 13px;
   letter-spacing: 0;
-  text-transform: none;
   font-weight: 700;
 }
 /* Accent colour roles site-wide:
