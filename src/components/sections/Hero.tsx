@@ -219,132 +219,107 @@ function CornerLabel({
 /* ─────────────────── Animations ─────────────────── */
 
 /**
- * BrandingAnimation — a craft seal / circular stamp. A curved
- * wordmark rotates slowly around the perimeter, four small green
- * diamonds mark the cardinal points, and a white center carries the
- * Maatouk mark with a subtle breathing scale. Reads unmistakably as
- * "brand identity" — seals and emblems are the archetypal brand
- * artefact. Loops continuously.
+ * BrandingAnimation — a static mini brand-kit page. Three stacked
+ * rows: mark + wordmark, color palette, and an "Aa" type specimen.
+ * Reads like a one-pager from a brand guideline — the essence of a
+ * visual identity.
  */
 function BrandingAnimation() {
-  // Text repeats to make the full circumference seamless at any rotation
-  const stampText = "MAATOUK STUDIO · BRAND IDENTITY · 2026 · CRAFT · ";
+  const palette = [
+    { color: "#0029D6", name: "00" },
+    { color: "#3CFFC5", name: "01" },
+    { color: "#FBF9F5", name: "02" },
+    { color: "#121214", name: "03" },
+  ];
 
   return (
     <div
       className="absolute inset-0 bg-brand-blue overflow-hidden"
       style={{ direction: "ltr" }}
     >
-      {/* Grid background */}
+      {/* Subtle grid background */}
       <div
-        className="absolute inset-0 opacity-[0.1] pointer-events-none"
+        className="absolute inset-0 opacity-[0.08] pointer-events-none"
         style={{
           backgroundImage:
             "linear-gradient(rgba(255,255,255,0.9) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.9) 1px, transparent 1px)",
-          backgroundSize: "22px 22px",
+          backgroundSize: "24px 24px",
         }}
         aria-hidden="true"
       />
 
-      {/* Breathing green glow behind the seal */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        animate={{
-          background: [
-            "radial-gradient(circle at 50% 55%, rgba(60,255,197,0.1) 0%, transparent 50%)",
-            "radial-gradient(circle at 50% 55%, rgba(60,255,197,0.24) 0%, transparent 55%)",
-            "radial-gradient(circle at 50% 55%, rgba(60,255,197,0.1) 0%, transparent 50%)",
-          ],
-        }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        aria-hidden="true"
-      />
-
-      {/* ── Seal composition ── */}
-      <div className="absolute inset-0 flex items-center justify-center pt-6 pb-2">
-        <div className="relative aspect-square h-[82%]">
-          {/* Outer ring — thin stroke defining the stamp boundary */}
-          <div className="absolute inset-0 rounded-full border-[1.5px] border-white/75" />
-          {/* Inner ring — bounds the text track */}
-          <div className="absolute inset-[14%] rounded-full border-[1.5px] border-white/75" />
-
-          {/* Rotating curved text — wraps around between the two rings */}
-          <motion.div
-            className="absolute inset-0"
-            animate={{ rotate: 360 }}
-            transition={{
-              duration: 24,
-              repeat: Infinity,
-              ease: "linear",
-            }}
+      {/* Brand-kit content */}
+      <div className="absolute inset-0 flex flex-col pt-11 pb-3 px-3.5 gap-2.5">
+        {/* ── Row 1: Mark + wordmark ── */}
+        <div className="shrink-0 flex items-center gap-2">
+          <div
+            className="relative w-[26px] h-[26px] bg-white rounded-[4px] flex items-center justify-center shrink-0"
+            style={{ boxShadow: "0 3px 8px rgba(0,0,0,0.15)" }}
           >
-            <svg
-              viewBox="0 0 200 200"
-              className="w-full h-full"
-              aria-hidden="true"
-            >
-              <defs>
-                <path
-                  id="stamp-text-path"
-                  d="M 100,100 m -87,0 a 87,87 0 1,1 174,0 a 87,87 0 1,1 -174,0"
-                  fill="none"
-                />
-              </defs>
-              <text
-                fill="#FFFFFF"
-                fontSize="9.5"
-                letterSpacing="3"
-                fontWeight="600"
-                fontFamily="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-              >
-                <textPath href="#stamp-text-path" startOffset="0">
-                  {stampText.repeat(2)}
-                </textPath>
-              </text>
-            </svg>
-          </motion.div>
-
-          {/* Four cardinal diamonds — static decorative markers on the outer ring */}
-          {[
-            "top-0 left-1/2 -translate-x-1/2 -translate-y-1/2",
-            "right-0 top-1/2 translate-x-1/2 -translate-y-1/2",
-            "bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2",
-            "left-0 top-1/2 -translate-x-1/2 -translate-y-1/2",
-          ].map((cls, i) => (
-            <div
-              key={i}
-              className={`absolute w-[7px] h-[7px] rotate-45 bg-brand-green ${cls}`}
-              style={{
-                boxShadow: "0 0 8px rgba(60,255,197,0.7)",
-              }}
-              aria-hidden="true"
-            />
-          ))}
-
-          {/* Inner center — white disc holding the brand mark */}
-          <motion.div
-            className="absolute inset-[22%] rounded-full bg-white flex items-center justify-center"
-            style={{
-              boxShadow:
-                "0 12px 30px rgba(60,255,197,0.35), inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -4px 10px rgba(0,41,214,0.08)",
-            }}
-            animate={{ scale: [1, 1.03, 1] }}
-            transition={{
-              duration: 3.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            {/* The mark — brand-blue square with rotated diamond + green centre */}
-            <div className="relative w-[54%] h-[54%] flex items-center justify-center">
-              <div className="w-full h-full rotate-45 bg-brand-blue rounded-[6px]" />
-              <div className="absolute w-[22%] h-[22%] rotate-45 bg-brand-green" />
-            </div>
-            {/* Tiny est.-line underneath the mark */}
-            <span className="absolute bottom-[14%] left-1/2 -translate-x-1/2 text-[6px] font-mono font-bold tracking-[0.3em] text-brand-blue/80 uppercase">
-              Est · 2026
+            <div className="w-[52%] h-[52%] rotate-45 bg-brand-blue rounded-[1.5px]" />
+            <div className="absolute w-[16%] h-[16%] rotate-45 bg-brand-green" />
+          </div>
+          <div className="flex flex-col">
+            <span className="font-lyon font-bold text-[13px] leading-none tracking-[0.04em] text-white uppercase">
+              Maatouk
             </span>
-          </motion.div>
+            <span className="text-[6px] font-mono text-white/55 tracking-[0.22em] uppercase mt-[3px]">
+              Studio · 2026
+            </span>
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div className="shrink-0 h-px bg-white/15" />
+
+        {/* ── Row 2: Color palette ── */}
+        <div className="shrink-0">
+          <div className="text-[6px] font-mono text-white/55 tracking-[0.28em] uppercase mb-1.5">
+            — Palette
+          </div>
+          <div className="flex gap-1.5">
+            {palette.map((c, i) => (
+              <div key={i} className="flex-1 flex flex-col items-center gap-1">
+                <div
+                  className="w-full aspect-square rounded-[3px]"
+                  style={{
+                    backgroundColor: c.color,
+                    boxShadow:
+                      "inset 0 0 0 0.5px rgba(255,255,255,0.3), 0 2px 4px rgba(0,0,0,0.2)",
+                  }}
+                />
+                <span className="text-[5.5px] font-mono text-white/45 tracking-[0.15em]">
+                  {c.name}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div className="shrink-0 h-px bg-white/15" />
+
+        {/* ── Row 3: Typography specimen ── */}
+        <div className="flex-1 flex flex-col justify-center min-h-0">
+          <div className="text-[6px] font-mono text-white/55 tracking-[0.28em] uppercase mb-1">
+            — Typography
+          </div>
+          <div className="flex items-end justify-between gap-2">
+            <span
+              className="font-lyon font-bold text-white leading-[0.82]"
+              style={{ fontSize: "44px" }}
+            >
+              Aa
+            </span>
+            <div className="flex flex-col items-end text-right pb-1.5">
+              <span className="text-[9px] font-lyon font-bold text-white tracking-tight leading-tight">
+                Lyon
+              </span>
+              <span className="text-[5.5px] font-mono text-white/50 tracking-[0.2em] uppercase mt-0.5">
+                Display · 700
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
