@@ -219,108 +219,54 @@ function CornerLabel({
 /* ─────────────────── Animations ─────────────────── */
 
 /**
- * BrandingAnimation — a static mini brand-kit page. Three stacked
- * rows: mark + wordmark, color palette, and an "Aa" type specimen.
- * Reads like a one-pager from a brand guideline — the essence of a
- * visual identity.
+ * BrandingAnimation — a quiet three-specimen brand kit. Centred on
+ * the card: the Maatouk mark, a row of four palette swatches, and
+ * a bold "Aa" type specimen. Nothing else. No labels, no animation,
+ * no decoration.
  */
 function BrandingAnimation() {
-  const palette = [
-    { color: "#0029D6", name: "00" },
-    { color: "#3CFFC5", name: "01" },
-    { color: "#FBF9F5", name: "02" },
-    { color: "#121214", name: "03" },
-  ];
+  const palette = ["#0029D6", "#3CFFC5", "#FBF9F5", "#121214"];
 
   return (
     <div
       className="absolute inset-0 bg-brand-blue overflow-hidden"
       style={{ direction: "ltr" }}
     >
-      {/* Subtle grid background */}
-      <div
-        className="absolute inset-0 opacity-[0.08] pointer-events-none"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.9) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.9) 1px, transparent 1px)",
-          backgroundSize: "24px 24px",
-        }}
-        aria-hidden="true"
-      />
-
-      {/* Brand-kit content */}
-      <div className="absolute inset-0 flex flex-col pt-11 pb-3 px-3.5 gap-2.5">
-        {/* ── Row 1: Mark + wordmark ── */}
-        <div className="shrink-0 flex items-center gap-2">
-          <div
-            className="relative w-[26px] h-[26px] bg-white rounded-[4px] flex items-center justify-center shrink-0"
-            style={{ boxShadow: "0 3px 8px rgba(0,0,0,0.15)" }}
-          >
-            <div className="w-[52%] h-[52%] rotate-45 bg-brand-blue rounded-[1.5px]" />
-            <div className="absolute w-[16%] h-[16%] rotate-45 bg-brand-green" />
-          </div>
-          <div className="flex flex-col">
-            <span className="font-lyon font-bold text-[13px] leading-none tracking-[0.04em] text-white uppercase">
-              Maatouk
-            </span>
-            <span className="text-[6px] font-mono text-white/55 tracking-[0.22em] uppercase mt-[3px]">
-              Studio · 2026
-            </span>
-          </div>
+      <div className="absolute inset-0 flex flex-col items-center justify-center gap-7 pt-10 pb-4 px-4">
+        {/* ── Mark ── */}
+        <div
+          className="relative w-[50px] h-[50px] bg-white rounded-[9px] flex items-center justify-center"
+          style={{
+            boxShadow:
+              "0 10px 22px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.6)",
+          }}
+        >
+          <div className="w-[54%] h-[54%] rotate-45 bg-brand-blue rounded-[3px]" />
+          <div className="absolute w-[16%] h-[16%] rotate-45 bg-brand-green" />
         </div>
 
-        {/* Divider */}
-        <div className="shrink-0 h-px bg-white/15" />
-
-        {/* ── Row 2: Color palette ── */}
-        <div className="shrink-0">
-          <div className="text-[6px] font-mono text-white/55 tracking-[0.28em] uppercase mb-1.5">
-            — Palette
-          </div>
-          <div className="flex gap-1.5">
-            {palette.map((c, i) => (
-              <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                <div
-                  className="w-full aspect-square rounded-[3px]"
-                  style={{
-                    backgroundColor: c.color,
-                    boxShadow:
-                      "inset 0 0 0 0.5px rgba(255,255,255,0.3), 0 2px 4px rgba(0,0,0,0.2)",
-                  }}
-                />
-                <span className="text-[5.5px] font-mono text-white/45 tracking-[0.15em]">
-                  {c.name}
-                </span>
-              </div>
-            ))}
-          </div>
+        {/* ── Palette ── */}
+        <div className="flex items-center gap-2">
+          {palette.map((c, i) => (
+            <div
+              key={i}
+              className="w-[30px] h-[30px] rounded-[6px]"
+              style={{
+                backgroundColor: c,
+                boxShadow:
+                  "inset 0 0 0 0.5px rgba(255,255,255,0.35), 0 2px 5px rgba(0,0,0,0.14)",
+              }}
+            />
+          ))}
         </div>
 
-        {/* Divider */}
-        <div className="shrink-0 h-px bg-white/15" />
-
-        {/* ── Row 3: Typography specimen ── */}
-        <div className="flex-1 flex flex-col justify-center min-h-0">
-          <div className="text-[6px] font-mono text-white/55 tracking-[0.28em] uppercase mb-1">
-            — Typography
-          </div>
-          <div className="flex items-end justify-between gap-2">
-            <span
-              className="font-lyon font-bold text-white leading-[0.82]"
-              style={{ fontSize: "44px" }}
-            >
-              Aa
-            </span>
-            <div className="flex flex-col items-end text-right pb-1.5">
-              <span className="text-[9px] font-lyon font-bold text-white tracking-tight leading-tight">
-                Lyon
-              </span>
-              <span className="text-[5.5px] font-mono text-white/50 tracking-[0.2em] uppercase mt-0.5">
-                Display · 700
-              </span>
-            </div>
-          </div>
-        </div>
+        {/* ── Typography ── */}
+        <span
+          className="font-lyon font-bold text-white leading-none"
+          style={{ fontSize: "50px" }}
+        >
+          Aa
+        </span>
       </div>
     </div>
   );
