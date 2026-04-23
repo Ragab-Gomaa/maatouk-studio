@@ -4,10 +4,6 @@ import { motion } from "framer-motion";
 import { useTranslation } from "@/lib/LocaleContext";
 import Button from "@/components/ui/Button";
 
-/**
- * ContactCTASection — closing. A bold bright card on the surface background,
- * centered, with a question headline and two actions.
- */
 export default function ContactCTASection() {
   const { t, locale } = useTranslation();
 
@@ -21,43 +17,49 @@ export default function ContactCTASection() {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="relative rounded-[36px] md:rounded-[48px] bg-brand-blue text-white overflow-hidden"
         >
-          {/* Background glow */}
+          {/* Ambient glows */}
           <div
-            className="absolute top-[-100px] right-[-100px] w-[400px] h-[400px] rounded-full bg-brand-green/30 blur-3xl pointer-events-none"
+            className="absolute top-[-120px] right-[-100px] w-[460px] h-[460px] rounded-full bg-brand-green/30 blur-3xl pointer-events-none"
             aria-hidden="true"
           />
           <div
-            className="absolute bottom-[-100px] left-[-50px] w-[300px] h-[300px] rounded-full bg-white/10 blur-3xl pointer-events-none"
+            className="absolute bottom-[-120px] left-[-80px] w-[400px] h-[400px] rounded-full bg-white/10 blur-3xl pointer-events-none"
             aria-hidden="true"
           />
 
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-16 p-10 md:p-16 lg:p-20 items-end">
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-10 lg:gap-16 p-10 md:p-16 lg:p-20 items-end">
+            {/* Left: pill + headline */}
             <div>
               <div className="inline-flex items-center gap-2 pl-2 pr-4 py-1 bg-white/10 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold text-white/85 mb-8">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-green" />
                 {t("Let's talk", "لنتحدث")}
               </div>
 
-              <h2 className={`font-lyon font-bold tracking-[-0.035em] text-5xl md:text-7xl lg:text-[6rem] ${locale === "ar" ? "leading-[1.2]" : "leading-[0.92]"}`}>
-                {t("Got a brief", "عندك ملف")}
+              <h2
+                className={`font-lyon font-bold tracking-[-0.035em] text-4xl md:text-6xl lg:text-[5rem] ${
+                  locale === "ar" ? "leading-[1.2]" : "leading-[0.95]"
+                }`}
+              >
+                {t("Your next project,", "مشروعك القادم،")}
                 <br />
                 <span className="text-brand-green italic">
-                  {t("worth making?", "يستحق الصنع؟")}
+                  {t("starts with a message.", "يبدأ برسالة.")}
                 </span>
               </h2>
             </div>
 
-            <div className="space-y-8 md:space-y-10">
+            {/* Right: description + CTAs + pledge */}
+            <div className="space-y-7 md:space-y-8">
               <p className="text-base md:text-lg text-white/80 leading-relaxed max-w-md">
                 {t(
-                  "Tell us what you're building. We'll respond within 24 hours with next steps.",
-                  "أخبرنا بما تبنيه. نرد خلال ٢٤ ساعة بالخطوات التالية."
+                  "Tell us about the idea and the timeline. We'll come back with a clear plan.",
+                  "حدّثنا عن الفكرة والتوقيت. نعود إليك بخطّةٍ واضحة."
                 )}
               </p>
 
               <div className="flex flex-wrap items-center gap-3">
                 <Button href="/contact" variant="dark" size="lg" withArrow>
-                  {t("Start a project", "ابدأ مشروعك")}
+                  {t("Start your project", "ابدأ مشروعك")}
                 </Button>
                 <Button
                   href="mailto:hello@maatouk.studio"
@@ -66,28 +68,18 @@ export default function ContactCTASection() {
                   external
                   className="text-white/85 hover:text-white hover:bg-white/10"
                 >
-                  {t("Email us", "راسلنا")}
+                  hello@maatouk.studio
                 </Button>
               </div>
 
-              <dl className="grid grid-cols-2 gap-5 md:gap-6 pt-6 border-t border-white/15">
-                <div>
-                  <dt className="text-[10px] uppercase tracking-[0.2em] font-semibold text-brand-green mb-1.5">
-                    {t("Response", "الرد")}
-                  </dt>
-                  <dd className="text-sm md:text-base text-white font-medium">
-                    {t("Within 24 hours", "خلال ٢٤ ساعة")}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="text-[10px] uppercase tracking-[0.2em] font-semibold text-brand-green mb-1.5">
-                    {t("Engagements", "الالتزامات")}
-                  </dt>
-                  <dd className="text-sm md:text-base text-white font-medium">
-                    {t("Full-service", "خدمة شاملة")}
-                  </dd>
-                </div>
-              </dl>
+              <div className="pt-6 border-t border-white/15">
+                <p className="text-sm text-white/70 leading-relaxed max-w-md">
+                  {t(
+                    "One project at a time, with full focus. We reply within 24 hours.",
+                    "مشروعٌ واحد في كلّ مرّة، بتركيزٍ كامل. نردّ خلال ٢٤ ساعة."
+                  )}
+                </p>
+              </div>
             </div>
           </div>
         </motion.div>
