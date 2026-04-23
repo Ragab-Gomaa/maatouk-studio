@@ -219,13 +219,13 @@ function CornerLabel({
 /* ─────────────────── Animations ─────────────────── */
 
 /**
- * BrandingAnimation — a Figma-style design tool workspace. Top bar
- * carries the file name and save state, a layers panel on the left
- * shows the logo tree (Logo > Mark/Accent, Wordmark, Palette), and
- * the canvas holds an artboard with the Maatouk mark inside —
- * corner-handled as if currently selected. Mirrors the
- * tool-aesthetic of the Motion (After Effects) and Digital
- * (browser) cards.
+ * BrandingAnimation — a Photoshop-style workspace. Dark chrome with
+ * the Ps badge + menu bar + file tab, a vertical tools rail on the
+ * left, a grey canvas in the middle with an artboard containing the
+ * Maatouk mark inside a marching-ants selection, and a layers panel
+ * on the right with three layer rows (Accent / Mark selected /
+ * Background). Mirrors the tool-aesthetic of the Motion (After
+ * Effects) and Digital (browser) cards.
  */
 function BrandingAnimation() {
   return (
@@ -233,162 +233,223 @@ function BrandingAnimation() {
       className="absolute inset-0 bg-brand-blue overflow-hidden"
       style={{ direction: "ltr" }}
     >
-      {/* Design tool panel — mirrors the Motion & Digital card structure */}
+      {/* Photoshop panel — dark workspace */}
       <div
-        className="absolute start-3 end-3 top-12 bottom-3 rounded-[8px] bg-white border border-black/[0.08] overflow-hidden flex flex-col"
-        style={{ boxShadow: "0 14px 32px -10px rgba(0,0,0,0.2)" }}
+        className="absolute start-3 end-3 top-12 bottom-3 rounded-[6px] bg-[#1E1E1E] border border-black/40 overflow-hidden flex flex-col"
+        style={{ boxShadow: "0 14px 32px -10px rgba(0,0,0,0.45)" }}
       >
-        {/* ── Top chrome: dots / filename / save state ── */}
-        <div className="shrink-0 flex items-center justify-between px-2 py-1 bg-surface-low border-b border-black/[0.06]">
-          <div className="flex items-center gap-[3px]">
-            <span className="w-[5px] h-[5px] rounded-full bg-[#FF5F57]" />
-            <span className="w-[5px] h-[5px] rounded-full bg-[#FEBC2E]" />
-            <span className="w-[5px] h-[5px] rounded-full bg-[#28C840]" />
+        {/* ── Top menu bar ── */}
+        <div className="shrink-0 h-[13px] flex items-center gap-1.5 px-1.5 bg-[#2B2B2B] border-b border-black/50">
+          {/* Ps logo badge */}
+          <div
+            className="w-[10px] h-[10px] rounded-[2px] flex items-center justify-center shrink-0"
+            style={{ backgroundColor: "#001E36" }}
+          >
+            <span
+              className="text-[6px] font-bold leading-none"
+              style={{
+                color: "#31A8FF",
+                fontFamily:
+                  "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+              }}
+            >
+              Ps
+            </span>
           </div>
-          <span className="text-[6px] font-mono text-ink-muted font-semibold">
-            maatouk-mark.fig
-          </span>
-          <div className="flex items-center gap-1">
-            <span className="relative flex w-1 h-1" aria-hidden="true">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-brand-green opacity-60 animate-ping" />
-              <span className="relative inline-flex rounded-full h-1 w-1 bg-brand-green" />
-            </span>
-            <span className="text-[5px] font-mono text-ink-whisper uppercase tracking-wider">
-              Saved
-            </span>
+          {/* Menu items */}
+          <div className="flex items-center gap-[5px] text-[5px] font-medium text-white/65">
+            <span>File</span>
+            <span>Edit</span>
+            <span>Image</span>
+            <span>Layer</span>
+            <span>Select</span>
+            <span>View</span>
           </div>
         </div>
 
-        {/* ── Workspace: layers panel + canvas ── */}
+        {/* ── File tab row ── */}
+        <div className="shrink-0 h-[11px] flex items-stretch bg-[#353535] border-b border-black/50">
+          <div className="flex items-center gap-1 px-1.5 bg-[#1E1E1E] border-r border-black/50">
+            <span className="text-[4.5px] text-white/40 leading-none">▣</span>
+            <span className="text-[5px] font-mono text-white/85 leading-none">
+              maatouk-mark.psd
+            </span>
+            <span className="text-[6px] text-white/35 leading-none">×</span>
+          </div>
+        </div>
+
+        {/* ── Main workspace: tools | canvas | layers ── */}
         <div className="flex-1 flex min-h-0">
-          {/* Layers panel */}
-          <div className="w-[36%] shrink-0 bg-[#FCFAF6] border-r border-black/[0.05] px-1.5 py-1.5 flex flex-col gap-[2px]">
-            <div className="flex items-center justify-between mb-0.5">
-              <span className="text-[5px] font-mono text-ink-whisper tracking-[0.18em] uppercase font-semibold">
-                Layers
-              </span>
-              <span className="text-[5px] font-mono text-ink-whisper">5</span>
+          {/* Tools rail (left) */}
+          <div className="w-[15px] shrink-0 bg-[#2B2B2B] border-r border-black/50 flex flex-col items-center py-1 gap-[5px]">
+            {/* Move arrow — selected */}
+            <div className="w-[11px] h-[11px] rounded-[1px] bg-white/15 flex items-center justify-center">
+              <svg width="7" height="7" viewBox="0 0 8 8" aria-hidden="true">
+                <path d="M1 0.5 L1 7 L3 5 L4.5 7.5 L5.5 7 L4 4.5 L6.5 4.5 Z" fill="white" />
+              </svg>
             </div>
-
-            {/* Group: Logo */}
-            <div className="flex items-center gap-1 px-1 py-[2px] rounded-[2px] bg-brand-blue/[0.08]">
-              <span className="text-[6px] text-brand-blue leading-none">▾</span>
-              <span className="text-[6px] font-semibold text-brand-blue">Logo</span>
-            </div>
-
-            {/* Child: Mark (selected) */}
-            <div className="flex items-center gap-1 px-1 py-[2px] ms-2.5 rounded-[2px] bg-brand-blue/[0.18]">
-              <div className="w-[6px] h-[6px] rotate-45 bg-brand-blue shrink-0" />
-              <span className="text-[5.5px] text-ink font-medium">Mark</span>
-            </div>
-
-            {/* Child: Accent */}
-            <div className="flex items-center gap-1 px-1 py-[2px] ms-2.5">
-              <div className="w-[6px] h-[6px] rotate-45 bg-brand-green shrink-0" />
-              <span className="text-[5.5px] text-ink-muted">Accent</span>
-            </div>
-
-            {/* Sibling: Wordmark */}
-            <div className="flex items-center gap-1 px-1 py-[2px] mt-1">
-              <span className="text-[6px] text-ink-whisper leading-none">▸</span>
-              <span className="text-[6px] font-lyon font-bold text-ink-muted shrink-0 leading-none">
-                T
-              </span>
-              <span className="text-[5.5px] text-ink-muted">Wordmark</span>
-            </div>
-
-            {/* Sibling: Palette */}
-            <div className="flex items-center gap-1 px-1 py-[2px]">
-              <span className="text-[6px] text-ink-whisper leading-none">▸</span>
-              <div className="flex gap-[1px] shrink-0">
-                <div className="w-[3px] h-[5px] bg-brand-blue" />
-                <div className="w-[3px] h-[5px] bg-brand-green" />
-                <div className="w-[3px] h-[5px] bg-ink" />
-              </div>
-              <span className="text-[5.5px] text-ink-muted">Palette</span>
-            </div>
-
-            {/* Sibling: Grid */}
-            <div className="flex items-center gap-1 px-1 py-[2px]">
-              <span className="text-[6px] text-ink-whisper leading-none">▸</span>
-              <div className="w-[6px] h-[6px] border border-ink-whisper shrink-0" />
-              <span className="text-[5.5px] text-ink-muted">Grid</span>
-            </div>
+            {/* Marquee (dashed square) */}
+            <div
+              className="w-[9px] h-[9px]"
+              style={{
+                border: "1px dashed rgba(255,255,255,0.7)",
+                borderRadius: "0.5px",
+              }}
+            />
+            {/* Type tool — T */}
+            <span className="text-[8px] font-bold text-white/70 leading-none font-lyon">
+              T
+            </span>
+            {/* Brush */}
+            <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">
+              <path
+                d="M1 9 L3 7 M2 8 L4 6 M3 5 L8 1 L9 2 L5 7 Z"
+                stroke="rgba(255,255,255,0.75)"
+                strokeWidth="1"
+                fill="none"
+                strokeLinecap="round"
+              />
+              <path d="M5 7 L8 1 L9 2 L5 7 Z" fill="rgba(255,255,255,0.75)" />
+            </svg>
+            {/* Eyedropper */}
+            <svg width="9" height="9" viewBox="0 0 10 10" aria-hidden="true">
+              <circle cx="7.5" cy="2.5" r="1.5" fill="#0029D6" stroke="white" strokeWidth="0.5" />
+              <line x1="6.3" y1="3.7" x2="1" y2="9" stroke="rgba(255,255,255,0.75)" strokeWidth="1" strokeLinecap="round" />
+            </svg>
+            {/* Pen tool — angled nib */}
+            <svg width="9" height="9" viewBox="0 0 10 10" aria-hidden="true">
+              <path
+                d="M5 1 L8 4 L5 9 L2 4 Z"
+                fill="none"
+                stroke="rgba(255,255,255,0.75)"
+                strokeWidth="0.8"
+                strokeLinejoin="round"
+              />
+              <circle cx="5" cy="4.5" r="0.8" fill="rgba(255,255,255,0.75)" />
+            </svg>
           </div>
 
-          {/* Canvas */}
-          <div className="flex-1 relative flex items-center justify-center bg-[#EDE6D8] overflow-hidden">
-            {/* Dotted canvas pattern */}
-            <div
-              className="absolute inset-0 opacity-40 pointer-events-none"
-              style={{
-                backgroundImage:
-                  "radial-gradient(circle, rgba(0,0,0,0.2) 0.7px, transparent 0.7px)",
-                backgroundSize: "9px 9px",
-              }}
-              aria-hidden="true"
-            />
-
-            {/* Ruler hash marks along top & left of the canvas */}
-            <div className="absolute top-0 left-0 right-0 h-[9px] flex items-end pointer-events-none">
-              {Array.from({ length: 14 }).map((_, i) => (
+          {/* Canvas area */}
+          <div className="flex-1 relative bg-[#4A4A4A] flex items-center justify-center overflow-hidden">
+            {/* Top ruler */}
+            <div className="absolute top-0 left-0 right-0 h-[8px] bg-[#2B2B2B] border-b border-black/50 flex items-end overflow-hidden">
+              {Array.from({ length: 18 }).map((_, i) => (
                 <div
                   key={i}
-                  className="flex-1 border-l border-ink/15 h-[3px]"
+                  className={`flex-1 border-l border-white/15 ${i % 5 === 0 ? "h-[3.5px]" : "h-[2px]"}`}
                   aria-hidden="true"
                 />
               ))}
             </div>
-            <div className="absolute top-0 bottom-0 left-0 w-[9px] flex flex-col items-end pointer-events-none">
+            {/* Left ruler */}
+            <div className="absolute top-0 bottom-0 left-0 w-[8px] bg-[#2B2B2B] border-r border-black/50 flex flex-col items-end overflow-hidden">
               {Array.from({ length: 14 }).map((_, i) => (
                 <div
                   key={i}
-                  className="flex-1 border-t border-ink/15 w-[3px]"
+                  className={`flex-1 border-t border-white/15 ${i % 5 === 0 ? "w-[3.5px]" : "w-[2px]"}`}
                   aria-hidden="true"
                 />
               ))}
             </div>
 
-            {/* Artboard + selection handles */}
-            <div className="relative">
-              {/* Artboard label */}
-              <span className="absolute -top-[9px] left-0 text-[5px] font-mono text-ink-whisper uppercase tracking-[0.15em] whitespace-nowrap">
-                Mark · 200×200
-              </span>
-
-              {/* Artboard surface */}
+            {/* Artboard area */}
+            <div className="relative ms-1 mt-1">
+              {/* Artboard */}
               <div
-                className="relative bg-white rounded-[3px] border border-black/[0.1] flex items-center justify-center"
+                className="relative bg-white"
                 style={{
-                  width: "66px",
-                  height: "66px",
-                  boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+                  width: "62px",
+                  height: "62px",
+                  boxShadow:
+                    "0 6px 18px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,0,0,0.25)",
                 }}
               >
-                <div className="relative w-[60%] h-[60%] flex items-center justify-center">
-                  <div className="w-full h-full rotate-45 bg-brand-blue rounded-[3px]" />
-                  <div className="absolute w-[22%] h-[22%] rotate-45 bg-brand-green" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="relative w-[58%] h-[58%] flex items-center justify-center">
+                    <div className="w-full h-full rotate-45 bg-brand-blue rounded-[2px]" />
+                    <div className="absolute w-[22%] h-[22%] rotate-45 bg-brand-green" />
+                  </div>
                 </div>
               </div>
 
-              {/* Selection handles at 4 corners — signals the mark is selected */}
-              {[
-                "top-0 left-0 -translate-x-1/2 -translate-y-1/2",
-                "top-0 right-0 translate-x-1/2 -translate-y-1/2",
-                "bottom-0 left-0 -translate-x-1/2 translate-y-1/2",
-                "bottom-0 right-0 translate-x-1/2 translate-y-1/2",
-              ].map((pos, i) => (
-                <div
-                  key={i}
-                  className={`absolute w-[5px] h-[5px] bg-white border border-brand-blue ${pos}`}
-                  aria-hidden="true"
-                />
-              ))}
+              {/* Marching-ants selection around the artboard */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  border: "1px dashed white",
+                  boxShadow: "inset 0 0 0 1px rgba(0,0,0,0.35)",
+                }}
+                aria-hidden="true"
+              />
+
+              {/* Tiny size label above */}
+              <span className="absolute -top-[8px] left-0 text-[4.5px] font-mono text-white/60 tracking-wider">
+                200 × 200 px
+              </span>
+            </div>
+          </div>
+
+          {/* Layers panel (right) */}
+          <div className="w-[66px] shrink-0 bg-[#2B2B2B] border-l border-black/50 flex flex-col min-h-0">
+            {/* Panel header */}
+            <div className="shrink-0 flex items-center justify-between px-1.5 py-1 bg-[#353535] border-b border-black/50">
+              <span className="text-[5px] font-semibold text-white/85 tracking-[0.12em] uppercase">
+                Layers
+              </span>
+              <span className="text-[5px] text-white/40">3</span>
+            </div>
+
+            {/* Layer list */}
+            <div className="flex-1 flex flex-col overflow-hidden">
+              {/* Top: Accent */}
+              <div className="flex items-center gap-1 px-1.5 py-1 border-b border-black/30 hover:bg-white/5">
+                <EyeIcon />
+                <div className="w-[9px] h-[9px] rounded-[1px] bg-brand-green shrink-0 border border-white/20" />
+                <span className="text-[5.5px] text-white/80 truncate">Accent</span>
+              </div>
+              {/* Middle: Mark (selected) */}
+              <div
+                className="flex items-center gap-1 px-1.5 py-1 border-b border-black/30"
+                style={{
+                  backgroundColor: "rgba(0, 41, 214, 0.28)",
+                  boxShadow: "inset 0 0 0 1px rgba(0, 41, 214, 0.65)",
+                }}
+              >
+                <EyeIcon highlighted />
+                <div className="w-[9px] h-[9px] rounded-[1px] bg-brand-blue shrink-0 border border-white/20" />
+                <span className="text-[5.5px] text-white font-medium truncate">
+                  Mark
+                </span>
+              </div>
+              {/* Bottom: Background */}
+              <div className="flex items-center gap-1 px-1.5 py-1 hover:bg-white/5">
+                <EyeIcon />
+                <div className="w-[9px] h-[9px] rounded-[1px] bg-white shrink-0 border border-white/20" />
+                <span className="text-[5.5px] text-white/80 truncate">
+                  Background
+                </span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  );
+}
+
+/** Tiny eye icon for the Photoshop layers panel */
+function EyeIcon({ highlighted = false }: { highlighted?: boolean }) {
+  const color = highlighted ? "white" : "rgba(255,255,255,0.55)";
+  return (
+    <svg width="8" height="8" viewBox="0 0 10 10" aria-hidden="true" className="shrink-0">
+      <path
+        d="M1 5 C 2.5 2.5, 7.5 2.5, 9 5 C 7.5 7.5, 2.5 7.5, 1 5 Z"
+        fill="none"
+        stroke={color}
+        strokeWidth="0.9"
+      />
+      <circle cx="5" cy="5" r="1.3" fill={color} />
+    </svg>
   );
 }
 
