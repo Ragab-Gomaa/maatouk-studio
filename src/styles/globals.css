@@ -7,6 +7,7 @@
   font-weight: 700;
   font-style: normal;
   font-display: swap;
+  font-synthesis: none;
 }
 
 @font-face {
@@ -15,6 +16,7 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+  font-synthesis: none;
 }
 @font-face {
   font-family: "Mizan";
@@ -22,6 +24,7 @@
   font-weight: 500;
   font-style: normal;
   font-display: swap;
+  font-synthesis: none;
 }
 @font-face {
   font-family: "Mizan";
@@ -29,6 +32,7 @@
   font-weight: 600;
   font-style: normal;
   font-display: swap;
+  font-synthesis: none;
 }
 @font-face {
   font-family: "Mizan";
@@ -36,6 +40,7 @@
   font-weight: 700;
   font-style: normal;
   font-display: swap;
+  font-synthesis: none;
 }
 
 /* ─── Design Tokens ─── */
@@ -88,7 +93,6 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
   }
@@ -99,6 +103,29 @@
     color: var(--color-ink);
     overflow-x: hidden;
     -webkit-tap-highlight-color: transparent;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  /* Arabic — enable contextual shaping, ligatures, and mark positioning.
+     Without these, iOS Safari renders Mizan with broken letter-joining
+     and floating tashkeel. */
+  [dir="rtl"] body,
+  [dir="rtl"] h1,
+  [dir="rtl"] h2,
+  [dir="rtl"] h3,
+  [dir="rtl"] h4,
+  [dir="rtl"] h5,
+  [dir="rtl"] h6,
+  [dir="rtl"] p,
+  [dir="rtl"] span,
+  [dir="rtl"] a,
+  [dir="rtl"] button,
+  [dir="rtl"] input,
+  [dir="rtl"] textarea,
+  [dir="rtl"] label,
+  [dir="rtl"] li {
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "mark" 1, "mkmk" 1, "ccmp" 1;
+    text-rendering: optimizeLegibility;
   }
 
   svg {
@@ -108,7 +135,7 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-lyon);
     font-weight: 700;
-    line-height: 1;
+    line-height: 1.05;
     letter-spacing: -0.03em;
   }
 
@@ -116,6 +143,9 @@
     font-family: var(--font-mizan);
   }
 
+  /* Arabic headings need more breathing room — tashkeel (شدّة، فتحة)
+     sit above the baseline and collide at tight leading. 1.25 is the
+     floor; component-level classes can tighten per-headline if needed. */
   [dir="rtl"] h1,
   [dir="rtl"] h2,
   [dir="rtl"] h3,
@@ -123,7 +153,7 @@
   [dir="rtl"] h5,
   [dir="rtl"] h6 {
     font-family: var(--font-mizan);
-    line-height: 1.1;
+    line-height: 1.25;
     letter-spacing: 0;
   }
 
