@@ -219,54 +219,34 @@ function CornerLabel({
 /* ─────────────────── Animations ─────────────────── */
 
 /**
- * BrandingAnimation — an artist's palette with a paintbrush that dips
- * into each color in sequence. Loops every 10s. Flat-illustration
- * style, consistent with the site's clean geometric aesthetic.
+ * BrandingAnimation — an artist's palette with a paintbrush held
+ * diagonally over it. The paint tip cycles through 5 dollop colors
+ * in sync with each dollop's pulse, and a paint drop falls from the
+ * tip mid-loop. Flat-illustration style using positioned divs (no
+ * SVG) for reliable rendering. Loops every 10s.
  */
 function BrandingAnimation() {
   const DURATION = 10;
 
-  // 5 paint dollops on the palette (SVG coords, viewBox 140x110)
+  // 5 dollops on the palette (positioned as % of the palette container)
   const dollops = [
-    { cx: 54, cy: 50, color: "#0029D6" },   // brand blue
-    { cx: 73, cy: 44, color: "#3CFFC5" },   // brand green
-    { cx: 92, cy: 50, color: "#FFD23F" },   // yellow
-    { cx: 62, cy: 70, color: "#FF4A6B" },   // pink
-    { cx: 86, cy: 74, color: "#8B5CFF" },   // purple
+    { left: "22%", top: "24%", color: "#0029D6" }, // brand blue
+    { left: "42%", top: "14%", color: "#3CFFC5" }, // brand green
+    { left: "62%", top: "24%", color: "#FFD23F" }, // yellow
+    { left: "32%", top: "56%", color: "#FF4A6B" }, // pink
+    { left: "56%", top: "62%", color: "#8B5CFF" }, // purple
   ];
 
-  // Brush tip keyframes: one dip per dollop + a rest-above position
-  // Brush starts above the palette, then dips each dollop, then rests.
-  const restPos = { x: 100, y: 12 };
-  const brushKeys = [
-    restPos,
-    ...dollops.flatMap((d) => [
-      { x: d.cx, y: d.cy - 10 }, // hover over
-      { x: d.cx, y: d.cy },      // dip
-      { x: d.cx, y: d.cy - 10 }, // lift
-    ]),
-    restPos,
-  ];
-  const brushX = brushKeys.map((k) => k.x);
-  const brushY = brushKeys.map((k) => k.y);
-
-  // Paint-tip color follows whichever dollop the brush is dipping
-  const tipColors = [
-    "#FFFFFF",
-    ...dollops.flatMap((d) => [d.color, d.color, d.color]),
-    "#FFFFFF",
-  ];
-
-  // Even time distribution over the loop
-  const totalKeys = brushKeys.length;
-  const brushTimes = brushKeys.map((_, i) => i / (totalKeys - 1));
+  // Paint-tip color cycles — holds each color for 1/5 of the loop
+  const tipColorKeys = dollops.map((d) => d.color);
+  const tipColorTimes = dollops.map((_, i) => i / dollops.length);
 
   return (
     <div
       className="absolute inset-0 bg-brand-blue overflow-hidden"
       style={{ direction: "ltr" }}
     >
-      {/* Soft grid background */}
+      {/* Grid background */}
       <div
         className="absolute inset-0 opacity-[0.12] pointer-events-none"
         style={{
@@ -282,272 +262,237 @@ function BrandingAnimation() {
         className="absolute inset-0 pointer-events-none"
         animate={{
           background: [
-            "radial-gradient(circle at 50% 55%, rgba(60,255,197,0.08) 0%, transparent 55%)",
-            "radial-gradient(circle at 50% 55%, rgba(60,255,197,0.2) 0%, transparent 55%)",
-            "radial-gradient(circle at 50% 55%, rgba(60,255,197,0.08) 0%, transparent 55%)",
+            "radial-gradient(circle at 50% 60%, rgba(60,255,197,0.08) 0%, transparent 55%)",
+            "radial-gradient(circle at 50% 60%, rgba(60,255,197,0.2) 0%, transparent 55%)",
+            "radial-gradient(circle at 50% 60%, rgba(60,255,197,0.08) 0%, transparent 55%)",
           ],
         }}
         transition={{ duration: DURATION, repeat: Infinity, ease: "easeInOut" }}
         aria-hidden="true"
       />
 
-      {/* Top-right kit pill */}
-      <motion.div
-        className="absolute top-3 end-3 z-20 flex items-center gap-1 px-1.5 py-0.5 rounded-[3px] bg-white/12 backdrop-blur-sm border border-white/25"
-        animate={{ opacity: [0, 1, 1, 0.3] }}
-        transition={{
-          duration: DURATION,
-          times: [0, 0.08, 0.88, 0.98],
-          repeat: Infinity,
-        }}
-      >
-        <span className="w-[3px] h-[3px] rounded-full bg-brand-green" />
-        <span className="text-[6px] font-mono uppercase tracking-[0.2em] text-white font-semibold">
-          Brand · 2026
-        </span>
-      </motion.div>
-
-      {/* Main illustration */}
-      <div className="absolute inset-0 flex items-center justify-center pt-7 pb-3 px-3">
-        <svg
-          viewBox="0 0 140 110"
-          className="w-full h-full"
-          preserveAspectRatio="xMidYMid meet"
-          aria-hidden="true"
-        >
-          <defs>
-            {/* Thumb-hole cutout */}
-            <mask id="palette-mask">
-              <rect x="0" y="0" width="140" height="110" fill="white" />
-              <ellipse cx="32" cy="66" rx="7.5" ry="5.5" fill="black" />
-            </mask>
-            {/* Soft drop shadow */}
-            <filter id="palette-shadow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" />
-              <feOffset dx="0" dy="1.5" result="offsetblur" />
-              <feComponentTransfer>
-                <feFuncA type="linear" slope="0.35" />
-              </feComponentTransfer>
-              <feMerge>
-                <feMergeNode />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-
-          {/* ─ Palette shape (kidney-bean) ─ */}
-          <motion.g
-            filter="url(#palette-shadow)"
-            initial={false}
-            animate={{ opacity: [0, 1, 1, 0], scale: [0.9, 1, 1, 1] }}
-            transition={{
-              duration: DURATION,
-              times: [0, 0.06, 0.96, 1],
-              repeat: Infinity,
-              ease: [0.22, 1, 0.36, 1],
+      {/* Stage — the palette sits in the lower center */}
+      <div className="absolute inset-0 flex items-end justify-center pt-8 pb-4 px-3">
+        <div className="relative w-[82%] aspect-[5/3]">
+          {/* ── Palette oval ── */}
+          <div
+            className="absolute inset-0 rounded-[50%] bg-[#F3E4CC]"
+            style={{
+              boxShadow:
+                "0 10px 24px rgba(0,0,0,0.22), inset 0 -4px 8px rgba(180,150,100,0.25), inset 0 3px 6px rgba(255,255,255,0.5)",
             }}
-            style={{ transformOrigin: "70px 60px" }}
-          >
-            <ellipse
-              cx="70"
-              cy="62"
-              rx="52"
-              ry="28"
-              fill="#F3E4CC"
-              mask="url(#palette-mask)"
-            />
-            {/* Subtle highlight on palette */}
-            <ellipse
-              cx="70"
-              cy="55"
-              rx="42"
-              ry="4"
-              fill="#FFFFFF"
-              opacity="0.3"
-            />
-            {/* Palette edge shading */}
-            <ellipse
-              cx="70"
-              cy="62"
-              rx="52"
-              ry="28"
-              fill="none"
-              stroke="#D9C5A3"
-              strokeWidth="0.8"
-              mask="url(#palette-mask)"
-            />
-          </motion.g>
+          />
+          {/* Top highlight on palette */}
+          <div
+            className="absolute rounded-full bg-white/50 pointer-events-none"
+            style={{
+              left: "12%",
+              top: "6%",
+              width: "60%",
+              height: "8%",
+              filter: "blur(2px)",
+            }}
+          />
+          {/* Thumb hole — matches card bg, looks like a real cutout */}
+          <div
+            className="absolute rounded-[50%] bg-brand-blue"
+            style={{
+              left: "6%",
+              top: "38%",
+              width: "13%",
+              height: "22%",
+              boxShadow:
+                "inset 0 2px 3px rgba(0,0,0,0.4), 0 1px 0 rgba(255,255,255,0.3)",
+            }}
+          />
 
-          {/* ─ Paint dollops — pop in sequentially ─ */}
+          {/* ── Paint dollops ── */}
           {dollops.map((d, i) => (
-            <motion.g
-              key={i}
-              initial={false}
-              animate={{
-                opacity: [0, 0, 1, 1, 0],
-                scale: [0, 0, 1.1, 1, 1],
+            <div
+              key={`dollop-${i}`}
+              className="absolute"
+              style={{
+                left: d.left,
+                top: d.top,
+                width: "16%",
+                height: "22%",
               }}
-              transition={{
-                duration: DURATION,
-                times: [
-                  0,
-                  0.08 + i * 0.02,
-                  0.14 + i * 0.02,
-                  0.95,
-                  1,
-                ],
-                repeat: Infinity,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              style={{ transformOrigin: `${d.cx}px ${d.cy}px` }}
             >
-              {/* Dollop base — slightly irregular */}
-              <ellipse cx={d.cx} cy={d.cy} rx="6.5" ry="5" fill={d.color} />
-              {/* Glossy highlight */}
-              <ellipse
-                cx={d.cx - 1.5}
-                cy={d.cy - 1.5}
-                rx="2.2"
-                ry="1.4"
-                fill="#FFFFFF"
-                opacity="0.55"
-              />
-            </motion.g>
-          ))}
-
-          {/* ─ Dollop ripple — wobble when brush dips ─ */}
-          {dollops.map((d, i) => {
-            // Each dollop's dip window in the loop
-            const tStart = 1 / (totalKeys - 1) + i * (3 / (totalKeys - 1));
-            const tDip = 2 / (totalKeys - 1) + i * (3 / (totalKeys - 1));
-            const tEnd = 3 / (totalKeys - 1) + i * (3 / (totalKeys - 1));
-            return (
-              <motion.circle
-                key={`ripple-${i}`}
-                cx={d.cx}
-                cy={d.cy}
-                r="6"
-                fill="none"
-                stroke={d.color}
-                strokeWidth="1"
-                initial={false}
+              {/* Ripple ring — pulses when tip matches this color */}
+              <motion.div
+                className="absolute inset-0 rounded-[50%] border"
+                style={{ borderColor: d.color }}
                 animate={{
-                  opacity: [0, 0, 0.6, 0, 0],
-                  r: [6, 6, 11, 14, 14],
+                  opacity: [0, 0.7, 0],
+                  scale: [1, 1.8, 2.2],
                 }}
                 transition={{
-                  duration: DURATION,
-                  times: [0, tStart, tDip, tEnd, 1],
+                  duration: 1.2,
+                  delay: (i / dollops.length) * DURATION,
                   repeat: Infinity,
+                  repeatDelay: DURATION - 1.2,
                   ease: "easeOut",
                 }}
               />
-            );
-          })}
+              {/* Dollop base */}
+              <motion.div
+                className="absolute inset-0 rounded-[50%]"
+                style={{
+                  backgroundColor: d.color,
+                  boxShadow:
+                    "0 2px 4px rgba(0,0,0,0.25), inset 1px 2px 2px rgba(255,255,255,0.35)",
+                }}
+                animate={{
+                  scale: [1, 1.18, 1],
+                }}
+                transition={{
+                  duration: 0.8,
+                  delay: (i / dollops.length) * DURATION,
+                  repeat: Infinity,
+                  repeatDelay: DURATION - 0.8,
+                  ease: "easeInOut",
+                }}
+              />
+              {/* Glossy highlight */}
+              <div
+                className="absolute rounded-full bg-white/55 pointer-events-none"
+                style={{
+                  left: "22%",
+                  top: "18%",
+                  width: "30%",
+                  height: "22%",
+                  filter: "blur(0.5px)",
+                }}
+              />
+            </div>
+          ))}
 
-          {/* ─ Paint drip — falls under brush mid-loop ─ */}
-          <motion.g
-            initial={false}
+          {/* ── Brush — diagonal, static position, over top-right dollop ── */}
+          <div
+            className="absolute pointer-events-none"
+            style={{
+              left: "28%",
+              top: "-60%",
+              width: "80%",
+              height: "10%",
+              transform: "rotate(35deg)",
+              transformOrigin: "left center",
+            }}
+          >
+            {/* Wooden handle */}
+            <div
+              className="absolute rounded-full"
+              style={{
+                left: "0%",
+                top: "30%",
+                width: "60%",
+                height: "40%",
+                background:
+                  "linear-gradient(to bottom, #D4A574 0%, #C69264 40%, #A67544 100%)",
+                boxShadow: "0 1px 2px rgba(0,0,0,0.3)",
+              }}
+            />
+            {/* Handle tail cap */}
+            <div
+              className="absolute rounded-full"
+              style={{
+                left: "-2%",
+                top: "25%",
+                width: "6%",
+                height: "50%",
+                background: "#8F5F38",
+              }}
+            />
+            {/* Silver ferrule */}
+            <div
+              className="absolute rounded-[2px]"
+              style={{
+                left: "58%",
+                top: "18%",
+                width: "14%",
+                height: "64%",
+                background:
+                  "linear-gradient(to bottom, #E5E8ED 0%, #C4C8CE 50%, #9AA0A8 100%)",
+                boxShadow: "0 1px 2px rgba(0,0,0,0.25)",
+              }}
+            />
+            {/* Ferrule crimp lines */}
+            <div
+              className="absolute"
+              style={{
+                left: "60%",
+                top: "22%",
+                width: "10%",
+                height: "1px",
+                background: "#6B7078",
+              }}
+            />
+            <div
+              className="absolute"
+              style={{
+                left: "60%",
+                top: "75%",
+                width: "10%",
+                height: "1px",
+                background: "#6B7078",
+              }}
+            />
+            {/* Bristles — tapered */}
+            <div
+              className="absolute"
+              style={{
+                left: "72%",
+                top: "10%",
+                width: "22%",
+                height: "80%",
+                background:
+                  "linear-gradient(to right, #F0DCB6 0%, #E5CFA3 60%, #D9C08A 100%)",
+                clipPath: "polygon(0% 0%, 100% 30%, 100% 70%, 0% 100%)",
+              }}
+            />
+            {/* Paint tip — color cycles through dollop colors */}
+            <motion.div
+              className="absolute rounded-full"
+              style={{
+                left: "90%",
+                top: "18%",
+                width: "14%",
+                height: "64%",
+                filter: "drop-shadow(0 2px 3px rgba(0,0,0,0.3))",
+              }}
+              animate={{
+                backgroundColor: [...tipColorKeys, tipColorKeys[0]],
+              }}
+              transition={{
+                duration: DURATION,
+                times: [...tipColorTimes, 1],
+                repeat: Infinity,
+              }}
+            />
+          </div>
+
+          {/* ── Paint drop — falls from brush tip periodically ── */}
+          <motion.div
+            className="absolute rounded-full"
+            style={{
+              left: "75%",
+              top: "-18%",
+              width: "4%",
+              height: "6%",
+            }}
             animate={{
+              backgroundColor: [...tipColorKeys, tipColorKeys[0]],
               opacity: [0, 0, 1, 1, 0, 0],
-              y: [0, 0, 0, 8, 14, 14],
+              y: [0, 0, 0, 14, 24, 24],
             }}
             transition={{
               duration: DURATION,
-              times: [0, 0.45, 0.48, 0.58, 0.64, 1],
+              times: [0, 0.45, 0.5, 0.62, 0.7, 1],
               repeat: Infinity,
               ease: "easeIn",
             }}
-          >
-            <circle cx="73" cy="42" r="1.4" fill="#3CFFC5" />
-          </motion.g>
-
-          {/* ─ Brush — compound group that travels between dollops ─ */}
-          <motion.g
-            initial={false}
-            animate={{
-              x: brushX,
-              y: brushY,
-              opacity: [0, 1, ...Array(totalKeys - 3).fill(1), 1, 0],
-            }}
-            transition={{
-              duration: DURATION,
-              times: brushTimes,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            {/* Brush body — rotated so the tip points down-left to the palette */}
-            <g transform="rotate(-35)">
-              {/* Wooden handle */}
-              <rect
-                x="-34"
-                y="-1.8"
-                width="30"
-                height="3.6"
-                rx="1.2"
-                fill="#C69264"
-              />
-              {/* Handle dark stripe */}
-              <rect
-                x="-34"
-                y="-1.8"
-                width="30"
-                height="0.8"
-                fill="#A67544"
-              />
-              {/* Handle tail tip */}
-              <circle cx="-34" cy="0" r="1.8" fill="#C69264" />
-              {/* Silver ferrule */}
-              <rect
-                x="-4.5"
-                y="-2.8"
-                width="5"
-                height="5.6"
-                rx="0.8"
-                fill="#C4C8CE"
-              />
-              <rect
-                x="-4.5"
-                y="-2.8"
-                width="5"
-                height="1"
-                fill="#E5E8ED"
-              />
-              <rect
-                x="-4.5"
-                y="1.8"
-                width="5"
-                height="1"
-                fill="#9AA0A8"
-              />
-              {/* Bristles — tapered shape */}
-              <path
-                d="M0.5 -2.2 L8 -1 L8.5 1 L0.5 2.2 Z"
-                fill="#F0DCB6"
-              />
-              {/* Bristle strokes */}
-              <line x1="2" y1="-1.6" x2="7.5" y2="-0.6" stroke="#D9C08A" strokeWidth="0.3" />
-              <line x1="2" y1="1.6" x2="7.5" y2="0.6" stroke="#D9C08A" strokeWidth="0.3" />
-            </g>
-            {/* Paint on the tip — color swaps as brush dips different dollops */}
-            <motion.circle
-              r="2.8"
-              cy="0"
-              cx="0"
-              initial={false}
-              animate={{ fill: tipColors }}
-              transition={{
-                duration: DURATION,
-                times: brushTimes,
-                repeat: Infinity,
-              }}
-              style={{
-                transform: "translate(4px, 3.5px)",
-              }}
-            />
-          </motion.g>
-        </svg>
+          />
+        </div>
       </div>
     </div>
   );
@@ -639,14 +584,14 @@ function MotionAnimation() {
         </div>
 
         {/* Transport + meta strip */}
-        <div className="shrink-0 flex items-center justify-between gap-2 px-2 py-1 border-b border-white/[0.06]">
-          <div className="flex items-center gap-1.5">
+        <div className="shrink-0 flex items-center justify-between gap-2 px-2.5 py-1.5 border-b border-white/[0.06]">
+          <div className="flex items-center gap-2">
             {/* Stop */}
-            <span className="w-[6px] h-[6px] bg-white/50 rounded-[1px]" />
+            <span className="w-[9px] h-[9px] bg-white/70 rounded-[1.5px]" />
             {/* Play — brand-green triangle, glowing */}
             <motion.span
               className="inline-block"
-              animate={{ opacity: [1, 0.75, 1] }}
+              animate={{ opacity: [1, 0.7, 1], scale: [1, 1.08, 1] }}
               transition={{
                 duration: 1.2,
                 repeat: Infinity,
@@ -655,21 +600,21 @@ function MotionAnimation() {
               style={{
                 width: 0,
                 height: 0,
-                borderLeft: "8px solid #3CFFC5",
-                borderTop: "5px solid transparent",
-                borderBottom: "5px solid transparent",
-                filter: "drop-shadow(0 0 5px rgba(60,255,197,0.6))",
+                borderLeft: "12px solid #3CFFC5",
+                borderTop: "7.5px solid transparent",
+                borderBottom: "7.5px solid transparent",
+                filter: "drop-shadow(0 0 6px rgba(60,255,197,0.75))",
               }}
             />
             {/* Pause */}
-            <span className="flex items-center gap-[1.5px]">
-              <span className="w-[1.5px] h-[6px] bg-white/50" />
-              <span className="w-[1.5px] h-[6px] bg-white/50" />
+            <span className="flex items-center gap-[2.5px]">
+              <span className="w-[2.5px] h-[10px] bg-white/70 rounded-[1px]" />
+              <span className="w-[2.5px] h-[10px] bg-white/70 rounded-[1px]" />
             </span>
           </div>
-          <div className="flex items-center gap-2 text-[5.5px] font-mono text-white/45 tabular-nums">
+          <div className="flex items-center gap-2 text-[6.5px] font-mono text-white/50 tabular-nums">
             <span>1920×1080</span>
-            <span className="text-white/20">·</span>
+            <span className="text-white/25">·</span>
             <span>24fps</span>
           </div>
         </div>
