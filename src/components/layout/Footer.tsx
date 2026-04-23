@@ -83,30 +83,29 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="pt-4 md:pt-6 pb-10 md:pb-14 bg-surface">
-      <div className="max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="relative rounded-[36px] md:rounded-[48px] bg-ink text-white overflow-hidden"
-        >
-          {/* Colour splashes */}
-          <div
-            className="absolute top-[-140px] right-[6%] w-[520px] h-[520px] rounded-full bg-brand-blue/[0.22] blur-3xl pointer-events-none"
-            aria-hidden="true"
-          />
-          <div
-            className="absolute bottom-[-160px] left-[4%] w-[460px] h-[460px] rounded-full bg-brand-green/[0.14] blur-3xl pointer-events-none"
-            aria-hidden="true"
-          />
-          <div
-            className="absolute top-[40%] left-[38%] w-[320px] h-[320px] rounded-full bg-brand-blue/[0.08] blur-3xl pointer-events-none"
-            aria-hidden="true"
-          />
+    <footer className="relative bg-ink text-white overflow-hidden">
+      {/* Colour splashes */}
+      <div
+        className="absolute top-[-160px] right-[8%] w-[600px] h-[600px] rounded-full bg-brand-blue/[0.22] blur-3xl pointer-events-none"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute bottom-[-200px] left-[6%] w-[520px] h-[520px] rounded-full bg-brand-green/[0.14] blur-3xl pointer-events-none"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute top-[30%] left-[42%] w-[360px] h-[360px] rounded-full bg-brand-blue/[0.08] blur-3xl pointer-events-none"
+        aria-hidden="true"
+      />
 
-          <div className="relative z-10 p-10 md:p-14 lg:p-16">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        className="relative z-10 max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16 py-14 md:py-20"
+      >
+        <div>
             {/* Top row — brand + availability */}
             <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 md:gap-10 mb-12 md:mb-14">
               <div className="max-w-lg">
@@ -190,8 +189,7 @@ export default function Footer() {
               </div>
             </div>
           </div>
-        </motion.div>
-      </div>
+      </motion.div>
     </footer>
   );
 }
