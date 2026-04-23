@@ -3,7 +3,7 @@
 import { forwardRef, ReactNode, ComponentPropsWithoutRef } from "react";
 import Link from "next/link";
 
-type Variant = "primary" | "secondary" | "ghost" | "dark";
+type Variant = "primary" | "secondary" | "ghost" | "dark" | "accent";
 type Size = "sm" | "md" | "lg";
 
 const variants: Record<Variant, string> = {
@@ -15,6 +15,8 @@ const variants: Record<Variant, string> = {
     "bg-transparent text-ink hover:bg-black/[0.04]",
   dark:
     "bg-ink text-white hover:bg-black shadow-sm hover:shadow-[0_12px_30px_-10px_rgba(0,0,0,0.5)]",
+  accent:
+    "bg-brand-green text-ink hover:bg-brand-green-dim shadow-sm hover:shadow-[0_12px_30px_-10px_rgba(60,255,197,0.6)]",
 };
 
 const sizes: Record<Size, string> = {

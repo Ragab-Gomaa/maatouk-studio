@@ -73,7 +73,7 @@ export default function ContactCTASection() {
               </p>
 
               <div className="flex flex-wrap items-center gap-3">
-                <Button href="/contact" variant="dark" size="lg" withArrow>
+                <Button href="/contact" variant="accent" size="lg" withArrow>
                   {t("Start your project", "ابدأ مشروعك")}
                 </Button>
                 <a
