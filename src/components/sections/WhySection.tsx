@@ -11,13 +11,15 @@ type Principle = {
 
 const principles: Principle[] = [
   {
-    // Target — strategy as aim
+    // Chess knight — strategic thinking
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
-        <circle cx="12" cy="12" r="9" />
-        <circle cx="12" cy="12" r="5" />
-        <circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none" />
-      </svg>
+      <span
+        className="text-[22px] leading-none"
+        style={{ fontVariantEmoji: "text" }}
+        aria-hidden="true"
+      >
+        ♞
+      </span>
     ),
     title: { en: "Strategy first", ar: "استراتيجية أولاً" },
     body: {
@@ -26,13 +28,21 @@ const principles: Principle[] = [
     },
   },
   {
-    // Hourglass — time/patience/craft
+    // Analog clock with hands — time/patience
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-        <path d="M7 3h10" />
-        <path d="M7 21h10" />
-        <path d="M8 3v4c0 1.8 1.3 3 4 5 2.7-2 4-3.2 4-5V3" />
-        <path d="M8 21v-4c0-1.8 1.3-3 4-5 2.7 2 4 3.2 4 5v4" />
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="w-5 h-5"
+      >
+        <circle cx="12" cy="12" r="9" />
+        <line x1="12" y1="12" x2="8.5" y2="9" />
+        <line x1="12" y1="12" x2="15.5" y2="7.5" />
+        <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none" />
       </svg>
     ),
     title: { en: "Quality before speed", ar: "الجودة قبل السرعة" },
@@ -42,14 +52,19 @@ const principles: Principle[] = [
     },
   },
   {
-    // Four connected nodes — full-stack pipeline
+    // Double check — delivered & confirmed, end-to-end
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
-        <circle cx="5" cy="5" r="2.5" />
-        <circle cx="19" cy="5" r="2.5" />
-        <circle cx="5" cy="19" r="2.5" />
-        <circle cx="19" cy="19" r="2.5" />
-        <path d="M7.5 5H16.5M5 7.5V16.5M7.5 19H16.5M19 7.5V16.5" strokeLinecap="round" />
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="w-5 h-5"
+      >
+        <path d="M2 12 L6 16 L14 8" />
+        <path d="M10 14 L12 16 L22 6" />
       </svg>
     ),
     title: { en: "Full-stack delivery", ar: "تسليم شامل" },
@@ -59,13 +74,18 @@ const principles: Principle[] = [
     },
   },
   {
-    // Ascending bars — growth, scale
+    // Ascending staircase — growth, scale
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="w-5 h-5">
-        <path d="M4 21V15" />
-        <path d="M10 21V11" />
-        <path d="M16 21V7" />
-        <path d="M22 21V3" />
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="w-5 h-5"
+      >
+        <path d="M3 20 H8 V16 H13 V12 H18 V8 H22" />
       </svg>
     ),
     title: { en: "Built to grow", ar: "مبني للنموّ" },

@@ -8,32 +8,32 @@ const steps = [
     num: "01",
     title: { en: "Discover", ar: "اكتشاف" },
     body: {
-      en: "We listen first. Research, audit, positioning — we understand the business before we design a pixel.",
-      ar: "نستمع أولاً. بحث، تدقيق، تموضع — نفهم العمل قبل أن نصمّم بكسلاً واحداً.",
+      en: "We listen first. Research, audit, positioning — we understand the business, the market, and the audience before we draw anything.",
+      ar: "نُنصت أولاً. بحثٌ، تدقيقٌ، وتموضع — نفهم العمل والسوق والجمهور قبل أن نرسم شيئاً.",
     },
   },
   {
     num: "02",
     title: { en: "Define", ar: "تعريف" },
     body: {
-      en: "Insights turn into direction. We lock the strategy, the voice, and the visual territory before moving forward.",
-      ar: "الرؤى تتحول إلى اتجاه. نثبّت الاستراتيجية والصوت والأفق البصري قبل التقدم.",
+      en: "Understanding turns into direction. A clear strategy, a defined voice, a visual decision — we agree on everything before we move.",
+      ar: "نُحوّل الفهم إلى اتجاه. استراتيجيةٌ واضحة، صوتٌ محدّد، وقرارٌ بصري — نتّفق على كل شيء قبل أن نتقدّم.",
     },
   },
   {
     num: "03",
     title: { en: "Design", ar: "تصميم" },
     body: {
-      en: "Ideas take form. Identity, motion, and product come together in sync — always designed, always built.",
-      ar: "الأفكار تتجسّد. الهوية والموشن والمنتج تتناغم — مُصممة دائماً، ومُصنّعة دائماً.",
+      en: "Ideas take shape. Identity, motion, and product move together in one track — no gap between stages.",
+      ar: "تأخذ الأفكار شكلها. الهوية، الموشن، والمنتج تتناغم في مسارٍ واحد — بلا فجوة بين المراحل.",
     },
   },
   {
     num: "04",
     title: { en: "Deliver", ar: "تسليم" },
     body: {
-      en: "We ship. Real files, real code, real systems — with guidelines that let the work keep performing.",
-      ar: "نُطلق. ملفات حقيقية، كود حقيقي، أنظمة حقيقية — مع دلائل تُبقي العمل يؤدي بعد التسليم.",
+      en: "We ship what works. Ready files, shipped code, documented systems — performance lasts past launch, without us hovering.",
+      ar: "نُسلّم ما يعمل. ملفاتٌ جاهزة، كودٌ منشور، أنظمةٌ موثّقة — يستمرّ الأداء بعد الإطلاق بلا إشرافٍ منّا.",
     },
   },
 ];
@@ -67,8 +67,8 @@ export default function ProcessSection() {
           </div>
           <p className="text-base md:text-lg text-ink-soft leading-relaxed max-w-lg lg:pb-3">
             {t(
-              "Every engagement follows four clear phases. You see progress at each one — no surprises, no drift.",
-              "كل التزام يسير في أربع مراحل واضحة. ترى التقدم في كل واحدة — بلا مفاجآت، بلا انحراف."
+              "Four phases, one outcome. You see progress at every step — no surprises, no ambiguity.",
+              "أربعُ مراحل، نتيجةٌ واحدة. ترى التقدّم في كل خطوة — بلا مفاجآت، بلا ضبابية."
             )}
           </p>
         </motion.div>

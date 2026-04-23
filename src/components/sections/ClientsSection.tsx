@@ -21,7 +21,7 @@ export default function ClientsSection() {
   const { t } = useTranslation();
 
   return (
-    <section className="py-10 md:py-14 bg-surface">
+    <section className="pt-2 md:pt-4 pb-10 md:pb-14 bg-surface">
       <div className="max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
         <div className="studio-card rounded-[28px] md:rounded-[36px] p-8 md:p-12 lg:p-14">
           <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-12 mb-10 md:mb-12">
@@ -51,8 +51,14 @@ export default function ClientsSection() {
             className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4"
           >
             {clients.map((c) => {
-              const widthClass =
-                c.ratio > 2.5 ? "max-w-[180px]" : c.ratio > 1.3 ? "max-w-[150px]" : "max-w-[80px]";
+              // Wide, horizontal logos (text + mark side by side) stay modest in height.
+              // Square / tall logos scale up so they read at a similar optical weight.
+              const sizeClass =
+                c.ratio > 2.5
+                  ? "h-10 md:h-11 max-w-[180px]"
+                  : c.ratio > 1.3
+                  ? "h-11 md:h-12 max-w-[150px]"
+                  : "h-14 md:h-16 max-w-[120px]";
               return (
                 <motion.li
                   key={c.name}
@@ -68,7 +74,7 @@ export default function ClientsSection() {
                   <img
                     src={c.logo}
                     alt={`${c.name} logo`}
-                    className={`w-full ${widthClass} h-10 md:h-11 object-contain transition-opacity duration-500 group-hover:opacity-0`}
+                    className={`w-full ${sizeClass} object-contain transition-opacity duration-500 group-hover:opacity-0`}
                     style={{ filter: "grayscale(1) opacity(0.55)" }}
                     loading="lazy"
                   />
@@ -77,7 +83,7 @@ export default function ClientsSection() {
                     src={c.logo}
                     alt=""
                     aria-hidden="true"
-                    className={`absolute w-full ${widthClass} h-10 md:h-11 object-contain opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none px-6`}
+                    className={`absolute w-full ${sizeClass} object-contain opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none px-6`}
                     loading="lazy"
                   />
                 </motion.li>
