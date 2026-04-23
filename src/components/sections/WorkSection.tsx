@@ -29,12 +29,8 @@ export default function WorkSection() {
               <span className="w-1.5 h-1.5 rounded-full bg-brand-blue" />
               {t("Selected work", "أعمال مختارة")}
             </span>
-            <h2 className={`font-lyon font-bold tracking-[-0.03em] text-4xl md:text-5xl lg:text-6xl max-w-2xl ${locale === "ar" ? "leading-[1.3]" : "leading-[0.95]"}`}>
-              {t("Things we", "أعمال")}
-              <br />
-              <span className="text-brand-blue italic">
-                {t("shipped recently.", "أطلقناها مؤخراً.")}
-              </span>
+            <h2 className={`font-lyon font-bold tracking-[-0.03em] text-4xl md:text-5xl lg:text-6xl max-w-2xl ${locale === "ar" ? "leading-[1.25]" : "leading-[1.05]"}`}>
+              {t("Recent launches.", "آخر ما أطلقناه.")}
             </h2>
           </div>
           <Link

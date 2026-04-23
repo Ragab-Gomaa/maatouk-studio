@@ -123,13 +123,12 @@ export default function WhySection() {
           <div>
             <span className="inline-flex items-center gap-2 pl-2 pr-4 py-1 bg-white/10 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold text-white/80 mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-brand-green" />
-              {t("Why Maatouk", "لماذا معتوق")}
+              {t("Principles", "مبادئنا")}
             </span>
-            <h2 className={`font-lyon font-bold tracking-[-0.03em] text-4xl md:text-5xl lg:text-6xl max-w-2xl ${locale === "ar" ? "leading-[1.3]" : "leading-[0.95]"}`}>
-              {t("Four principles,", "أربع مبادئ،")}
-              <br />
+            <h2 className={`font-lyon font-bold tracking-[-0.03em] text-4xl md:text-5xl lg:text-6xl max-w-2xl ${locale === "ar" ? "leading-[1.25]" : "leading-[1.05]"}`}>
+              {t("Why ", "لماذا ")}
               <span className="text-brand-green italic">
-                {t("one way of working.", "طريقة عمل واحدة.")}
+                {t("Maatouk?", "معتوق؟")}
               </span>
             </h2>
           </div>

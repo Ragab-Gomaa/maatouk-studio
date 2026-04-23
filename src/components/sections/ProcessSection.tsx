@@ -57,11 +57,10 @@ export default function ProcessSection() {
               <span className="w-1.5 h-1.5 rounded-full bg-brand-blue" />
               {t("Process", "المنهجية")}
             </span>
-            <h2 className={`font-lyon font-bold tracking-[-0.03em] text-4xl md:text-5xl lg:text-6xl max-w-2xl ${locale === "ar" ? "leading-[1.3]" : "leading-[0.95]"}`}>
-              {t("From insight", "من الرؤية")}
-              <br />
+            <h2 className={`font-lyon font-bold tracking-[-0.03em] text-4xl md:text-5xl lg:text-6xl max-w-2xl ${locale === "ar" ? "leading-[1.25]" : "leading-[1.05]"}`}>
+              {t("Four stages. ", "أربع مراحل. ")}
               <span className="text-brand-blue italic">
-                {t("to impact.", "إلى الأثر.")}
+                {t("One outcome.", "نتيجةٌ واحدة.")}
               </span>
             </h2>
           </div>
