@@ -88,7 +88,7 @@ export default function AboutPage() {
               hidden: {},
               visible: { transition: { staggerChildren: 0.12 } },
             }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-5"
+            className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6"
           >
             {values.map((v, i) => (
               <motion.article

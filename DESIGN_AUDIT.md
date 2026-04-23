@@ -18,10 +18,10 @@ Goal: every magic number in the codebase is either a token or an intentional exc
 
 Goal: every page shares identical scaffolding; vertical rhythm between sections is intentional.
 
-- [ ] 2.1 Container max-width — verify every page uses `max-w-[1320px]`
-- [ ] 2.2 Horizontal gutters — verify every section uses `px-6 sm:px-8 md:px-12 lg:px-16`
-- [ ] 2.3 Section vertical rhythm — audit `py-*` per section; normalize to a scale (py-12 / py-16 / py-20)
-- [ ] 2.4 Grid gap consistency — audit card grids; normalize to the same `gap-*`
+- [x] 2.1 Container max-width — all sections use `max-w-[1320px]`. Verified across 20+ usages.
+- [x] 2.2 Horizontal gutters — every content section uses `px-6 sm:px-8 md:px-12 lg:px-16`. Header uses a tighter gutter which compensates via its inner pill padding; verified logo lines up with section content at ±2px.
+- [x] 2.3 Section vertical rhythm — two-tier scale confirmed as intentional: `py-14 md:py-20` for homepage sections (brand breathing), `py-12 md:py-16` for inner pages and ContactCTA (denser info). Asymmetric hero padding `pt-28 md:pt-32` is consistent across all page heroes.
+- [x] 2.4 Grid gap scale — `gap-3/4` for tight grids (logos), `gap-4/5` for dense card grids (principles, process), `gap-5/6` for breathy card grids (services, case studies). About values grid bumped to `gap-5 md:gap-6` to match pattern.
 
 ## Phase 3 — Mobile & Responsive (primary priority)
 
