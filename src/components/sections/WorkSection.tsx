@@ -197,13 +197,11 @@ export default function WorkSection() {
               }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             >
-              <a
-                href={`https://vimeo.com/${sandah.vimeoId}`}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href={`/work/${sandah.slug}`}
                 aria-label={t(
-                  `Watch ${sandah.title.en} on Vimeo`,
-                  `شاهد ${sandah.title.ar} على Vimeo`
+                  `Open ${sandah.title.en} project`,
+                  `افتح مشروع ${sandah.title.ar}`
                 )}
                 className="group relative block overflow-hidden rounded-[24px] md:rounded-[28px] h-full bg-ink text-white focus:outline-none focus-visible:outline-2 focus-visible:outline-brand-green focus-visible:outline-offset-4"
               >
@@ -242,7 +240,7 @@ export default function WorkSection() {
                     </div>
                   </div>
                 </div>
-              </a>
+              </Link>
             </motion.article>
           </div>
         </motion.div>

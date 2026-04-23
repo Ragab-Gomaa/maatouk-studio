@@ -11,55 +11,67 @@ type Principle = {
 
 const principles: Principle[] = [
   {
+    // Target — strategy as aim
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
         <circle cx="12" cy="12" r="9" />
-        <path d="M12 7v5l3.5 2" strokeLinecap="round" />
+        <circle cx="12" cy="12" r="5" />
+        <circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none" />
       </svg>
     ),
     title: { en: "Strategy first", ar: "استراتيجية أولاً" },
     body: {
-      en: "Every project starts with research, positioning, and business logic — not moodboards. Beautiful work that doesn't perform is just decoration.",
-      ar: "كل مشروع يبدأ ببحث وتموضع ومنطق تجاري — لا بـ moodboards. العمل الجميل الذي لا يؤدّي وظيفته مجرد زخرفة.",
+      en: "Every project starts with questions, not templates. We understand the business, the audience, and the market — before we draw a single thing. Form without purpose is just decoration.",
+      ar: "كل مشروع يبدأ بأسئلة، لا بقوالب. نفهم العمل، الجمهور، والسوق — قبل أن نرسم شيئاً. الشكلُ بلا هدفٍ مجرّد زخرفة.",
     },
   },
   {
+    // Hourglass — time/patience/craft
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
-        <path d="M3 6h6M6 6v12M3 18h6" strokeLinecap="round" />
-        <path d="M15 18l3-12 3 12M16 14h4" strokeLinecap="round" strokeLinejoin="round" />
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+        <path d="M7 3h10" />
+        <path d="M7 21h10" />
+        <path d="M8 3v4c0 1.8 1.3 3 4 5 2.7-2 4-3.2 4-5V3" />
+        <path d="M8 21v-4c0-1.8 1.3-3 4-5 2.7 2 4 3.2 4 5v4" />
       </svg>
     ),
-    title: { en: "Bilingual by craft", ar: "ثنائي اللغة بالحرفية" },
+    title: { en: "Quality before speed", ar: "الجودة قبل السرعة" },
     body: {
-      en: "Arabic isn't a translation. It's a first draft, shaped with the same care as Latin — type pairings, layout, cultural nuance, all from scratch.",
-      ar: "العربية ليست ترجمة. هي مسوّدة أولى، تُصاغ بنفس العناية مثل اللاتينية — اقتران الخطوط، التخطيط، الفروق الثقافية، كلها من الصفر.",
+      en: "We promise better, not faster. Work that lasts needs time to breathe, to be reviewed, iterated, refined. We don't cut the road short.",
+      ar: "نعدك بالأفضل، لا بالأسرع. العمل الذي يبقى يحتاج وقتاً ليُراجَع، ويُكرَّر، ويُنقَّح. لا نختصر الطريق.",
     },
   },
   {
+    // Four connected nodes — full-stack pipeline
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
-        <rect x="3" y="3" width="18" height="18" rx="2" />
-        <path d="M3 9h18M9 3v18" />
+        <circle cx="5" cy="5" r="2.5" />
+        <circle cx="19" cy="5" r="2.5" />
+        <circle cx="5" cy="19" r="2.5" />
+        <circle cx="19" cy="19" r="2.5" />
+        <path d="M7.5 5H16.5M5 7.5V16.5M7.5 19H16.5M19 7.5V16.5" strokeLinecap="round" />
       </svg>
     ),
     title: { en: "Full-stack delivery", ar: "تسليم شامل" },
     body: {
-      en: "Strategy, identity, motion, and product — all in-house, one team. The brand you saw in the deck is the one that ships, without compromise.",
-      ar: "الاستراتيجية، الهوية، الموشن، والمنتج — كلها داخل الاستوديو، فريق واحد. الهوية التي وافقت عليها هي نفسها التي تنطلق، بلا تنازل.",
+      en: "From the first strategy to the last line of code — one team, one roof. What you saw in the deck is what reaches the user, with no compromise between stages.",
+      ar: "من أوّل استراتيجية إلى آخر سطر كود — فريقٌ واحد تحت سقفٍ واحد. ما تراه في العرض، هو ما يصل للمستخدم — بلا تنازل بين المراحل.",
     },
   },
   {
+    // Ascending bars — growth, scale
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
-        <path d="M3 17l6-8 5 6 7-10" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M16 5h5v5" strokeLinecap="round" strokeLinejoin="round" />
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="w-5 h-5">
+        <path d="M4 21V15" />
+        <path d="M10 21V11" />
+        <path d="M16 21V7" />
+        <path d="M22 21V3" />
       </svg>
     ),
-    title: { en: "Built to scale", ar: "مبني للتوسع" },
+    title: { en: "Built to grow", ar: "مبني للنموّ" },
     body: {
-      en: "We think in systems from day one. Components, tokens, guidelines — everything documented so the work keeps performing long after launch.",
-      ar: "نفكّر في أنظمة من اليوم الأول. مكونات، tokens، دلائل — كلها موثقة ليستمر العمل بالأداء طويلاً بعد الإطلاق.",
+      en: "We design with systems from day one — components, colors, documented rules. What we ship grows with you and doesn't need rebuilding a year later.",
+      ar: "نُصمّم بالأنظمة من اليوم الأول — مكوّنات، ألوان، قواعد موثّقة. ما نُسلّمه يكبُر معك، ولا يحتاج إعادة بناء بعد سنة.",
     },
   },
 ];
@@ -103,8 +115,8 @@ export default function WhySection() {
           </div>
           <p className="text-base md:text-lg text-white/65 leading-relaxed max-w-lg lg:pb-3">
             {t(
-              "How we work — and what you can count on, regardless of the brief.",
-              "كيف نعمل — وما يمكنك الاعتماد عليه، مهما كان الملف."
+              "How we think — and what we commit to, whatever the brief.",
+              "كيف نُفكّر — وما نُعِدك به، مهما اختلف المشروع."
             )}
           </p>
         </motion.div>
