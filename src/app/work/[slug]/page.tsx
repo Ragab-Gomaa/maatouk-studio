@@ -437,15 +437,15 @@ function VisualSystem({ project }: { project: CaseStudy }) {
             </div>
             <div className="grid grid-cols-5 gap-3">
               {swatches.map((s) => (
-                <div key={s.name}>
+                <div key={s.name} className="text-center">
                   <div
-                    className="w-full aspect-square rounded-2xl mb-2"
+                    className="w-full aspect-square rounded-2xl mb-3"
                     style={{
                       backgroundColor: s.color,
                       border: `1px solid ${project.palette.primary}22`,
                     }}
                   />
-                  <div className="text-[10px] opacity-60 truncate">{s.name}</div>
+                  <div className="text-[11px] opacity-60 leading-tight">{s.name}</div>
                 </div>
               ))}
             </div>
@@ -562,23 +562,17 @@ function LiveShowcase({ project }: { project: CaseStudy }) {
 
         {/* Browser frame with iframe */}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-8 items-end">
-          <BrowserFrame url={hostname} project={project}>
-            <iframe
-              src={project.liveUrl}
-              className="w-full h-[500px] md:h-[640px] bg-white"
-              loading="lazy"
-              title={`${project.title.en} live preview`}
-            />
-          </BrowserFrame>
+          <BrowserFrame
+            url={hostname}
+            project={project}
+            src={project.liveUrl}
+            title={`${project.title.en} live preview`}
+          />
 
-          <PhoneFrame>
-            <iframe
-              src={project.liveUrl}
-              className="w-full h-full bg-white"
-              loading="lazy"
-              title={`${project.title.en} mobile preview`}
-            />
-          </PhoneFrame>
+          <PhoneFrame
+            src={project.liveUrl}
+            title={`${project.title.en} mobile preview`}
+          />
         </div>
 
         <p className="text-xs text-center mt-6 opacity-50">
@@ -592,20 +586,31 @@ function LiveShowcase({ project }: { project: CaseStudy }) {
   );
 }
 
+/**
+ * Browser frame with a desktop-sized iframe (1440×900) scaled via CSS
+ * container queries to fit the responsive container. The site renders
+ * at true desktop resolution, then visually fits the frame.
+ */
 function BrowserFrame({
   url,
   project,
-  children,
+  src,
+  title,
 }: {
   url: string;
   project: CaseStudy;
-  children: React.ReactNode;
+  src: string;
+  title: string;
 }) {
+  const FRAME_W = 1440;
+  const FRAME_H = 900;
+
   return (
     <div
       className="rounded-2xl overflow-hidden shadow-2xl border"
       style={{ borderColor: `${project.palette.primary}22` }}
     >
+      {/* Chrome bar */}
       <div
         className="px-4 py-2.5 flex items-center gap-2 border-b"
         style={{
@@ -627,21 +632,72 @@ function BrowserFrame({
         </div>
         <span className="w-3 h-3 opacity-30" />
       </div>
-      {children}
+
+      {/* Iframe at true desktop resolution, scaled to fit container width */}
+      <div
+        className="relative w-full bg-white overflow-hidden"
+        style={{
+          aspectRatio: `${FRAME_W} / ${FRAME_H}`,
+          containerType: "inline-size",
+        }}
+      >
+        <iframe
+          src={src}
+          title={title}
+          loading="lazy"
+          className="absolute top-0 left-0 border-0"
+          style={{
+            width: `${FRAME_W}px`,
+            height: `${FRAME_H}px`,
+            transform: `scale(calc(100cqw / ${FRAME_W}))`,
+            transformOrigin: "top left",
+          }}
+        />
+      </div>
     </div>
   );
 }
 
-function PhoneFrame({ children }: { children: React.ReactNode }) {
+/**
+ * Phone frame with a mobile-sized iframe (390×844 — iPhone 14 viewport)
+ * scaled down to fit a visible phone shell. The site renders at true
+ * mobile resolution so the responsive layout looks like a real phone.
+ */
+function PhoneFrame({ src, title }: { src: string; title: string }) {
+  const FRAME_W = 390; // iPhone 14 viewport width
+  const FRAME_H = 844; // iPhone 14 viewport height
+  const VISIBLE_W = 260;
+  const SCALE = VISIBLE_W / FRAME_W;
+  const VISIBLE_H = FRAME_H * SCALE;
+
   return (
     <div
       className="hidden lg:block relative mx-auto bg-black rounded-[36px] p-2 shadow-2xl"
-      style={{ width: "260px", height: "550px" }}
+      style={{
+        width: `${VISIBLE_W + 16}px`,
+        height: `${VISIBLE_H + 16}px`,
+      }}
     >
-      <div className="relative w-full h-full bg-white rounded-[28px] overflow-hidden">
+      <div
+        className="relative w-full h-full bg-white rounded-[28px] overflow-hidden"
+      >
         {/* Phone notch */}
-        <div className="absolute top-2 left-1/2 -translate-x-1/2 h-4 w-20 rounded-full bg-black z-10" aria-hidden="true" />
-        {children}
+        <div
+          className="absolute top-2 left-1/2 -translate-x-1/2 h-4 w-20 rounded-full bg-black z-10"
+          aria-hidden="true"
+        />
+        <iframe
+          src={src}
+          title={title}
+          loading="lazy"
+          className="absolute top-0 left-0 border-0"
+          style={{
+            width: `${FRAME_W}px`,
+            height: `${FRAME_H}px`,
+            transform: `scale(${SCALE})`,
+            transformOrigin: "top left",
+          }}
+        />
       </div>
     </div>
   );
@@ -724,11 +780,14 @@ function VisualWalkthrough({ project }: { project: CaseStudy }) {
   const shots = project.shots;
   if (!shots) return null;
 
-  const items: { src: string; caption: string; aspect?: string }[] = [];
-  if (shots.desktopHome) items.push({ src: shots.desktopHome, caption: t("Storefront — desktop", "المتجر — سطح المكتب") });
-  if (shots.desktopInner) items.push({ src: shots.desktopInner, caption: t("Product page — desktop", "صفحة المنتج — سطح المكتب") });
-  if (shots.mobileHome) items.push({ src: shots.mobileHome, caption: t("Storefront — mobile", "المتجر — موبايل"), aspect: "aspect-[9/19]" });
-  if (shots.mobileInner) items.push({ src: shots.mobileInner, caption: t("Product page — mobile", "صفحة المنتج — موبايل"), aspect: "aspect-[9/19]" });
+  const items: { src: string; caption: string }[] = [];
+  if (shots.desktopHome) items.push({ src: shots.desktopHome, caption: t("Storefront", "المتجر") });
+  if (shots.desktopInner) items.push({ src: shots.desktopInner, caption: t("Product page", "صفحة المنتج") });
+  if (shots.extra) {
+    shots.extra.forEach((e) => {
+      items.push({ src: e.src, caption: t(e.caption.en, e.caption.ar) });
+    });
+  }
 
   if (!items.length) return null;
 
@@ -763,7 +822,7 @@ function VisualWalkthrough({ project }: { project: CaseStudy }) {
               transition={{ duration: 0.7, delay: i * 0.05 }}
               className="rounded-2xl overflow-hidden bg-black/20"
             >
-              <div className={item.aspect || "aspect-[16/10]"}>
+              <div className="aspect-[16/10]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={item.src}
