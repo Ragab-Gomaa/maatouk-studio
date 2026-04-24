@@ -379,10 +379,42 @@ export const caseStudies: CaseStudy[] = [
       },
     },
     shots: {
-      desktopHome: "/images/projects/dolcebello/home-desktop.png",
-      mobileHome: "/images/projects/dolcebello/home-mobile.png",
-      desktopInner: "/images/projects/dolcebello/inner-desktop.png",
-      mobileInner: "/images/projects/dolcebello/inner-mobile.png",
+      desktopHome: "/images/projects/dolcebello/home.png",
+      desktopInner: "/images/projects/dolcebello/product.png",
+      extra: [
+        {
+          src: "/images/projects/dolcebello/story.png",
+          caption: { en: "Our Story", ar: "قصّتنا" },
+        },
+        {
+          src: "/images/projects/dolcebello/offers.png",
+          caption: { en: "Seasonal creations", ar: "إبداعات موسميّة" },
+        },
+        {
+          src: "/images/projects/dolcebello/shop.png",
+          caption: { en: "Shop catalog", ar: "كتالوج المتجر" },
+        },
+        {
+          src: "/images/projects/dolcebello/checkout.png",
+          caption: { en: "Checkout flow", ar: "تدفّق الدفع" },
+        },
+        {
+          src: "/images/projects/dolcebello/admin-login.png",
+          caption: { en: "Admin sign-in", ar: "دخول لوحة الإدارة" },
+        },
+        {
+          src: "/images/projects/dolcebello/admin-dashboard.png",
+          caption: { en: "Admin dashboard", ar: "لوحة الإدارة" },
+        },
+        {
+          src: "/images/projects/dolcebello/admin-orders.png",
+          caption: { en: "Orders list", ar: "قائمة الطلبات" },
+        },
+        {
+          src: "/images/projects/dolcebello/admin-order-detail.png",
+          caption: { en: "Order detail", ar: "تفاصيل الطلب" },
+        },
+      ],
     },
     shortDescription: {
       en: "A premium luxury sweets storefront built for Kuwait's most refined gifting occasions.",
