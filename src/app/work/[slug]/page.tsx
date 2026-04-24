@@ -4,7 +4,12 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useTranslation } from "@/lib/LocaleContext";
-import { caseStudies, motionProjects, type CaseStudy } from "@/data/content";
+import {
+  caseStudies,
+  motionProjects,
+  type CaseStudy,
+  type MotionProject,
+} from "@/data/content";
 import Button from "@/components/ui/Button";
 import AnimatedNumber from "@/components/ui/AnimatedNumber";
 
@@ -32,6 +37,10 @@ export default function ProjectPage() {
   }
 
   if (motionProject) {
+    const sortedMotion = [...motionProjects].sort((a, b) => a.order - b.order);
+    const mIndex = sortedMotion.findIndex((m) => m.slug === motionProject.slug);
+    const nextMotion = sortedMotion[(mIndex + 1) % sortedMotion.length];
+
     return (
       <>
         <section
@@ -73,22 +82,7 @@ export default function ProjectPage() {
           </div>
         </section>
 
-        <section className="py-12 md:py-16 bg-surface text-center">
-          <div className="flex flex-wrap gap-3 justify-center">
-            <Button
-              href={`https://vimeo.com/${motionProject.vimeoId}`}
-              variant="primary"
-              size="md"
-              withArrow
-              external
-            >
-              {t("Watch on Vimeo", "شاهد على Vimeo")}
-            </Button>
-            <Button href="/work" variant="secondary" size="md">
-              {t("Back to work", "العودة للأعمال")}
-            </Button>
-          </div>
-        </section>
+        <NextMotion next={nextMotion} />
       </>
     );
   }
@@ -1143,6 +1137,87 @@ function NextCase({ next }: { next: CaseStudy }) {
           >
             {t(next.shortDescription.en, next.shortDescription.ar)}
           </p>
+        </Link>
+      </div>
+    </section>
+  );
+}
+
+/* ─────────────────────────── Next Motion ─────────────────────────── */
+
+function NextMotion({ next }: { next: MotionProject }) {
+  const { t, locale } = useTranslation();
+
+  return (
+    <section
+      className="py-16 md:py-24 text-white"
+      style={{ backgroundColor: next.color }}
+    >
+      <div className="max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
+        <Link
+          href={`/work/${next.slug}`}
+          className="group block focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-green"
+        >
+          <div className="text-[11px] font-semibold mb-6 opacity-60 uppercase tracking-wider">
+            {t("Next motion piece", "العمل التالي")}
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-8 lg:gap-12 items-center">
+            {/* Left: title + description + CTA */}
+            <div>
+              <h2
+                className={`font-lyon font-bold tracking-[-0.03em] mb-4 ${
+                  locale === "ar"
+                    ? "text-4xl md:text-6xl lg:text-7xl leading-[1.15]"
+                    : "text-[2.25rem] md:text-[3.5rem] lg:text-[5rem] leading-[0.95]"
+                }`}
+              >
+                {t(next.title.en, next.title.ar)}
+              </h2>
+              <p className="text-sm opacity-60 mb-5">
+                {t(next.client.en, next.client.ar)} · {next.year}
+              </p>
+              <p className="text-base md:text-lg text-white/75 leading-relaxed max-w-lg mb-7">
+                {t(next.description.en, next.description.ar)}
+              </p>
+              <span className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/15 border border-white/15 text-sm font-medium transition-all duration-300 group-hover:bg-white/25 group-hover:border-white/30">
+                {t("Watch next", "شاهد التالي")}
+                <svg
+                  viewBox="0 0 14 14"
+                  className="w-3.5 h-3.5 rtl-flip"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  aria-hidden="true"
+                >
+                  <path d="M3 7h8M8 4l3 3-3 3" />
+                </svg>
+              </span>
+            </div>
+
+            {/* Right: thumbnail with play */}
+            <div className="relative aspect-video rounded-2xl overflow-hidden bg-black shadow-2xl">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`https://vumbnail.com/${next.vimeoId}.jpg`}
+                alt={t(next.title.en, next.title.ar)}
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-16 h-16 rounded-full bg-white/95 flex items-center justify-center shadow-xl transition-transform duration-500 group-hover:scale-110">
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="w-6 h-6 text-ink ml-0.5"
+                    aria-hidden="true"
+                  >
+                    <polygon points="8,5 18,12 8,19" fill="currentColor" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
         </Link>
       </div>
     </section>
