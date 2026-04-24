@@ -42,7 +42,7 @@ export default function ContactCTASection() {
             aria-hidden="true"
           />
 
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-10 lg:gap-16 p-10 md:p-16 lg:p-20 items-end">
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-10 lg:gap-16 p-10 md:p-16 lg:p-20 items-center">
             {/* Left: pill + headline */}
             <div>
               <div className="kicker-pill kicker-pill-dark mb-8">
@@ -54,7 +54,7 @@ export default function ContactCTASection() {
                 className={`font-lyon font-bold tracking-[-0.035em] ${
                   locale === "ar"
                     ? "text-4xl md:text-5xl lg:text-[4.5rem] leading-[1.2]"
-                    : "text-[2.25rem] md:text-[2.75rem] lg:text-[3.25rem] xl:text-[3.5rem] leading-[1.1]"
+                    : "text-[2rem] md:text-[2.25rem] xl:text-[2.75rem] 2xl:text-[3rem] leading-[1.1]"
                 }`}
               >
                 {t("Let's build together", "لنبنِ معاً")}
