@@ -820,21 +820,17 @@ function VisualWalkthrough({ project }: { project: CaseStudy }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.7, delay: i * 0.05 }}
-              className="rounded-2xl overflow-hidden bg-black/20"
+              className="rounded-2xl overflow-hidden"
+              style={{ backgroundColor: project.palette.background }}
             >
-              <div className="aspect-[16/10]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={item.src}
-                  alt={item.caption}
-                  className="w-full h-full object-cover object-top"
-                  loading="lazy"
-                />
-              </div>
-              <figcaption
-                className="px-5 py-4 text-xs opacity-60"
-                style={{ backgroundColor: project.palette.background }}
-              >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={item.src}
+                alt={item.caption}
+                className="w-full h-auto block"
+                loading="lazy"
+              />
+              <figcaption className="px-5 py-4 text-xs opacity-60">
                 {item.caption}
               </figcaption>
             </motion.figure>
