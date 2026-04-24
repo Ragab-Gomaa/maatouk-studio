@@ -649,7 +649,7 @@ function BrowserFrame({
           style={{
             width: `${FRAME_W}px`,
             height: `${FRAME_H}px`,
-            transform: `scale(calc(100cqw / ${FRAME_W}))`,
+            transform: `scale(calc(100cqw / ${FRAME_W}px))`,
             transformOrigin: "top left",
           }}
         />
