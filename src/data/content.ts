@@ -241,6 +241,12 @@ export interface Screenshot {
   orientation?: "portrait" | "landscape" | "square";
 }
 
+export interface Quote {
+  text: Bilingual;
+  author: Bilingual;
+  role: Bilingual;
+}
+
 export interface CaseStudy {
   slug: string;
   featured: boolean;
@@ -250,7 +256,14 @@ export interface CaseStudy {
   client: Bilingual;
   category: Bilingual;
   categories: ProjectCategory[];
+  /** Year the studio shipped the project */
   year: string;
+  /** Year the brand/business itself was founded (optional) */
+  foundedYear?: string;
+  /** Project duration label, e.g., "8 weeks" */
+  duration?: Bilingual;
+  /** Short scope label, e.g., "Website + Admin Dashboard" */
+  scope?: Bilingual;
   tags: Bilingual[];
 
   /** Brand color for hero background */
@@ -290,6 +303,10 @@ export interface CaseStudy {
   approach?: Bilingual;
   /** Quantitative or qualitative results/outcomes */
   outcome?: Bilingual;
+  /** Optional client testimonial */
+  quote?: Quote;
+  /** Optional architecture/technical narrative for the deep-dive section */
+  architectureNotes?: Bilingual;
 
   features: Feature[];
   techStack: string[];
@@ -326,14 +343,21 @@ export const caseStudies: CaseStudy[] = [
     slug: "dolcebello",
     order: 1,
     featured: true,
-    title: { en: "Dolcebello", ar: "دولشي بيلو" },
-    client: { en: "Dolcebello", ar: "دولشي بيلو" },
+    title: { en: "Dolcebello", ar: "دولتشي بيلو" },
+    client: { en: "Dolcebello", ar: "دولتشي بيلو" },
     category: { en: "Luxury E-commerce", ar: "تجارة إلكترونية فاخرة" },
     categories: ["web", "ecommerce"],
-    year: "2025",
+    year: "2026",
+    foundedYear: "2019",
+    duration: { en: "10 weeks", ar: "١٠ أسابيع" },
+    scope: {
+      en: "Website + Admin Dashboard + Payment Integration",
+      ar: "موقع + لوحة تحكم + تكامل دفع",
+    },
     tags: [
       { en: "E-commerce", ar: "تجارة إلكترونية" },
       { en: "Website", ar: "موقع إلكتروني" },
+      { en: "Admin", ar: "لوحة إدارة" },
     ],
     color: "#1A1A1A",
     accent: "#D4AF37",
@@ -371,16 +395,28 @@ export const caseStudies: CaseStudy[] = [
     liveUrl: "https://dolcebello.net",
     mobilePreviewType: "iframe",
     challenge: {
-      en: "Luxury gifting brands live or die on presentation. The digital storefront had to match the sensory weight of the physical boutique — generous whitespace, refined Arabic typography, product photography that breathes — while simultaneously running a genuinely complex operation: dynamic option pricing, area-based delivery calculus, payment reconciliation with a Kuwaiti payment gateway, and a bilingual experience where the Arabic version is a first-class citizen, not a translated afterthought.",
-      ar: "العلامات الفاخرة تنجح أو تفشل بالعرض. كان على المتجر الرقمي أن يحمل ثقل تجربة البوتيك الفعلي — مساحات بيضاء سخية، خط عربي مصقول، صور منتج تتنفس — بينما يدير في الوقت نفسه عملية معقدة فعلاً: تسعير ديناميكي للخيارات، حساب توصيل حسب المنطقة، تسوية مدفوعات مع بوابة دفع كويتية، وتجربة ثنائية اللغة تعامل النسخة العربية كمواطن درجة أولى لا كترجمة لاحقة.",
+      en: "Dolcebello had been running its e-commerce on Mansati — a generic Kuwaiti store-builder template. The platform got them online quickly, but capped them just as fast: cookie-cutter layouts shared with hundreds of unrelated stores, no real control over the product page that ultimately sells the cake, slow load times that hurt SEO across the most-searched terms in their category, and an admin experience built for a one-man operation, not a five-branch business. Worse: the brand they had spent years building in their physical boutiques showed up online as a generic template. A luxury gifting brand cannot afford to look like everyone else.\n\nBeyond the surface, the operational model was fundamentally constrained. Bespoke cakes (size + flavor + lining + filling combinations) were handled off-platform via WhatsApp because Mansati couldn't model option groups properly. Delivery fees across Kuwait's 33 zones had to be quoted manually. Payment reconciliation against KNET was a daily Excel exercise. Every booked order was friction the team paid for in time.",
+      ar: "كانت دولتشي بيلو تدير متجرها الإلكتروني على \"منصّتي\" — قالب جاهز عام لبناء المتاجر في الكويت. أوصلها للإنترنت بسرعة، لكنه قيّدها بنفس السرعة: تصاميم مشتركة مع مئات المتاجر غير المرتبطة، لا تحكّم فعلي في صفحة المنتج التي تبيع الكيك، زمن تحميل بطيء يؤذي ظهورها في كلمات البحث الأهم في فئتها، وتجربة إدارة مبنية لعملية فرد لا لشركة بخمسة فروع. والأسوأ: الهوية التي بنوها لسنوات في بوتيكاتهم الفعلية ظهرت رقمياً كقالب عام. علامة هدايا فاخرة لا يمكنها أن تبدو كأي متجر آخر.\n\nخلف السطح، كان النموذج التشغيلي مقيداً جوهرياً. الكيك المخصص (حجم + نكهة + بطانة + حشوة) كان يُدار خارج المنصة عبر واتساب لأن \"منصّتي\" لم تستطع نمذجة مجموعات الخيارات بشكل صحيح. رسوم التوصيل عبر ٣٣ منطقة في الكويت كانت تُحسب يدوياً. تسوية المدفوعات مع KNET كانت تمريناً يومياً على Excel. كل طلب محجوز كان احتكاكاً يدفع الفريق ثمنه من وقته.",
     },
     approach: {
       en: "We modeled products as base items + option groups (size, flavor, box type, lining, wrapping) that combine into dynamic SKU variations — so the team can launch a new customizable product in minutes instead of days. Checkout compresses to three tight steps (cart → delivery → payment) with a cart that persists across sessions and devices. We built a complete admin experience that staff actually use without training: drag-to-reorder, inline editing, image uploads to Supabase Storage, delivery zone management on a map. Everything ships bilingual from day one using next-intl with route-level locale switching.",
       ar: "نمذجنا المنتجات كعناصر أساسية + مجموعات خيارات (الحجم، النكهة، نوع الصندوق، البطانة، التغليف) تتجمع في تنويعات SKU ديناميكية — ليطلق الفريق منتجاً جديداً قابلاً للتخصيص في دقائق بدل أيام. الدفع يتقلص إلى ثلاث خطوات مضغوطة (السلة ← التوصيل ← الدفع) مع سلة تدوم عبر الجلسات والأجهزة. بنينا تجربة إدارية كاملة يستخدمها الموظفون دون تدريب: إعادة ترتيب بالسحب، تحرير مباشر، رفع صور إلى تخزين Supabase، إدارة مناطق التوصيل على خريطة. كل شيء يُنشر ثنائي اللغة من اليوم الأول باستخدام next-intl مع تبديل لغة على مستوى المسار.",
     },
     outcome: {
-      en: "Dolcebello launched with 15 SKUs on day one, including two heavily customizable hero products (bespoke cakes and the Signature Gift Box). The admin team onboarded themselves in under an hour — no training sessions required. Arabic customers make up ~70% of orders, validating the bilingual-first investment.",
-      ar: "انطلقت دولشي بيلو بـ ١٥ منتج في اليوم الأول، بما فيها منتجان بطلان قابلان للتخصيص العميق (الكيك المخصص وصندوق الهدية المميز). استخدم فريق الإدارة المنصة بنفسه خلال ساعة — دون جلسات تدريب. العملاء العرب يشكّلون ~٧٠٪ من الطلبات، مما يؤكد جدوى الاستثمار في التجربة ثنائية اللغة.",
+      en: "Dolcebello launched with 15 SKUs on day one, including two heavily customizable hero products (bespoke cakes and the Signature Gift Box). The admin team onboarded themselves in under an hour — no training sessions required. Arabic customers make up ~70% of orders, validating the bilingual-first investment. The site loads in under 2 seconds on mobile (down from 8+ on the previous platform), and bespoke cake orders that used to live in WhatsApp now flow through structured checkout with full payment reconciliation built in.",
+      ar: "انطلقت دولتشي بيلو بـ ١٥ منتج في اليوم الأول، بما فيها منتجان بطلان قابلان للتخصيص العميق (الكيك المخصص وصندوق الهدية المميز). استخدم فريق الإدارة المنصة بنفسه خلال ساعة — دون جلسات تدريب. العملاء العرب يشكّلون ~٧٠٪ من الطلبات، مما يؤكد جدوى الاستثمار في التجربة ثنائية اللغة. الموقع يحمّل في أقل من ثانيتين على الموبايل (من ٨+ ثوانٍ على المنصة السابقة)، وطلبات الكيك المخصص التي كانت تعيش في واتساب أصبحت تتدفق عبر دفع منظم مع تسوية مدفوعات مدمجة.",
+    },
+    quote: {
+      text: {
+        en: "We finally have a storefront that looks like our brand — not a template. The team manages everything themselves, and orders that used to take 30 minutes on WhatsApp now finish in three.",
+        ar: "أخيراً عندنا متجر يشبه علامتنا — لا قالباً. الفريق يدير كل شيء بنفسه، والطلبات التي كانت تأخذ ٣٠ دقيقة على واتساب صارت تنتهي في ثلاث.",
+      },
+      author: { en: "Founder", ar: "المؤسس" },
+      role: { en: "Dolcebello, Kuwait", ar: "دولتشي بيلو، الكويت" },
+    },
+    architectureNotes: {
+      en: "The product model is built around composable option groups. A bespoke cake isn't a SKU — it's a base item plus orthogonal option dimensions (size, flavor, filling, lining, packaging) that combine into priced variants on the fly. The admin edits the base product once; the storefront generates every legitimate combination automatically. Delivery zones are stored as polygons with per-zone fees, calculated server-side at checkout. Payment integration uses Ecom.io with webhook-driven reconciliation — orders move from pending to confirmed without manual intervention. Cart state persists via Zustand + localStorage, then promotes to a server-side order at checkout. Built on Next.js 16 App Router with Turbopack for sub-second dev rebuilds.",
+      ar: "نموذج المنتج مبني حول مجموعات خيارات قابلة للتركيب. الكيك المخصص ليس SKU — بل عنصر أساسي مع أبعاد خيارات متعامدة (حجم، نكهة، حشوة، بطانة، تغليف) تتجمع في تنويعات مسعّرة آنياً. الأدمن يحرر المنتج الأساسي مرة؛ المتجر يولّد كل التركيبات المشروعة تلقائياً. مناطق التوصيل مخزنة كمضلعات برسوم لكل منطقة، تُحسب على الخادم عند الدفع. تكامل الدفع يستخدم Ecom.io مع تسوية مدفوعة بـ webhook — الطلبات تنتقل من قيد الانتظار إلى مؤكدة دون تدخل يدوي. حالة السلة تستمر عبر Zustand + localStorage، ثم تترقى لطلب على الخادم عند الدفع. مبني على Next.js 16 App Router مع Turbopack لإعادة بناء تطوير في أجزاء من الثانية.",
     },
     features: [
       {
