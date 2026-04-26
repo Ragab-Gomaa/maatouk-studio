@@ -218,13 +218,12 @@ export default function ServicesSection() {
                 {/* Bottom link — pushed to card bottom so all 3 cards align */}
                 <Link
                   href="/services"
-                  aria-label={t(
-                    `Learn more about ${s.title.en}`,
-                    `اعرف المزيد عن ${s.title.ar}`
-                  )}
                   className={`mt-auto inline-flex items-center gap-1.5 text-sm font-medium self-start ${a.link} group/link focus:outline-none focus-visible:outline-2 focus-visible:outline-current focus-visible:outline-offset-2 rounded-sm`}
                 >
-                  {t("Learn more", "اعرف المزيد")}
+                  {t(
+                    `More about ${s.title.en.toLowerCase()}`,
+                    `المزيد عن ${s.title.ar}`
+                  )}
                   <svg
                     className="w-3.5 h-3.5 rtl-flip transition-transform duration-300 group-hover/link:translate-x-0.5"
                     viewBox="0 0 14 14"

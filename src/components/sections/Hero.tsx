@@ -112,6 +112,7 @@ export default function Hero() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="hidden min-[800px]:flex items-center justify-center"
+            aria-hidden="true"
           >
             <ComposedMark />
           </motion.div>
