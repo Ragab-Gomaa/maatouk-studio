@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { useTranslation } from "@/lib/LocaleContext";
 import { caseStudies, motionProjects } from "@/data/content";
@@ -207,12 +208,12 @@ export default function WorkSection() {
                   </p>
 
                   <div className="mt-auto mb-4 md:mb-6 relative aspect-video rounded-2xl overflow-hidden bg-black transition-transform duration-700 group-hover:scale-[1.02]">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={`https://vumbnail.com/${sandah.vimeoId}.jpg`}
                       alt={sandah.title.en}
-                      className="absolute inset-0 w-full h-full object-cover"
-                      loading="lazy"
+                      fill
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                      className="object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                     <div className="absolute inset-0 flex items-center justify-center">
@@ -246,12 +247,12 @@ function LaptopMockup({ src, alt }: { src: string; alt: string }) {
         }}
       >
         <div className="relative rounded-[4px] md:rounded-[6px] overflow-hidden bg-black aspect-[16/10]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src={src}
             alt={alt}
-            loading="lazy"
-            className="absolute inset-0 w-full h-full object-cover object-top"
+            fill
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            className="object-cover object-top"
           />
         </div>
       </div>
@@ -283,12 +284,12 @@ function PhoneMockup({ src, alt }: { src: string; alt: string }) {
         }}
       >
         <div className="relative h-full w-full bg-black rounded-[18px] overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src={src}
             alt={alt}
-            loading="lazy"
-            className="absolute inset-0 w-full h-full object-cover object-top"
+            fill
+            sizes="160px"
+            className="object-cover object-top"
           />
           <div
             className="absolute top-1.5 left-1/2 -translate-x-1/2 h-3.5 w-12 rounded-full bg-black z-10"
