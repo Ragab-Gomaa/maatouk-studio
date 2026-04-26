@@ -262,7 +262,7 @@ function BrandingAnimation() {
         {/* ── File tab row ── */}
         <div className="shrink-0 h-[11px] flex items-stretch bg-[#353535] border-b border-black/50">
           <div className="flex items-center gap-1 px-1.5 bg-[#1E1E1E] border-r border-black/50">
-            <span className="text-[4.5px] text-white/40 leading-none">▣</span>
+            <span className="text-[4.5px] text-white/65 leading-none">▣</span>
             <span className="text-[5px] font-mono text-white/85 leading-none">
               maatouk-type.psd
             </span>
@@ -426,7 +426,7 @@ function BrandingAnimation() {
               />
 
               {/* Tiny size label above */}
-              <span className="absolute -top-[8px] left-0 text-[4.5px] font-mono text-white/60 tracking-wider">
+              <span className="absolute -top-[8px] left-0 text-[4.5px] font-mono text-white/75 tracking-wider">
                 Brand Guidelines · Pg 01
               </span>
             </div>
@@ -695,7 +695,7 @@ function MotionAnimation() {
                   className="absolute inset-y-0 w-[1px] bg-white/10"
                   style={{ left: `${(s / 8) * 100}%` }}
                 >
-                  <span className="text-[4.5px] font-mono text-white/40 absolute top-[1px] ps-[2px] tabular-nums">
+                  <span className="text-[4.5px] font-mono text-white/60 absolute top-[1px] ps-[2px] tabular-nums">
                     {s}s
                   </span>
                 </div>
