@@ -27,7 +27,7 @@ export default function Hero() {
       <div className="relative z-10 w-full max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
         <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] gap-12 lg:gap-16 xl:gap-20 items-center">
           {/* ── Left: text ── */}
-          <div>
+          <div className="max-w-2xl mx-auto lg:max-w-none lg:mx-0">
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
