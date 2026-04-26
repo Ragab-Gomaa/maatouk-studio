@@ -25,9 +25,9 @@ export default function Hero() {
       />
 
       <div className="relative z-10 w-full max-w-[1320px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
-        <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] gap-12 lg:gap-16 xl:gap-20 items-center">
+        <div className="grid grid-cols-1 min-[800px]:grid-cols-[1.15fr_1fr] gap-12 min-[800px]:gap-10 lg:gap-16 xl:gap-20 items-center">
           {/* ── Left: text ── */}
-          <div className="max-w-2xl mx-auto lg:max-w-none lg:mx-0">
+          <div>
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
@@ -52,8 +52,8 @@ export default function Hero() {
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               className={`font-lyon font-bold tracking-[-0.035em] text-ink mb-6 ${
                 locale === "ar"
-                  ? "text-[2.75rem] sm:text-[3.75rem] md:text-[5rem] lg:text-[5.75rem] xl:text-[6.5rem] leading-[1.15]"
-                  : "text-[2rem] sm:text-[2.75rem] md:text-[3.25rem] lg:text-[3.5rem] xl:text-[3.75rem] leading-[1.05]"
+                  ? "text-[2.75rem] sm:text-[3.75rem] md:text-[5rem] min-[800px]:text-[4rem] lg:text-[5.75rem] xl:text-[6.5rem] leading-[1.15]"
+                  : "text-[2rem] sm:text-[2.75rem] md:text-[3.25rem] min-[800px]:text-[2.5rem] lg:text-[3.5rem] xl:text-[3.75rem] leading-[1.05]"
               }`}
             >
               {locale === "ar" ? (
@@ -91,20 +91,6 @@ export default function Hero() {
               </span>
             </motion.p>
 
-            {/* ── Tablet-only inline mark — renders between
-                description and CTA so the hero still closes with the
-                buttons. Hidden on phones (< sm) where the composed
-                pattern doesn't translate, and on lg+ where it moves
-                to the right column. */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="hidden sm:flex lg:hidden items-center justify-center mb-8"
-            >
-              <ComposedMark />
-            </motion.div>
-
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -120,12 +106,12 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* ── Right: Desktop-only composed mark ── */}
+          {/* ── Right: composed mark — visible from 800px+ ── */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="hidden lg:flex items-center justify-center"
+            className="hidden min-[800px]:flex items-center justify-center"
           >
             <ComposedMark />
           </motion.div>
