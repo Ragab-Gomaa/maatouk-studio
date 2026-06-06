@@ -1,116 +1,58 @@
 import type { Metadata, Viewport } from "next";
-import { cookies } from "next/headers";
-import { Analytics } from "@vercel/analytics/react";
-import "@/styles/globals.css";
-import { ClientLayout } from "./client-layout";
-import { Locale, getDirection } from "@/lib/i18n";
+import { Inter } from "next/font/google";
+import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
 
 const SITE_URL = "https://maatouk-studio.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: {
-    default: "Maatouk Studio | معتوق — Branding, Motion & Websites",
-    template: "%s | Maatouk Studio",
-  },
+  title: "Maatouk Studio — Brands, Digital, Motion",
   description:
-    "Maatouk Studio is a creative studio specializing in branding, motion design, and digital experiences for visionary brands. ستوديو معتوق",
-  keywords: [
-    "branding",
-    "motion design",
-    "web design",
-    "creative studio",
-    "brand identity",
-    "Arabic branding",
-    "bilingual design",
-    "Maatouk",
-    "معتوق",
-  ],
-  authors: [{ name: "Maatouk Studio" }],
-  creator: "Maatouk Studio",
-  publisher: "Maatouk Studio",
-  manifest: "/site.webmanifest",
+    "An independent design studio crafting brands, digital experiences and motion.",
   openGraph: {
-    title: "Maatouk Studio | معتوق — Branding, Motion & Websites",
+    title: "Maatouk Studio",
     description:
-      "Creative studio specializing in branding, motion design, and digital experiences.",
-    url: SITE_URL,
+      "Brands, Digital, Motion. An independent design studio crafting work that earns attention by deserving it.",
     type: "website",
-    locale: "en_US",
-    alternateLocale: "ar_SA",
+    url: SITE_URL,
     siteName: "Maatouk Studio",
     images: [
       {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
+        url: "/images/work/01-saraya.jpg",
+        width: 2400,
+        height: 1600,
         alt: "Maatouk Studio",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Maatouk Studio | معتوق",
-    description:
-      "Branding, Motion & Websites for visionary brands.",
-    images: ["/og-image.png"],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
+    title: "Maatouk Studio",
+    description: "Brands, Digital, Motion.",
+    images: ["/images/work/01-saraya.jpg"],
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0029D6",
+  themeColor: "#0a0a0a",
   width: "device-width",
   initialScale: 1,
 };
 
-const organizationJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "Maatouk Studio",
-  alternateName: "ستوديو معتوق",
-  url: SITE_URL,
-  logo: `${SITE_URL}/favicon-512.png`,
-  description:
-    "Creative studio specializing in branding, motion design, and digital experiences for visionary brands.",
-  sameAs: [],
-  knowsLanguage: ["en", "ar"],
-};
-
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = await cookies();
-  const cookieLocale = cookieStore.get("maatouk-locale")?.value;
-  const initialLocale: Locale =
-    cookieLocale === "ar" || cookieLocale === "en" ? cookieLocale : "en";
-  const dir = getDirection(initialLocale);
-
   return (
-    <html lang={initialLocale} dir={dir} suppressHydrationWarning>
-      <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationJsonLd),
-          }}
-        />
-      </head>
-      <body className="font-body antialiased" suppressHydrationWarning>
-        <ClientLayout initialLocale={initialLocale}>{children}</ClientLayout>
-        <Analytics />
-      </body>
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
+      <body>{children}</body>
     </html>
   );
 }

@@ -1,23 +1,25 @@
-import Hero from "@/components/sections/Hero";
-import ServicesSection from "@/components/sections/ServicesSection";
-import WorkSection from "@/components/sections/WorkSection";
-import WhySection from "@/components/sections/WhySection";
-import ProcessSection from "@/components/sections/ProcessSection";
-import ClientsSection from "@/components/sections/ClientsSection";
-import FactsSection from "@/components/sections/FactsSection";
-import ContactCTASection from "@/components/sections/ContactCTASection";
+import { Header } from "@/components/site/Header";
+import { Hero } from "@/components/site/Hero";
+import { Services } from "@/components/site/Services";
+import { SelectedWork } from "@/components/site/SelectedWork";
+import { About } from "@/components/site/About";
+import { Contact } from "@/components/site/Contact";
+import { Footer } from "@/components/site/Footer";
+import { CustomCursor } from "@/components/site/CustomCursor";
 
-export default function HomePage() {
+export default function Home() {
   return (
     <>
-      <Hero />
-      <ServicesSection />
-      <WorkSection />
-      <WhySection />
-      <ProcessSection />
-      <ClientsSection />
-      <FactsSection />
-      <ContactCTASection />
+      <CustomCursor />
+      <Header />
+      <main>
+        <Hero />
+        <Services />
+        <SelectedWork />
+        <About />
+        <Contact />
+      </main>
+      <Footer />
     </>
   );
 }
