@@ -7,12 +7,25 @@ import { useReveal } from "@/lib/useReveal";
 import { useLang } from "@/components/i18n/LangProvider";
 import { Statement } from "@/components/ui/Statement";
 import { WorkLightbox } from "./WorkLightbox";
+import { WebsiteViewer } from "./WebsiteViewer";
+
+const motionWorks = works.filter((w) => w.type !== "website");
+const websiteWorks = works.filter((w) => w.type === "website");
 
 export function SelectedWork() {
   const { copy } = useLang();
   const head = useReveal<HTMLDivElement>();
   const statement = useReveal<HTMLHeadingElement>();
-  const [openIdx, setOpenIdx] = useState<number | null>(null);
+  const [videoIdx, setVideoIdx] = useState<number | null>(null);
+  const [siteIdx, setSiteIdx] = useState<number | null>(null);
+
+  const openWork = (work: Work) => {
+    if (work.type === "website") {
+      setSiteIdx(websiteWorks.findIndex((s) => s.slug === work.slug));
+    } else {
+      setVideoIdx(motionWorks.findIndex((m) => m.slug === work.slug));
+    }
+  };
 
   return (
     <section
@@ -50,7 +63,7 @@ export function SelectedWork() {
               work={work}
               index={i}
               conceptLabel={copy.work.concept}
-              onOpen={() => setOpenIdx(i)}
+              onOpen={() => openWork(work)}
             />
           ))}
         </div>
@@ -69,10 +82,16 @@ export function SelectedWork() {
       </div>
 
       <WorkLightbox
-        works={works}
-        index={openIdx}
-        onClose={() => setOpenIdx(null)}
-        onNav={(i) => setOpenIdx(i)}
+        works={motionWorks}
+        index={videoIdx}
+        onClose={() => setVideoIdx(null)}
+        onNav={(i) => setVideoIdx(i)}
+      />
+      <WebsiteViewer
+        sites={websiteWorks}
+        index={siteIdx}
+        onClose={() => setSiteIdx(null)}
+        onNav={(i) => setSiteIdx(i)}
       />
     </section>
   );
@@ -91,6 +110,7 @@ function WorkCard({
 }) {
   const reveal = useReveal<HTMLButtonElement>();
   const tiltRef = useRef<HTMLDivElement | null>(null);
+  const isWebsite = work.type === "website";
 
   const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = tiltRef.current;
@@ -124,7 +144,7 @@ function WorkCard({
         ref={tiltRef}
         onMouseMove={onMove}
         onMouseLeave={onLeave}
-        className="relative aspect-video overflow-hidden bg-[var(--color-bg-elevated)] transition-transform duration-500 ease-out"
+        className="relative aspect-video overflow-hidden bg-[#0c0c0c] transition-transform duration-500 ease-out"
         style={{ transformStyle: "preserve-3d" }}
       >
         <Image
@@ -132,15 +152,23 @@ function WorkCard({
           alt={work.title}
           fill
           sizes="(min-width: 1024px) 50vw, (min-width: 640px) 50vw, 100vw"
-          className="object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
+          className={`transition-transform duration-[1400ms] ease-out group-hover:scale-[1.03] ${
+            isWebsite ? "object-contain" : "object-cover group-hover:scale-[1.05]"
+          }`}
         />
         <div className="absolute inset-0 bg-black/30 transition-opacity duration-700 group-hover:bg-black/10" />
 
-        {/* Play affordance — signals these are videos. */}
+        {/* Affordance — ↗ for live sites, ▶ for video work */}
         <span className="absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/60 bg-black/30 text-white opacity-0 backdrop-blur-sm transition-all duration-500 group-hover:scale-100 group-hover:opacity-100 md:scale-75">
-          <svg width="16" height="18" viewBox="0 0 16 18" fill="currentColor" aria-hidden>
-            <path d="M0 1.2v15.6c0 .9 1 1.5 1.8 1l13-7.8c.7-.5.7-1.6 0-2L1.8.2C1 -.3 0 .3 0 1.2z" />
-          </svg>
+          {isWebsite ? (
+            <svg width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
+              <path d="M4.5 11.5L11.5 4.5M6 4.5h5.5V10" />
+            </svg>
+          ) : (
+            <svg width="16" height="18" viewBox="0 0 16 18" fill="currentColor" aria-hidden>
+              <path d="M0 1.2v15.6c0 .9 1 1.5 1.8 1l13-7.8c.7-.5.7-1.6 0-2L1.8.2C1 -.3 0 .3 0 1.2z" />
+            </svg>
+          )}
         </span>
 
         {work.kind === "concept" && (

@@ -265,6 +265,16 @@ section#top {
   .scroll-wheel { animation: none; }
 }
 
+/* Reveal-on-overscroll footer banner: a fixed brand-blue panel sits behind the
+   page; the content has a matching bottom margin so scrolling past the footer
+   uncovers it. */
+.reveal-banner {
+  height: clamp(340px, 52vh, 560px);
+}
+.reveal-content {
+  margin-bottom: clamp(340px, 52vh, 560px);
+}
+
 .hero-noise {
   position: absolute;
   inset: -10%;

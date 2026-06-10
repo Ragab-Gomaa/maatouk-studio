@@ -11,9 +11,15 @@ export type Work = {
   client?: string;
   /** Production credits, shown in the lightbox. */
   credits?: string;
-  /** Vimeo video id, used for the embedded player. */
-  vimeoId: string;
-  /** Poster image (Vimeo thumbnail downloaded to /public). */
+  /** What kind of work — drives how the card opens (video lightbox vs live site). */
+  type?: "motion" | "website";
+  /** Vimeo video id (motion works). */
+  vimeoId?: string;
+  /** Live site URL (website works). */
+  url?: string;
+  /** Whether the live site allows iframe embedding (else show poster + visit). */
+  embeddable?: boolean;
+  /** Poster image (Vimeo thumbnail or site screenshot in /public). */
   image: string;
   /** Native aspect ratio of the source video. */
   aspect: "16/9" | "1/1";
@@ -126,6 +132,32 @@ export const works: Work[] = [
     credits: "Concept piece · 24 ETAR Academy",
     vimeoId: "866585392",
     image: "/images/work/realtime.jpg",
+    aspect: "16/9",
+  },
+  {
+    slug: "nobles",
+    title: "Nobles",
+    category: "Digital",
+    year: 2024,
+    kind: "client",
+    client: "Nobles — Kuwait",
+    type: "website",
+    url: "https://www.nobleskuw.com/",
+    embeddable: true,
+    image: "/images/work/nobleskuw.jpg",
+    aspect: "16/9",
+  },
+  {
+    slug: "dolcebello",
+    title: "Dolce Bello",
+    category: "Digital",
+    year: 2024,
+    kind: "client",
+    client: "Dolce Bello — Kuwait",
+    type: "website",
+    url: "https://dolcebello.net/ar",
+    embeddable: true,
+    image: "/images/work/dolcebello.jpg",
     aspect: "16/9",
   },
 ];

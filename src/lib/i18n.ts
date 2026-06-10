@@ -48,6 +48,8 @@ export const copy = {
     projects: "projects",
     concept: "Concept",
     play: "Play",
+    visitSite: "Visit live site",
+    livePreview: "Live preview",
     cta: "Start a project",
     statement: [
       { t: "Work that " },

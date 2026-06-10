@@ -8,22 +8,26 @@ import { Footer } from "@/components/site/Footer";
 import { CustomCursor } from "@/components/site/CustomCursor";
 import { SkipLink } from "@/components/site/SkipLink";
 import { BackToTop } from "@/components/site/BackToTop";
+import { RevealBanner } from "@/components/site/RevealBanner";
 
 export default function Home() {
   return (
     <>
-      <SkipLink />
-      <CustomCursor />
-      <Header />
-      <main id="main-content">
-        <Hero />
-        <Services />
-        <SelectedWork />
-        <About />
-        <Contact />
-      </main>
-      <Footer />
-      <BackToTop />
+      <RevealBanner />
+      <div className="reveal-content relative z-10 bg-[var(--color-bg)]">
+        <SkipLink />
+        <CustomCursor />
+        <Header />
+        <main id="main-content">
+          <Hero />
+          <Services />
+          <SelectedWork />
+          <About />
+          <Contact />
+        </main>
+        <Footer />
+        <BackToTop />
+      </div>
     </>
   );
 }
