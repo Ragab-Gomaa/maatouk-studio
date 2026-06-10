@@ -1,23 +1,27 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useLang } from "@/components/i18n/LangProvider";
 
-const nav = [
-  { label: "Home", href: "#top" },
-  { label: "Works", href: "#works" },
-  { label: "Services", href: "#services" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
-];
+const navItems = [
+  { key: "home", href: "#top" },
+  { key: "works", href: "#works" },
+  { key: "services", href: "#services" },
+  { key: "about", href: "#about" },
+  { key: "contact", href: "#contact" },
+] as const;
 
 export function Header() {
+  const { copy } = useLang();
   const [active, setActive] = useState("#top");
   const [scrolled, setScrolled] = useState(false);
   const [hoverIdx, setHoverIdx] = useState<number | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const nav = navItems.map((n) => ({ ...n, label: copy.nav[n.key] }));
+
   useEffect(() => {
-    const ids = nav.map((n) => n.href.slice(1));
+    const ids = navItems.map((n) => n.href.slice(1));
     const observer = new IntersectionObserver(
       (entries) => {
         const visible = entries
@@ -43,11 +47,7 @@ export function Header() {
   }, []);
 
   useEffect(() => {
-    if (menuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
@@ -106,11 +106,7 @@ export function Header() {
                     >
                       <span
                         className={`relative z-10 transition-colors ${
-                          isHover
-                            ? "text-[var(--color-accent)]"
-                            : isActive
-                            ? "text-[var(--color-accent)]"
-                            : "text-white/85"
+                          isHover || isActive ? "text-[var(--color-accent)]" : "text-white/85"
                         }`}
                       >
                         {item.label}
@@ -134,22 +130,24 @@ export function Header() {
             <span className="inline-block transition-transform duration-500 group-hover:translate-x-1">
               →
             </span>
-            Start a project
+            {copy.nav.start}
           </a>
 
-          <button
-            type="button"
-            onClick={() => setMenuOpen((v) => !v)}
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={menuOpen}
-            className={`relative z-50 flex h-10 w-10 flex-col items-center justify-center gap-[5px] md:hidden ${
-              menuOpen ? "menu-open" : ""
-            }`}
-          >
-            <span className="menu-line menu-line-1 block h-px w-6 origin-center" />
-            <span className="menu-line menu-line-2 block h-px w-6 origin-center" />
-            <span className="menu-line menu-line-3 block h-px w-6 origin-center" />
-          </button>
+          <div className="flex items-center gap-3 md:hidden">
+            <button
+              type="button"
+              onClick={() => setMenuOpen((v) => !v)}
+              aria-label={menuOpen ? copy.nav.menuClose : copy.nav.menuOpen}
+              aria-expanded={menuOpen}
+              className={`relative z-50 flex h-10 w-10 flex-col items-center justify-center gap-[5px] ${
+                menuOpen ? "menu-open" : ""
+              }`}
+            >
+              <span className="menu-line menu-line-1 block h-px w-6 origin-center" />
+              <span className="menu-line menu-line-2 block h-px w-6 origin-center" />
+              <span className="menu-line menu-line-3 block h-px w-6 origin-center" />
+            </button>
+          </div>
         </div>
       </header>
 
@@ -158,9 +156,7 @@ export function Header() {
           menuOpen ? "pointer-events-auto" : "pointer-events-none"
         }`}
         style={{
-          clipPath: menuOpen
-            ? "circle(150% at 100% 0%)"
-            : "circle(0% at 100% 0%)",
+          clipPath: menuOpen ? "circle(150% at 100% 0%)" : "circle(0% at 100% 0%)",
           transition: "clip-path 700ms cubic-bezier(0.65, 0, 0.35, 1)",
         }}
         aria-hidden={!menuOpen}
@@ -178,9 +174,7 @@ export function Header() {
                   onClick={() => setMenuOpen(false)}
                   className="group flex items-baseline gap-4"
                 >
-                  <span className="text-[11px] text-white/40">
-                    0{i + 1}
-                  </span>
+                  <span className="text-[11px] text-white/55">0{i + 1}</span>
                   <span className="font-serif text-[44px] leading-[1] text-white transition-colors group-hover:text-[var(--color-accent)]">
                     {item.label}
                   </span>
@@ -193,14 +187,9 @@ export function Header() {
             className={`mt-16 flex flex-col gap-4 ${menuOpen ? "menu-item" : ""}`}
             style={menuOpen ? { animationDelay: "600ms" } : undefined}
           >
-            <span className="text-[11px] text-white/40">
-              Get in touch
-            </span>
-            <a
-              href="mailto:hello@maatouk-studio.com"
-              className="text-[16px] text-white/85"
-            >
-              hello@maatouk-studio.com
+            <span className="text-[11px] text-white/55">{copy.nav.getInTouch}</span>
+            <a href={`mailto:${copy.nav.email}`} className="text-[16px] text-white/90">
+              {copy.nav.email}
             </a>
           </div>
         </nav>

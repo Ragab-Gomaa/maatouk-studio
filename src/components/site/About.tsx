@@ -1,8 +1,11 @@
 "use client";
 
 import { useReveal } from "@/lib/useReveal";
+import { useLang } from "@/components/i18n/LangProvider";
+import { Statement } from "@/components/ui/Statement";
 
 export function About() {
+  const { copy } = useLang();
   const head = useReveal<HTMLDivElement>();
   const main = useReveal<HTMLParagraphElement>();
   const meta = useReveal<HTMLDivElement>();
@@ -17,13 +20,13 @@ export function About() {
           ref={head.ref}
           className={`reveal-up mb-6 flex items-center justify-between md:mb-12 ${head.visible ? "is-visible" : ""}`}
         >
-          <span className="text-[11px] text-white/40 md:text-[12px]">
-            About
+          <span className="text-[11px] text-white/55 md:text-[12px]">
+            {copy.about.label}
           </span>
           <span className="inline-flex items-center gap-2.5 rounded-full border border-[var(--color-accent)]/30 bg-[var(--color-accent)]/5 px-3 py-1.5">
             <span className="status-dot block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
             <span className="text-[11px] text-[var(--color-accent)] md:text-[12px]">
-              Currently accepting projects
+              {copy.about.status}
             </span>
           </span>
         </div>
@@ -35,26 +38,18 @@ export function About() {
               main.visible ? "is-visible" : ""
             }`}
           >
-            We are an independent studio working at the intersection of{" "}
-            <span className="italic text-[var(--color-accent)]">brand</span>,{" "}
-            <span className="italic text-[var(--color-accent)]">digital</span>{" "}
-            and{" "}
-            <span className="italic text-[var(--color-accent)]">motion</span> —
-            building work that earns attention by deserving it.
+            <Statement segments={copy.about.statement} />
           </p>
 
           <div
             ref={meta.ref}
-            className={`reveal-up md:col-span-3 md:col-start-10 flex flex-col gap-6 text-[14px] text-white/55 ${
+            className={`reveal-up md:col-span-3 md:col-start-10 flex flex-col gap-6 text-[14px] text-white/65 ${
               meta.visible ? "is-visible" : ""
             }`}
             style={{ transitionDelay: "200ms" }}
           >
-            <p>Founded in 2023. Based wherever the work is.</p>
-            <p>
-              Selected for clients in construction, hospitality, technology and
-              culture.
-            </p>
+            <p>{copy.about.meta1}</p>
+            <p>{copy.about.meta2}</p>
           </div>
         </div>
       </div>

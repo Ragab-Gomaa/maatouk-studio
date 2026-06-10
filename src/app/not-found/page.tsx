@@ -2,7 +2,7 @@ export default function NotFound() {
   return (
     <main className="grid min-h-screen place-items-center bg-[var(--color-bg)] px-8 text-center">
       <div className="flex flex-col items-center gap-6">
-        <span className="text-[12px] text-white/40">
+        <span className="text-[12px] text-white/55">
           404
         </span>
         <h1 className="font-serif text-[56px] leading-[1.05] text-white md:text-[88px]">

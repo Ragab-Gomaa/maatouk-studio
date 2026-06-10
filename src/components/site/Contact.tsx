@@ -2,41 +2,36 @@
 
 import { useState } from "react";
 import { useReveal } from "@/lib/useReveal";
+import { useLang } from "@/components/i18n/LangProvider";
+import { Statement } from "@/components/ui/Statement";
+import { SelectMenu } from "@/components/ui/SelectMenu";
 
 type Status = "idle" | "sending" | "sent" | "error";
-
-type Errors = Partial<Record<"name" | "email" | "message", string>>;
-
-function validateName(v: string): string | undefined {
-  if (!v.trim()) return "Required";
-  if (v.length > 120) return "Too long";
-}
-function validateEmail(v: string): string | undefined {
-  if (!v.trim()) return "Required";
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return "Invalid email address";
-}
-function validateMessage(v: string): string | undefined {
-  if (!v.trim()) return "Required";
-  if (v.length < 10) return "A bit more, please";
-  if (v.length > 5000) return "Too long";
-}
+type Field = "name" | "phone" | "email" | "budget" | "service";
+type Errors = Partial<Record<Field, string>>;
 
 export function Contact() {
+  const { copy } = useLang();
+  const err = copy.contact.err;
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState<string>("");
   const [errors, setErrors] = useState<Errors>({});
+  const [service, setService] = useState("");
+  const [budget, setBudget] = useState("");
   const head = useReveal<HTMLDivElement>();
   const headline = useReveal<HTMLHeadingElement>();
   const form = useReveal<HTMLFormElement>();
 
-  function onBlurValidate(field: keyof Errors, value: string) {
-    const fn =
-      field === "name"
-        ? validateName
-        : field === "email"
-        ? validateEmail
-        : validateMessage;
-    setErrors((p) => ({ ...p, [field]: fn(value) }));
+  const validate = {
+    name: (v: string) => (!v.trim() ? err.required : v.length > 120 ? err.invalid_name : undefined),
+    email: (v: string) =>
+      !v.trim() ? err.required : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? err.email : undefined,
+    phone: (v: string) =>
+      !v.trim() ? err.required : !/^[+]?[\d\s()-]{6,}$/.test(v) ? err.phone : undefined,
+  };
+
+  function onBlurValidate(field: "name" | "email" | "phone", value: string) {
+    setErrors((p) => ({ ...p, [field]: validate[field](value) }));
   }
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -45,27 +40,22 @@ export function Contact() {
     const data = new FormData(formEl);
     const name = String(data.get("name") ?? "");
     const email = String(data.get("email") ?? "");
-    const message = String(data.get("message") ?? "");
+    const phone = String(data.get("phone") ?? "");
 
     const next: Errors = {
-      name: validateName(name),
-      email: validateEmail(email),
-      message: validateMessage(message),
+      name: validate.name(name),
+      email: validate.email(email),
+      phone: validate.phone(phone),
+      service: service ? undefined : err.select,
+      budget: budget ? undefined : err.select,
     };
     setErrors(next);
-    if (next.name || next.email || next.message) return;
+    if (next.name || next.email || next.phone || next.service || next.budget) return;
 
     setStatus("sending");
     setErrorMsg("");
 
-    const payload = {
-      name,
-      email,
-      company: data.get("company"),
-      service: data.get("service"),
-      message,
-      website: data.get("website"),
-    };
+    const payload = { name, email, phone, budget, service, website: data.get("website") };
 
     try {
       const res = await fetch("/api/contact", {
@@ -77,21 +67,21 @@ export function Contact() {
       if (json.ok) {
         setStatus("sent");
         formEl.reset();
+        setService("");
+        setBudget("");
       } else {
         setStatus("error");
-        setErrorMsg(json.error || "Something went wrong");
+        const code = json.error as keyof typeof err | undefined;
+        setErrorMsg((code && err[code]) || err.generic);
       }
     } catch {
       setStatus("error");
-      setErrorMsg("Network error");
+      setErrorMsg(err.network);
     }
   }
 
   return (
-    <section
-      id="contact"
-      className="relative w-full bg-[var(--color-bg)] py-14 md:py-20"
-    >
+    <section id="contact" className="relative w-full bg-[var(--color-bg)] py-14 md:py-20">
       <div className="mx-auto w-full max-w-[1600px] px-6 md:px-14">
         <div
           ref={head.ref}
@@ -99,14 +89,12 @@ export function Contact() {
             head.visible ? "is-visible" : ""
           }`}
         >
-          <span className="text-[11px] text-white/40 md:text-[12px]">
-            Contact
-          </span>
+          <span className="text-[11px] text-white/55 md:text-[12px]">{copy.contact.label}</span>
           <a
-            href="mailto:hello@maatouk-studio.com"
-            className="hidden text-[12px] text-white/40 hover:text-white md:inline"
+            href={`mailto:${copy.nav.email}`}
+            className="hidden text-[12px] text-white/55 hover:text-white md:inline"
           >
-            hello@maatouk-studio.com
+            {copy.nav.email}
           </a>
         </div>
 
@@ -116,8 +104,7 @@ export function Contact() {
             headline.visible ? "is-visible" : ""
           }`}
         >
-          Start a{" "}
-          <span className="italic text-[var(--color-accent)]">project</span>.
+          <Statement segments={copy.contact.headline} />
         </h2>
 
         <form
@@ -129,61 +116,51 @@ export function Contact() {
           }`}
           style={{ transitionDelay: "120ms" }}
         >
-          <input
-            type="text"
-            name="website"
-            tabIndex={-1}
-            autoComplete="off"
-            aria-hidden="true"
-            className="hidden"
-          />
+          <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
 
-          <Field
-            label="Name"
-            name="name"
+          <TextField label={copy.contact.name} name="name" autoComplete="name" required error={errors.name} onBlurValidate={(v) => onBlurValidate("name", v)} />
+          <TextField label={copy.contact.phone} name="phone" type="tel" inputMode="tel" autoComplete="tel" required error={errors.phone} onBlurValidate={(v) => onBlurValidate("phone", v)} />
+          <TextField label={copy.contact.email} name="email" type="email" inputMode="email" autoComplete="email" required error={errors.email} onBlurValidate={(v) => onBlurValidate("email", v)} />
+          <SelectMenu
+            label={copy.contact.budget}
+            placeholder={copy.contact.selectBudget}
+            options={copy.contact.budgetOptions}
+            value={budget}
+            onChange={(v) => {
+              setBudget(v);
+              setErrors((p) => ({ ...p, budget: undefined }));
+            }}
             required
-            error={errors.name}
-            onBlurValidate={(v) => onBlurValidate("name", v)}
+            error={errors.budget}
           />
-          <Field
-            label="Email"
-            name="email"
-            type="email"
+          <SelectMenu
+            label={copy.contact.service}
+            placeholder={copy.contact.selectService}
+            options={copy.contact.serviceOptions}
+            value={service}
+            onChange={(v) => {
+              setService(v);
+              setErrors((p) => ({ ...p, service: undefined }));
+            }}
             required
-            error={errors.email}
-            onBlurValidate={(v) => onBlurValidate("email", v)}
+            error={errors.service}
           />
-          <Field label="Company" name="company" />
-          <SelectField label="Service" name="service" />
-
-          <div className="md:col-span-2">
-            <Field
-              label="Message"
-              name="message"
-              textarea
-              required
-              error={errors.message}
-              onBlurValidate={(v) => onBlurValidate("message", v)}
-            />
-          </div>
 
           <div className="md:col-span-2 flex flex-col items-start justify-between gap-6 border-t border-[var(--color-line)] pt-8 sm:flex-row sm:items-center">
-            <p className="text-[13px] text-white/40">
+            <p role="status" aria-live="polite" className="text-[13px] text-white/55">
               {status === "sent"
-                ? "Thanks — we'll be in touch within 48 hours."
+                ? copy.contact.sent
                 : status === "error"
-                ? `Couldn't send: ${errorMsg}.`
-                : "We respond to every inquiry within 48 hours."}
+                ? `${copy.contact.errorPrefix}: ${errorMsg}.`
+                : copy.contact.respond}
             </p>
             <button
               type="submit"
               disabled={status === "sending"}
-              className="group inline-flex items-center gap-3 border border-white/30 px-6 py-3 text-[12px] text-white transition-all hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] disabled:opacity-50 md:text-[13px]"
+              className="group inline-flex items-center gap-3 border border-white/40 px-6 py-3 text-[12px] text-white transition-all hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] disabled:opacity-50 md:text-[13px]"
             >
-              {status === "sending" ? "Sending…" : "Send inquiry"}
-              <span className="transition-transform duration-500 group-hover:translate-x-1">
-                →
-              </span>
+              {status === "sending" ? copy.contact.sending : copy.contact.send}
+              <span className="transition-transform duration-500 group-hover:translate-x-1">→</span>
             </button>
           </div>
         </form>
@@ -192,93 +169,52 @@ export function Contact() {
   );
 }
 
-function Field({
+function TextField({
   label,
   name,
   type = "text",
+  inputMode,
+  autoComplete,
   required = false,
-  textarea = false,
   error,
   onBlurValidate,
 }: {
   label: string;
   name: string;
   type?: string;
+  inputMode?: "text" | "tel" | "email";
+  autoComplete?: string;
   required?: boolean;
-  textarea?: boolean;
   error?: string;
   onBlurValidate?: (v: string) => void;
 }) {
   const hasError = !!error;
   return (
     <label className="block">
-      <span className="mb-3 flex items-baseline justify-between text-[11px] text-white/40 md:text-[12px]">
+      <span className="mb-3 flex items-baseline justify-between text-[11px] text-white/55 md:text-[12px]">
         <span>
-          {label}{" "}
-          {required && <span className="text-[var(--color-accent)]">*</span>}
+          {label} {required && <span className="text-[var(--color-accent)]">*</span>}
         </span>
         <span
-          className={`normal-case tracking-normal text-[11px] transition-opacity duration-300 ${
+          className={`text-[11px] normal-case tracking-normal transition-opacity duration-300 ${
             hasError ? "text-[var(--color-accent)] opacity-100" : "opacity-0"
           }`}
         >
-          {error || " "}
+          {error || " "}
         </span>
       </span>
-      {textarea ? (
-        <textarea
-          name={name}
-          required={required}
-          rows={4}
-          onBlur={(e) => onBlurValidate?.(e.currentTarget.value)}
-          onChange={(e) => hasError && onBlurValidate?.(e.currentTarget.value)}
-          className={`w-full resize-none border-b bg-transparent pb-3 text-[16px] text-white outline-none transition-colors focus:border-[var(--color-accent)] md:text-[18px] ${
-            hasError ? "border-[var(--color-accent)]" : "border-white/15"
-          }`}
-        />
-      ) : (
-        <input
-          name={name}
-          type={type}
-          required={required}
-          onBlur={(e) => onBlurValidate?.(e.currentTarget.value)}
-          onChange={(e) => hasError && onBlurValidate?.(e.currentTarget.value)}
-          className={`w-full border-b bg-transparent pb-3 text-[16px] text-white outline-none transition-colors focus:border-[var(--color-accent)] md:text-[18px] ${
-            hasError ? "border-[var(--color-accent)]" : "border-white/15"
-          }`}
-        />
-      )}
-    </label>
-  );
-}
-
-function SelectField({ label, name }: { label: string; name: string }) {
-  return (
-    <label className="block">
-      <span className="mb-3 block text-[11px] text-white/40 md:text-[12px]">
-        {label}
-      </span>
-      <select
+      <input
         name={name}
-        defaultValue=""
-        className="w-full appearance-none border-b border-white/15 bg-transparent pb-3 text-[16px] text-white outline-none transition-colors focus:border-[var(--color-accent)] md:text-[18px]"
-      >
-        <option value="" className="bg-[var(--color-bg)]">
-          Select a service
-        </option>
-        <option value="branding" className="bg-[var(--color-bg)]">
-          Branding
-        </option>
-        <option value="digital" className="bg-[var(--color-bg)]">
-          Digital
-        </option>
-        <option value="motion" className="bg-[var(--color-bg)]">
-          Motion
-        </option>
-        <option value="other" className="bg-[var(--color-bg)]">
-          Something else
-        </option>
-      </select>
+        type={type}
+        inputMode={inputMode}
+        autoComplete={autoComplete}
+        required={required}
+        onBlur={(e) => onBlurValidate?.(e.currentTarget.value)}
+        onChange={(e) => hasError && onBlurValidate?.(e.currentTarget.value)}
+        className={`w-full border-b bg-transparent pb-3 text-[16px] text-white outline-none transition-colors focus:border-[var(--color-accent)] md:text-[18px] ${
+          hasError ? "border-[var(--color-accent)]" : "border-white/20"
+        }`}
+      />
     </label>
   );
 }

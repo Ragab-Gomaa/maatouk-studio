@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { LangProvider } from "@/components/i18n/LangProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -15,6 +16,10 @@ export const metadata: Metadata = {
   title: "Maatouk Studio — Brands, Digital, Motion",
   description:
     "An independent design studio crafting brands, digital experiences and motion.",
+  alternates: {
+    canonical: "/",
+    languages: { en: "/", ar: "/" },
+  },
   openGraph: {
     title: "Maatouk Studio",
     description:
@@ -24,10 +29,10 @@ export const metadata: Metadata = {
     siteName: "Maatouk Studio",
     images: [
       {
-        url: "/images/work/01-saraya.jpg",
-        width: 2400,
-        height: 1600,
-        alt: "Maatouk Studio",
+        url: "/images/work/blankos.jpg",
+        width: 1280,
+        height: 720,
+        alt: "Maatouk Studio — motion work",
       },
     ],
   },
@@ -35,7 +40,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Maatouk Studio",
     description: "Brands, Digital, Motion.",
-    images: ["/images/work/01-saraya.jpg"],
+    images: ["/images/work/blankos.jpg"],
   },
 };
 
@@ -51,8 +56,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
-      <body>{children}</body>
+    <html lang="en" dir="ltr" className={inter.variable} suppressHydrationWarning>
+      <body>
+        <LangProvider>{children}</LangProvider>
+      </body>
     </html>
   );
 }

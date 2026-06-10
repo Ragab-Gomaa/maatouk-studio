@@ -1,16 +1,18 @@
 import { NextResponse } from "next/server";
 
-const MAX_MESSAGE_LENGTH = 5000;
 const MAX_NAME_LENGTH = 120;
 
 function isEmail(s: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
 }
+function isPhone(s: string) {
+  return /^[+]?[\d\s()-]{6,}$/.test(s);
+}
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { name, email, company, service, budget, message, website } = body ?? {};
+    const { name, email, phone, budget, service, website } = body ?? {};
 
     // Honeypot: filled = bot
     if (website) return NextResponse.json({ ok: true });
@@ -21,17 +23,16 @@ export async function POST(req: Request) {
     if (!email || typeof email !== "string" || !isEmail(email)) {
       return NextResponse.json({ ok: false, error: "invalid_email" }, { status: 400 });
     }
-    if (!message || typeof message !== "string" || message.length > MAX_MESSAGE_LENGTH) {
-      return NextResponse.json({ ok: false, error: "invalid_message" }, { status: 400 });
+    if (!phone || typeof phone !== "string" || !isPhone(phone)) {
+      return NextResponse.json({ ok: false, error: "invalid_phone" }, { status: 400 });
     }
 
     const payload = {
       name,
       email,
-      company: company || "",
-      service: service || "",
-      budget: budget || "",
-      message,
+      phone,
+      budget: typeof budget === "string" ? budget : "",
+      service: typeof service === "string" ? service : "",
       receivedAt: new Date().toISOString(),
     };
 
@@ -43,12 +44,10 @@ export async function POST(req: Request) {
       const html = `
         <h2>New project inquiry — Maatouk Studio</h2>
         <p><strong>Name:</strong> ${escapeHtml(payload.name)}</p>
+        <p><strong>Mobile:</strong> ${escapeHtml(payload.phone)}</p>
         <p><strong>Email:</strong> ${escapeHtml(payload.email)}</p>
-        ${payload.company ? `<p><strong>Company:</strong> ${escapeHtml(payload.company)}</p>` : ""}
-        ${payload.service ? `<p><strong>Service:</strong> ${escapeHtml(payload.service)}</p>` : ""}
         ${payload.budget ? `<p><strong>Budget:</strong> ${escapeHtml(payload.budget)}</p>` : ""}
-        <p><strong>Message:</strong></p>
-        <p>${escapeHtml(payload.message).replace(/\n/g, "<br/>")}</p>
+        ${payload.service ? `<p><strong>Service:</strong> ${escapeHtml(payload.service)}</p>` : ""}
       `;
 
       const res = await fetch("https://api.resend.com/emails", {
@@ -70,7 +69,7 @@ export async function POST(req: Request) {
         return NextResponse.json({ ok: false, error: "send_failed" }, { status: 500 });
       }
     } else {
-      // No provider configured — log for now so you can still see submissions in Vercel logs
+      // No provider configured — log so submissions are still visible in server logs
       console.info("[contact] Inquiry received (no email provider configured):", payload);
     }
 

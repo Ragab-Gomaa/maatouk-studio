@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useLang } from "@/components/i18n/LangProvider";
 
 export function CustomCursor() {
+  const { copy } = useLang();
   const ringRef = useRef<HTMLDivElement | null>(null);
-  const [active, setActive] = useState(false);
+  const [kind, setKind] = useState<string | null>(null);
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
@@ -16,13 +18,22 @@ export function CustomCursor() {
     let rx = mx;
     let ry = my;
     let raf = 0;
+    let wasActive = false;
 
     const onMove = (e: MouseEvent) => {
       mx = e.clientX;
       my = e.clientY;
       const target = e.target as HTMLElement | null;
-      const interactive = target?.closest('[data-cursor="view"]');
-      setActive(!!interactive);
+      const el = target?.closest("[data-cursor]");
+      const nowActive = !!el;
+      // Entering a target: snap the ring to the pointer so it appears right
+      // under the cursor instead of sliding in from its previous spot.
+      if (nowActive && !wasActive) {
+        rx = mx;
+        ry = my;
+      }
+      wasActive = nowActive;
+      setKind(el ? el.getAttribute("data-cursor") : null);
     };
 
     const tick = () => {
@@ -45,6 +56,14 @@ export function CustomCursor() {
 
   if (!enabled) return null;
 
+  const active = kind !== null;
+  const label =
+    kind === "prev"
+      ? `← ${copy.hero.prev}`
+      : kind === "next"
+      ? `${copy.hero.next} →`
+      : copy.cursor.view;
+
   return (
     <div
       ref={ringRef}
@@ -53,7 +72,7 @@ export function CustomCursor() {
         active ? "opacity-100 scale-100" : "opacity-0 scale-50"
       }`}
     >
-      <span className="text-[10px]">View</span>
+      <span className="text-[11px] font-medium leading-none">{label}</span>
     </div>
   );
 }

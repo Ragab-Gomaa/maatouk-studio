@@ -4,39 +4,22 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { works } from "@/lib/works";
 import { useReveal } from "@/lib/useReveal";
+import { useLang } from "@/components/i18n/LangProvider";
 
-type ServiceDef = {
-  name: string;
-  blurb: string;
-  category: "Branding" | "Digital" | "Motion";
-};
+type Category = "Branding" | "Digital" | "Motion";
 
-const services: ServiceDef[] = [
-  {
-    name: "Branding",
-    category: "Branding",
-    blurb:
-      "Identity systems, naming, guidelines — the unmistakable craft that holds a brand together.",
-  },
-  {
-    name: "Digital",
-    category: "Digital",
-    blurb:
-      "Websites, products and interfaces designed and built to feel as good as they look.",
-  },
-  {
-    name: "Motion",
-    category: "Motion",
-    blurb:
-      "Brand films, openers and motion identities that carry the work into a moving frame.",
-  },
-];
-
-const SLIDE_MS = 280;
+const SLIDE_MS = 500;
 
 export function Services() {
+  const { copy } = useLang();
   const reveal = useReveal<HTMLDivElement>();
   const [hovered, setHovered] = useState<number | null>(null);
+
+  const services: { name: string; blurb: string; category: Category }[] = [
+    { name: copy.services.items.branding.name, blurb: copy.services.items.branding.blurb, category: "Branding" },
+    { name: copy.services.items.digital.name, blurb: copy.services.items.digital.blurb, category: "Digital" },
+    { name: copy.services.items.motion.name, blurb: copy.services.items.motion.blurb, category: "Motion" },
+  ];
 
   return (
     <section
@@ -48,29 +31,29 @@ export function Services() {
     >
       <div className="mx-auto w-full max-w-[1600px] px-6 md:px-14">
         <div className="mb-8 flex items-end justify-between md:mb-12">
-          <span className="text-[11px] text-white/40 md:text-[12px]">
-            Services
+          <span className="text-[11px] text-white/55 md:text-[12px]">
+            {copy.services.label}
           </span>
-          <span className="hidden text-[12px] text-white/40 md:inline">
-            What we make
+          <span className="hidden text-[12px] text-white/55 md:inline">
+            {copy.services.tagline}
           </span>
         </div>
 
         <div className="grid grid-cols-1 gap-0 overflow-hidden border-y border-[var(--color-line)] md:grid-cols-3">
           {services.map((service, i) => {
-            const projects = works.filter(
-              (w) => w.category === service.category
-            );
+            const projects = works.filter((w) => w.category === service.category);
             return (
               <ServiceCard
-                key={service.name}
+                key={service.category}
                 index={i}
-                service={service}
+                name={service.name}
+                blurb={service.blurb}
                 projects={projects}
                 hovered={hovered === i}
                 onEnter={() => setHovered(i)}
                 onLeave={() => setHovered(null)}
                 isLast={i === services.length - 1}
+                projectsLabel={copy.services.projects}
               />
             );
           })}
@@ -82,24 +65,29 @@ export function Services() {
 
 function ServiceCard({
   index,
-  service,
+  name,
+  blurb,
   projects,
   hovered,
   onEnter,
   onLeave,
   isLast,
+  projectsLabel,
 }: {
   index: number;
-  service: ServiceDef;
+  name: string;
+  blurb: string;
   projects: { slug: string; image: string; title: string }[];
   hovered: boolean;
   onEnter: () => void;
   onLeave: () => void;
   isLast: boolean;
+  projectsLabel: string;
 }) {
   const [slide, setSlide] = useState(0);
   const timerRef = useRef<number | null>(null);
   const headingReveal = useReveal<HTMLHeadingElement>({ threshold: 0.3 });
+  const hasProjects = projects.length > 0;
 
   useEffect(() => {
     if (!hovered || projects.length < 2) return;
@@ -130,18 +118,18 @@ function ServiceCard({
       onMouseMove={onMouseMoveCard}
       className={`spotlight-card glow-accent group relative flex min-h-[460px] flex-col justify-between overflow-hidden border-b border-[var(--color-line)] p-6 transition-all duration-700 last:border-b-0 md:min-h-[640px] md:border-b-0 md:p-10 ${
         isLast ? "" : "md:border-r"
-      } ${hovered ? "bg-black is-hot" : "bg-transparent"}`}
+      } ${hovered && hasProjects ? "bg-black is-hot" : hovered ? "is-hot" : "bg-transparent"}`}
     >
       <div
         className={`pointer-events-none absolute inset-0 z-0 transition-opacity duration-700 ${
-          hovered ? "opacity-100" : "opacity-0"
+          hovered && hasProjects ? "opacity-100" : "opacity-0"
         }`}
         aria-hidden
       >
         {projects.map((project, j) => (
           <div
             key={project.slug}
-            className={`absolute inset-0 transition-opacity duration-150 ease-out ${
+            className={`absolute inset-0 transition-opacity duration-500 ease-out ${
               j === slide ? "opacity-100" : "opacity-0"
             }`}
           >
@@ -158,30 +146,26 @@ function ServiceCard({
       </div>
 
       <div className="relative z-10 flex items-start justify-between">
-        <span className="text-[11px] text-white/45 md:text-[12px]">
+        <span className="text-[11px] text-white/55 md:text-[12px]">
           0{index + 1}
         </span>
         <span
           className={`text-[11px] transition-all duration-500 md:text-[12px] ${
-            hovered
+            hovered && hasProjects
               ? "translate-x-0 text-[var(--color-accent)] opacity-100"
               : "translate-x-2 opacity-0"
           }`}
         >
-          ↗ {projects.length} projects
+          ↗ {projects.length} {projectsLabel}
         </span>
       </div>
 
       <div className="relative z-10 flex-1 flex items-center justify-center md:py-6">
         <h3
           ref={headingReveal.ref}
-          className="font-serif whitespace-nowrap text-[44px] leading-[0.95] text-white md:text-[64px] lg:text-[80px]"
-          style={{
-            transform: "rotate(-90deg)",
-            transformOrigin: "center center",
-          }}
+          className="origin-center rotate-0 font-serif whitespace-nowrap text-[44px] leading-[0.95] text-white md:-rotate-90 md:text-[64px] lg:text-[80px]"
         >
-          {service.name.split("").map((ch, k) => (
+          {name.split("").map((ch, k) => (
             <span
               key={k}
               className={`letter inline-block ${headingReveal.visible ? "is-on" : ""}`}
@@ -193,29 +177,14 @@ function ServiceCard({
         </h3>
       </div>
 
-      <div className="relative z-10 flex items-end justify-between gap-4 md:gap-6">
+      <div className="relative z-10">
         <p
           className={`max-w-[28ch] text-[13px] leading-[1.55] transition-colors duration-500 md:text-[15px] ${
-            hovered ? "text-white/85" : "text-white/55"
+            hovered ? "text-white/90" : "text-white/65"
           }`}
         >
-          {service.blurb}
+          {blurb}
         </p>
-
-        {hovered && projects.length > 1 ? (
-          <div className="hidden items-center gap-1.5 md:flex">
-            {projects.map((_, j) => (
-              <span
-                key={j}
-                className={`block h-px transition-all duration-300 ${
-                  j === slide
-                    ? "w-6 bg-[var(--color-accent)]"
-                    : "w-3 bg-white/30"
-                }`}
-              />
-            ))}
-          </div>
-        ) : null}
       </div>
     </div>
   );

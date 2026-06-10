@@ -6,13 +6,16 @@ import { About } from "@/components/site/About";
 import { Contact } from "@/components/site/Contact";
 import { Footer } from "@/components/site/Footer";
 import { CustomCursor } from "@/components/site/CustomCursor";
+import { SkipLink } from "@/components/site/SkipLink";
+import { BackToTop } from "@/components/site/BackToTop";
 
 export default function Home() {
   return (
     <>
+      <SkipLink />
       <CustomCursor />
       <Header />
-      <main>
+      <main id="main-content">
         <Hero />
         <Services />
         <SelectedWork />
@@ -20,6 +23,7 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
+      <BackToTop />
     </>
   );
 }
